@@ -1,30 +1,48 @@
-export const clubShopinfo = async (data: any) => {
-  console.log(data);
+export const clubShopinfo: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const clubSendinfo = async (data: any) => {
-  console.log(data);
+export const clubSendinfo: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const clubRecvinfo = async (data: any) => {
-  console.log(data);
+export const clubRecvinfo: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const clubPresent_get = async (data: any) => {
-  console.log(data);
+export const clubPresent_get: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const clubPresent_code = async (data: any) => {
-  console.log(data);
+export const clubPresent_code: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const clubPresent_done = async (data: any) => {
-  console.log(data);
+export const clubPresent_done: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 

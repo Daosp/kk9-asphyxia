@@ -1,5 +1,8 @@
-export const populationReport = async (data: any) => {
-  console.log(data);
+export const populationReport: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 

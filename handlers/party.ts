@@ -1,20 +1,32 @@
-export const partyWhatsnow = async (data: any) => {
-  console.log(data);
+export const partyWhatsnow: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const partyInfo = async (data: any) => {
-  console.log(data);
+export const partyInfo: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const partyPinfo = async (data: any) => {
-  console.log(data);
+export const partyPinfo: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const partyAdvantage = async (data: any) => {
-  console.log(data);
+export const partyAdvantage: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 

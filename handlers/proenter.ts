@@ -1,30 +1,48 @@
-export const proenterRegist = async (data: any) => {
-  console.log(data);
+export const proenterRegist: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const proenterEntry = async (data: any) => {
-  console.log(data);
+export const proenterEntry: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const proenterResult = async (data: any) => {
-  console.log(data);
+export const proenterResult: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const proenterNow = async (data: any) => {
-  console.log(data);
+export const proenterNow: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const proenterQuit = async (data: any) => {
-  console.log(data);
+export const proenterQuit: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
-export const proenterWins = async (data: any) => {
-  console.log(data);
+export const proenterWins: EPR = async (info, data, send) => {
+  console.log('---');
+  console.log(JSON.stringify(info));
+  console.log(JSON.stringify(data));
+
   return send.deny({ format: false, header: false });
 };
 
