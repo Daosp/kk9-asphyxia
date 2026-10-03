@@ -1,3 +1,4 @@
+import { __logInfoData } from './handlers/__test__';
 import { versSend } from './handlers/vers';
 import { lobbyQuery, lobbyAccept, lobbyPoling } from './handlers/lobby';
 import { pdataRead, pdataWrite, pdataConv, pdataCheck, pdataCheck_recovery, pdataCreate, pdataRanking, pdataMisc_info} from './handlers/pdata';
