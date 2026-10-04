@@ -2,6 +2,17 @@ import { __logInfoData } from './handlers/__test__';
 import { versSend } from './handlers/vers';
 import { lobbyQuery, lobbyAccept, lobbyPoling } from './handlers/lobby';
 import { pdataRead, pdataWrite, pdataConv, pdataCheck, pdataCheck_recovery, pdataCreate, pdataRanking, pdataMisc_info} from './handlers/pdata';
+
+import { enqueteSee, enqueteNow, enqueteVote } from './handlers/enquete';
+import { customizeGet, customizeCheck, customizeItem, customizePro_override, customizeShop_confirm, customizeShop_buy, customizeOshigacha_confirm, customizeOshigacha_draw } from './handlers/customize';
+import { identifierInquire, identifierIssue, identifierCheck, identifierVerify } from './handlers/identifier';
+import { sessionLogin, sessionLogout, sessionRefresh } from './handlers/session';
+import { questionInfo, questionAnswer } from './handlers/question';
+import { snsFellow_comment_send_pcb, snsFellow_comment_new, snsFellow_challenge, snsFellow_request, snsApplilink_stat, snsApplilink_use, snsSend_nanikiru } from './handlers/sns';
+import { wdjOpen } from './handlers/wdj';
+import { vipStart, vipStatus, vipAdd_point, vipConsume_pay, vipConsume_reserve, vipConsume_adjust, vipRight_reserve, vipRight_confirm, vipItem_get, vipGoods_get, vipGoods_use } from './handlers/vip';
+
+
 import { msgPut, msgRec, msgRecbin, msgStat, msgTrade } from './handlers/msg';
 import { clubShopinfo, clubSendinfo, clubRecvinfo, clubPresent_get, clubPresent_code, clubPresent_done } from './handlers/club';
 import { proRanking } from './handlers/pro';
@@ -53,6 +64,47 @@ export function register() {
   R.Route('kk9pdata.create', pdataCreate);
   R.Route('kk9pdata.ranking', pdataRanking);
   R.Route('kk9pdata.misc_info', pdataMisc_info);
+
+  R.Route('kk9enquete.see', enqueteSee);
+  R.Route('kk9enquete.now', enqueteNow);
+  R.Route('kk9enquete.vote', enqueteVote);
+  R.Route('kk9customize.get', customizeGet);
+  R.Route('kk9customize.check', customizeCheck);
+  R.Route('kk9customize.item', customizeItem);
+  R.Route('kk9customize.pro_override', customizePro_override);
+  R.Route('kk9customize.shop_confirm', customizeShop_confirm);
+  R.Route('kk9customize.shop_buy', customizeShop_buy);
+  R.Route('kk9customize.oshigacha_confirm', customizeOshigacha_confirm);
+  R.Route('kk9customize.oshigacha_draw', customizeOshigacha_draw);
+  R.Route('kk9identifier.inquire', identifierInquire);
+  R.Route('kk9identifier.issue', identifierIssue);
+  R.Route('kk9identifier.check', identifierCheck);
+  R.Route('kk9identifier.verify', identifierVerify);
+  R.Route('kk9session.login', sessionLogin);
+  R.Route('kk9session.logout', sessionLogout);
+  R.Route('kk9session.refresh', sessionRefresh);
+  R.Route('kk9question.info', questionInfo);
+  R.Route('kk9question.answer', questionAnswer);
+  R.Route('kk9sns.fellow_comment_send_pcb', snsFellow_comment_send_pcb);
+  R.Route('kk9sns.fellow_comment_new', snsFellow_comment_new);
+  R.Route('kk9sns.fellow_challenge', snsFellow_challenge);
+  R.Route('kk9sns.fellow_request', snsFellow_request);
+  R.Route('kk9sns.applilink_stat', snsApplilink_stat);
+  R.Route('kk9sns.applilink_use', snsApplilink_use);
+  R.Route('kk9sns.send_nanikiru', snsSend_nanikiru);
+  R.Route('kk9wdj.open', wdjOpen);
+  R.Route('kk9vip.start', vipStart);
+  R.Route('kk9vip.status', vipStatus);
+  R.Route('kk9vip.add_point', vipAdd_point);
+  R.Route('kk9vip.consume_pay', vipConsume_pay);
+  R.Route('kk9vip.consume_reserve', vipConsume_reserve);
+  R.Route('kk9vip.consume_adjust', vipConsume_adjust);
+  R.Route('kk9vip.right_reserve', vipRight_reserve);
+  R.Route('kk9vip.right_confirm', vipRight_confirm);
+  R.Route('kk9vip.item_get', vipItem_get);
+  R.Route('kk9vip.goods_get', vipGoods_get);
+  R.Route('kk9vip.goods_use', vipGoods_use);
+
   R.Route('kk9msg.put', msgPut);
   R.Route('kk9msg.rec', msgRec);
   R.Route('kk9msg.recbin', msgRecbin);
