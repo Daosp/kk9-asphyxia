@@ -9,6 +9,8 @@ export const djpStat: EPR = async (info, data, send) => {
    * kk9djp.stat
    * Запрос статистики по DJP? Что такое DJP?
    * 
+   * receiver returns failure
+   * 
    * DATA:
    *  - loc_id="ea"
    *  - method="stat"

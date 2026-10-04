@@ -27,6 +27,8 @@ export const proenterNow: EPR = async (info, data, send) => {
    * kk9proenter.now
    * Запрос состояния?..
    * 
+   * receiver returns failure
+   * 
    * DATA:
    *  - method="now"
    */

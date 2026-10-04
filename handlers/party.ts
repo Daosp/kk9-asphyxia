@@ -4,6 +4,8 @@ export const partyWhatsnow: EPR = async (info, data, send) => {
    * kk9party.whatsnow
    * "What's now?" - Что сейчас есть?
    * 
+   * receiver returns failure
+   * 
    * DATA:
    *  - max=8
    *  - method="whatsnow"
