@@ -35,7 +35,7 @@ export function register() {
   R.GameCode('KK9');
 
   /* A plugin can have multiple contributors. */
-  R.Contributor('Daosp', 'http://daosp.ru');
+  R.Contributor('Daosp', 'https://github.com/Daosp');
   R.Contributor('Remaster', 'https://github.com/remaster1');
 
   /* Register plugin configuration */
