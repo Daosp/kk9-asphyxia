@@ -1,5 +1,13 @@
 import { __logInfoData } from './__test__';
 export const partyWhatsnow: EPR = async (info, data, send) => {
+  /**
+   * kk9party.whatsnow
+   * "What's now?" - Что сейчас есть?
+   * 
+   * DATA:
+   *  - max=8
+   *  - method="whatsnow"
+   */
 
   return __logInfoData(info, data, send);
 };

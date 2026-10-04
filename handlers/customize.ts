@@ -1,5 +1,15 @@
 import { __logInfoData } from './__test__';
 export const customizeGet: EPR = async (info, data, send) => {
+  /**
+   * kk9customize.get
+   * Подача информации о кастомизации?
+   * 
+   * DATA:
+   *  - data_id="6AC255D500000000"
+   *  - method="get"
+   * <pro_id __type="s32">0</pro_id>
+   */
+
   return __logInfoData(info, data, send);
 };
 

@@ -10,11 +10,27 @@ export const sdjpInquire: EPR = async (info, data, send) => {
 };
 
 export const sdjpHistory: EPR = async (info, data, send) => {
+  /**
+   * kk9sdjp.history
+   * История по SDJP?
+   * 
+   * DATA:
+   *  - loc_id="ea"
+   *  - method="history"
+   *  - nr=10
+   */
 
   return __logInfoData(info, data, send);
 };
 
 export const sdjpSettings: EPR = async (info, data, send) => {
+  /**
+   * kk9sdjp.settings
+   * Запрос настроек SDJP? Что такое SDJP?
+   * 
+   * DATA:
+   *  - method="settings"
+   */
 
   return __logInfoData(info, data, send);
 };

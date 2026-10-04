@@ -5,6 +5,14 @@ export const djpAdd: EPR = async (info, data, send) => {
 };
 
 export const djpStat: EPR = async (info, data, send) => {
+  /**
+   * kk9djp.stat
+   * Запрос статистики по DJP? Что такое DJP?
+   * 
+   * DATA:
+   *  - loc_id="ea"
+   *  - method="stat"
+   */
 
   return __logInfoData(info, data, send);
 };
@@ -15,6 +23,15 @@ export const djpInquire: EPR = async (info, data, send) => {
 };
 
 export const djpHistory: EPR = async (info, data, send) => {
+  /**
+   * kk9djp.history
+   * История по DJP? Что такое DJP?
+   * 
+   * DATA:
+   *  - loc_id="ea"
+   *  - method="history"
+   *  - nr=10
+   */
 
   return __logInfoData(info, data, send);
 };

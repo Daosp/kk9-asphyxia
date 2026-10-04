@@ -1,5 +1,13 @@
 import { __logInfoData } from './__test__';
 export const proenterRegist: EPR = async (info, data, send) => {
+  /**
+   * kk9proenter.regist
+   * регистрация каба для онлайн-партий через Интернет?
+   * 
+   * DATA:
+   *  - addr="ip:port"
+   *  - method="regist"
+   */
 
   return __logInfoData(info, data, send);
 };
@@ -15,6 +23,13 @@ export const proenterResult: EPR = async (info, data, send) => {
 };
 
 export const proenterNow: EPR = async (info, data, send) => {
+  /**
+   * kk9proenter.now
+   * Запрос состояния?..
+   * 
+   * DATA:
+   *  - method="now"
+   */
 
   return __logInfoData(info, data, send);
 };
