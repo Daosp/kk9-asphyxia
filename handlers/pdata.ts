@@ -43,13 +43,10 @@ export const pdataRanking: EPR = async (info, data, send) => {
    *  - data_id="AD8972E47E435A6B"
    *  - method="ranking"
    */
-
-
-
   var inner = {
-    "date":K.ITEM("str",formatCurrentDateTimeUTC()),
+    "data":K.ITEM("s8",1,{"note_id":"1"}),
   };
-  var response = K.ATTR({"data_id":$(data).attr().data_id, time:formatCurrentDateTimeUTC()},inner);
+  var response = K.ATTR({time:formatCurrentDateTimeUTC(),"stat":"1"},inner);
   return send.object(response);
   //return __logInfoData(info, data, send);
 };

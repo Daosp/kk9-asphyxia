@@ -19,7 +19,7 @@ export const customizeGet: EPR = async (info, data, send) => {
       "corner":K.ITEM("s8",0),
       "midle":K.ITEM("s8",0),
       "medal_nr":K.ITEM("s8",0),
-      "medal":K.ITEM("s8",0),
+      "medal":"",
       "enable_pro_marker":K.ITEM("s8",0),
       "pro_marker":K.ITEM("s8",0),
       "date":K.ITEM("s8",0)
