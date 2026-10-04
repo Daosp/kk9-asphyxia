@@ -9,7 +9,6 @@ export function __logInfoData(info: EamuseInfo, data: any, send: EamuseSend) {
     encoding:enc,
     encrypt:false,
     kencode:false,
-    rootName:"DAOSP",
     status:1
   };
   return send.success(opt);

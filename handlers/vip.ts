@@ -4,6 +4,10 @@ export const vipStart: EPR = async (info, data, send) => {
 };
 
 export const vipStatus: EPR = async (info, data, send) => {
+  var response = {
+    "enable":K.ITEM("s8",-1)
+  }
+  return send.object(response)
   return __logInfoData(info, data, send);
 };
 

@@ -10,7 +10,12 @@ export const customizeGet: EPR = async (info, data, send) => {
    * <pro_id __type="s32">0</pro_id>
    */
 
-  return __logInfoData(info, data, send);
+  var response = {
+    "customize_id":K.ITEM("s8",-1)
+  };
+  
+  return send.object(response);
+  //return __logInfoData(info, data, send);
 };
 
 export const customizeCheck: EPR = async (info, data, send) => {

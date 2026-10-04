@@ -12,7 +12,6 @@ import { snsFellow_comment_send_pcb, snsFellow_comment_new, snsFellow_challenge,
 import { wdjOpen } from './handlers/wdj';
 import { vipStart, vipStatus, vipAdd_point, vipConsume_pay, vipConsume_reserve, vipConsume_adjust, vipRight_reserve, vipRight_confirm, vipItem_get, vipGoods_get, vipGoods_use } from './handlers/vip';
 
-
 import { msgPut, msgRec, msgRecbin, msgStat, msgTrade } from './handlers/msg';
 import { clubShopinfo, clubSendinfo, clubRecvinfo, clubPresent_get, clubPresent_code, clubPresent_done } from './handlers/club';
 import { proRanking } from './handlers/pro';
@@ -28,6 +27,8 @@ import { paseliTreasure2_lobby, paseliTreasure2_quit, paseliTreasure2_status, pa
 import { channelSchedule, channelStore_kf, channelLottery, channelVlink } from './handlers/channel';
 import { haiRec, haiRec_movie, haiGet } from './handlers/hai';
 import { twitterUser, twitterTweet } from './handlers/twitter';
+
+import { cardmngGetdatalist } from './handlers/cardmng';
 
 
 export function register() {
@@ -163,6 +164,8 @@ export function register() {
   R.Route('kk9hai.get', haiGet);
   R.Route('kk9twitter.user', twitterUser);
   R.Route('kk9twitter.tweet', twitterTweet);
+
+  R.Route('cardmng.getdatalist', cardmngGetdatalist);
 
   /*
     Register a unhandled handler that print all unhandled methods.
