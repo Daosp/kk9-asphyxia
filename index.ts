@@ -36,6 +36,7 @@ export function register() {
 
   /* A plugin can have multiple contributors. */
   R.Contributor('Daosp', 'http://daosp.ru');
+  R.Contributor('Remaster', 'https://github.com/remaster1');
 
   /* Register plugin configuration */
   R.Config('event', {
