@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __logInfoData, formatCurrentDateTimeUTC } from './__test__';
 export const pdataRead: EPR = async (info, data, send) => {
 
   return __logInfoData(info, data, send);
@@ -34,7 +34,22 @@ export const pdataCreate: EPR = async (info, data, send) => {
 };
 
 export const pdataRanking: EPR = async (info, data, send) => {
-  var response = K.ATTR({"data_id":$(data).attr().data_id});
+  /**
+   * kk9pdata.ranking
+   * 
+   * receiver returns failure
+   * 
+   * DATA:
+   *  - data_id="AD8972E47E435A6B"
+   *  - method="ranking"
+   */
+
+
+
+  var inner = {
+    "date":K.ITEM("str",formatCurrentDateTimeUTC()),
+  };
+  var response = K.ATTR({"data_id":$(data).attr().data_id, time:formatCurrentDateTimeUTC()},inner);
   return send.object(response);
   //return __logInfoData(info, data, send);
 };
@@ -55,4 +70,3 @@ export const pdataMisc_info: EPR = async (info, data, send) => {
   return send.object(response);
   //return __logInfoData(info, data, send);
 };
-

@@ -1,5 +1,7 @@
 import { __logInfoData } from './__test__';
 export const cardmngGetdatalist: EPR = async (info, data, send) => {
+  /*await send.object({ "@attr": {} });
+  return;*/
   var item ={
     "mcode":K.ITEM("str","user"),
     "dataid":K.ITEM("str",$(data).attr().refid),

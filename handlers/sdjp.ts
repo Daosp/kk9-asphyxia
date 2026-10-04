@@ -4,8 +4,6 @@ export const sdjpStat: EPR = async (info, data, send) => {
    * kk9sdjp.stat
    * Запрос статистики по SDJP? Что такое SDJP?
    * 
-   * receiver returns failure
-   * 
    * DATA:
    *  - loc_id="ea"
    *  - method="stat"

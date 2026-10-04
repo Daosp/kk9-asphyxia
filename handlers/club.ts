@@ -8,13 +8,14 @@ export const clubShopinfo: EPR = async (info, data, send) => {
    *  - loc_id="ea"
    *  - method="shopinfo"
    */
-
+  var response = K.ATTR({"area":"13","comment1":"","comment2":"","comment3":"","loc_id":"ea","method":"sendinfo","shop_name":"ＡＡ"})
+  return send.object(response);
   return __logInfoData(info, data, send);
 };
 
 export const clubSendinfo: EPR = async (info, data, send) => {
   /**
-   * kk9club.shopinfo
+   * kk9club.Sendinfo
    * запрос информации по магазину?
    * 
    * DATA:
@@ -23,7 +24,7 @@ export const clubSendinfo: EPR = async (info, data, send) => {
    *  - comment2=
    *  - comment3=
    *  - loc_id="ea"
-   *  - method="shopinfo"
+   *  - method="sendinfo"
    *  - shop_name="ＡＡＡ"
    */
 

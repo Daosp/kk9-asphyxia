@@ -4,6 +4,8 @@ export const customizeGet: EPR = async (info, data, send) => {
    * kk9customize.get
    * Подача информации о кастомизации?
    * 
+   * receiver returns failure
+   * 
    * DATA:
    *  - data_id="6AC255D500000000"
    *  - method="get"
@@ -11,7 +13,31 @@ export const customizeGet: EPR = async (info, data, send) => {
    */
 
   var response = {
-    "customize_id":K.ITEM("s8",-1)
+    "customize_id":K.ITEM("s8",0),
+    "panel":{
+      "base":K.ITEM("s8",0),
+      "corner":K.ITEM("s8",0),
+      "midle":K.ITEM("s8",0),
+      "medal_nr":K.ITEM("s8",0),
+      "medal":K.ITEM("s8",0),
+      "enable_pro_marker":K.ITEM("s8",0),
+      "pro_marker":K.ITEM("s8",0),
+      "date":K.ITEM("s8",0)
+    },
+    "table":{
+      "table":K.ITEM("s8",0),
+      "hai":K.ITEM("s8",0),
+      "date":K.ITEM("s8",0)
+    },
+    "irodori":{
+      "comment":K.ITEM("s8",0),
+      "call":K.ITEM("s8",0),
+      "date":K.ITEM("s8",0)
+    },
+    "gouka":{
+      "movebg":K.ITEM("s8",0),
+      "date":K.ITEM("s8",0)
+    }
   };
   
   return send.object(response);

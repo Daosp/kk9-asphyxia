@@ -1,14 +1,19 @@
 import { __logInfoData } from './__test__';
 export const vipStart: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  var response = {
+    "success":K.ITEM("bool",0),
+    "already":K.ITEM("bool",0),
+  }
+  return send.object(response)
+  //return __logInfoData(info, data, send);
 };
 
 export const vipStatus: EPR = async (info, data, send) => {
   var response = {
-    "enable":K.ITEM("s8",-1)
+    "enable":K.ITEM("bool",0)
   }
   return send.object(response)
-  return __logInfoData(info, data, send);
+  //return __logInfoData(info, data, send);
 };
 
 export const vipAdd_point: EPR = async (info, data, send) => {
