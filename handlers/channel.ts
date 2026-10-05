@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG } from './__test__';
 export const channelSchedule: EPR = async (info, data, send) => {
   /**
    * kk9channel.schedule
@@ -9,18 +9,18 @@ export const channelSchedule: EPR = async (info, data, send) => {
    *  - nr=10
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const channelStore_kf: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const channelLottery: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const channelVlink: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 

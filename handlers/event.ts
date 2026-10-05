@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG } from './__test__';
 export const eventSchedule: EPR = async (info, data, send) => {
   /**
    * kk9event.schedule
@@ -9,6 +9,6 @@ export const eventSchedule: EPR = async (info, data, send) => {
    *  - nr=8
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 

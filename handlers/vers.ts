@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG } from './__test__';
 export const versSend: EPR = async (info, data, send) => {
   /**
    * kk9vers.send
@@ -21,6 +21,6 @@ export const versSend: EPR = async (info, data, send) => {
    * 
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 

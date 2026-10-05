@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG } from './__test__';
 export const sdjpStat: EPR = async (info, data, send) => {
   /**
    * kk9sdjp.stat
@@ -8,12 +8,12 @@ export const sdjpStat: EPR = async (info, data, send) => {
    *  - loc_id="ea"
    *  - method="stat"
    */
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const sdjpInquire: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const sdjpHistory: EPR = async (info, data, send) => {
@@ -27,7 +27,7 @@ export const sdjpHistory: EPR = async (info, data, send) => {
    *  - nr=10
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const sdjpSettings: EPR = async (info, data, send) => {
@@ -39,11 +39,11 @@ export const sdjpSettings: EPR = async (info, data, send) => {
    *  - method="settings"
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const sdjpGiven: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 

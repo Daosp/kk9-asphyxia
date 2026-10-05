@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG, __logingInfoData } from './__test__';
 export const customizeGet: EPR = async (info, data, send) => {
   /**
    * kk9customize.get
@@ -19,7 +19,7 @@ export const customizeGet: EPR = async (info, data, send) => {
       "corner":K.ITEM("s8",0),
       "midle":K.ITEM("s8",0),
       "medal_nr":K.ITEM("s8",0),
-      "medal":"",
+      "medal":K.ARRAY("s8",[0]),
       "enable_pro_marker":K.ITEM("s8",0),
       "pro_marker":K.ITEM("s8",0),
       "date":K.ITEM("s8",0)
@@ -39,35 +39,39 @@ export const customizeGet: EPR = async (info, data, send) => {
       "date":K.ITEM("s8",0)
     }
   };
+  __logingInfoData(info, data);
+  console.log('-=RESPONSE=-');
+  console.log(JSON.stringify(response));
+  console.log(U.toXML(response));
   
   return send.object(response);
   //return __logInfoData(info, data, send);
 };
 
 export const customizeCheck: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const customizeItem: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const customizePro_override: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const customizeShop_confirm: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const customizeShop_buy: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const customizeOshigacha_confirm: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const customizeOshigacha_draw: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };

@@ -1,6 +1,6 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG } from './__test__';
 export const enqueteSee: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const enqueteNow: EPR = async (info, data, send) => {
@@ -12,9 +12,9 @@ export const enqueteNow: EPR = async (info, data, send) => {
    *  - data_id="6AC255D500000000"
    *  - method="now"
    */
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const enqueteVote: EPR = async (info, data, send) => {
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };

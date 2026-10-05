@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG } from './__test__';
 export const msgPut: EPR = async (info, data, send) => {
   /**
    * kk9msg.put
@@ -29,26 +29,26 @@ export const msgPut: EPR = async (info, data, send) => {
    *  - msg="DJP_ERR_LOG,line:326 reqid:2 ret:-1"
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const msgRec: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const msgRecbin: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const msgStat: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const msgTrade: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 

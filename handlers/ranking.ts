@@ -1,4 +1,4 @@
-import { __logInfoData } from './__test__';
+import { __sendSuccessLOG } from './__test__';
 export const rankingTops: EPR = async (info, data, send) => {
   /**
    * kk9ranking.tops
@@ -11,7 +11,7 @@ export const rankingTops: EPR = async (info, data, send) => {
    *  - size=921600
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const rankingIndex: EPR = async (info, data, send) => {
@@ -24,7 +24,7 @@ export const rankingIndex: EPR = async (info, data, send) => {
    *  - size=200
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const rankingNeighbors: EPR = async (info, data, send) => {
@@ -37,7 +37,7 @@ export const rankingNeighbors: EPR = async (info, data, send) => {
    *  - method="neighbors"
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const rankingPros: EPR = async (info, data, send) => {
@@ -49,16 +49,16 @@ export const rankingPros: EPR = async (info, data, send) => {
    *  - method="pros"
    */
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const rankingList: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const rankingGet: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 

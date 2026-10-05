@@ -1,27 +1,27 @@
-import { __logInfoData, formatCurrentDateTimeUTC } from './__test__';
+import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
 export const pdataRead: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataWrite: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataConv: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataCheck: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataCheck_recovery: EPR = async (info, data, send) => {
 
-  return __logInfoData(info, data, send);
+  return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataCreate: EPR = async (info, data, send) => {

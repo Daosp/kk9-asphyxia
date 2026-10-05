@@ -1,4 +1,4 @@
-import { __logInfoData } from './handlers/__test__';
+import { __sendSuccessLOG } from './handlers/__test__';
 import { versSend } from './handlers/vers';
 import { lobbyQuery, lobbyAccept, lobbyPoling } from './handlers/lobby';
 import { pdataRead, pdataWrite, pdataConv, pdataCheck, pdataCheck_recovery, pdataCreate, pdataRanking, pdataMisc_info} from './handlers/pdata';
@@ -28,7 +28,7 @@ import { channelSchedule, channelStore_kf, channelLottery, channelVlink } from '
 import { haiRec, haiRec_movie, haiGet } from './handlers/hai';
 import { twitterUser, twitterTweet } from './handlers/twitter';
 
-import { cardmngGetdatalist } from './handlers/cardmng';
+import { cardmngGetdatalist, facilityGet } from './handlers/eamuse';
 
 
 export function register() {
@@ -166,6 +166,7 @@ export function register() {
   R.Route('kk9twitter.tweet', twitterTweet);
 
   R.Route('cardmng.getdatalist', cardmngGetdatalist);
+  R.Route('facility.get', cardmngGetdatalist);
 
   /*
     Register a unhandled handler that print all unhandled methods.
