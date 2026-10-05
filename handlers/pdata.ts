@@ -5,6 +5,17 @@ export const pdataRead: EPR = async (info, data, send) => {
 };
 
 export const pdataWrite: EPR = async (info, data, send) => {
+  /**
+   * kk9pdata.write
+   * 
+   * DATA:
+   *  - data_id="AD8972E47E435A6B"
+   *  - method="ranking"
+   * <data __type="bin" node_id=0>
+   *  <type>Buffer</type>
+   *  <data>K.ARRAY</data>
+   * </data>
+   */
 
   return __sendSuccessLOG(info, data, send);
 };
@@ -43,10 +54,7 @@ export const pdataRanking: EPR = async (info, data, send) => {
    *  - data_id="AD8972E47E435A6B"
    *  - method="ranking"
    */
-  var inner = {
-    "data":K.ITEM("s8",1,{"note_id":"1"}),
-  };
-  var response = K.ATTR({time:formatCurrentDateTimeUTC(),"stat":"1"},inner);
+  var response = K.ATTR({"stat":"0"});
   return send.object(response);
   //return __logInfoData(info, data, send);
 };

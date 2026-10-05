@@ -1,7 +1,5 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
 export const cardmngGetdatalist: EPR = async (info, data, send) => {
-  /*await send.object({ "@attr": {} });
-  return;*/
   var item ={
     "mcode":K.ITEM("str","user"),
     "dataid":K.ITEM("str",$(data).attr().refid),
@@ -19,8 +17,6 @@ export const cardmngGetdatalist: EPR = async (info, data, send) => {
 
 
 export const facilityGet: EPR = async (info, data, send) => {
-  /*await send.object({ "@attr": {} });
-  return;*/
   var ipPort = $(data).attr().privateip.split(":");
   var item ={
     "@attr":{
@@ -43,8 +39,8 @@ export const facilityGet: EPR = async (info, data, send) => {
       accuracy:K.ITEM("u8",0),
     },
     "line":{
-      id:K.ITEM("str","123123"),
-      class:K.ITEM("str","123123"),
+      id:K.ITEM("str","0"),
+      class:K.ITEM("u8",0),
     },
     "portfw":{
       globalip:K.ITEM("ip4",ipPort[0]),

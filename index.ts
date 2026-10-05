@@ -165,8 +165,8 @@ export function register() {
   R.Route('kk9twitter.user', twitterUser);
   R.Route('kk9twitter.tweet', twitterTweet);
 
-  R.Route('cardmng.getdatalist', cardmngGetdatalist);
-  R.Route('facility.get', cardmngGetdatalist);
+  //R.Route('cardmng.getdatalist', cardmngGetdatalist);
+  //R.Route('facility.get', cardmngGetdatalist);
 
   /*
     Register a unhandled handler that print all unhandled methods.
