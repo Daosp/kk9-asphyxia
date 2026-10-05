@@ -2,7 +2,7 @@ import { __sendSuccessLOG } from './__test__';
 export const vipStart: EPR = async (info, data, send) => {
   var response = {
     "success":K.ITEM("bool",0),
-    "already":K.ITEM("bool",0),
+    "already":K.ITEM("bool",1),
   }
   return send.object(response)
   //return __logInfoData(info, data, send);

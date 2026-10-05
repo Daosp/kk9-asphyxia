@@ -12,11 +12,19 @@ export const pdataWrite: EPR = async (info, data, send) => {
    *  - data_id="AD8972E47E435A6B"
    *  - method="ranking"
    * <data __type="bin" node_id=0>
-   *  <type>Buffer</type>
    *  <data>K.ARRAY</data>
    * </data>
    */
+  var data_id = $(data).attr().data_id;
+  var diff_time = $(data).attr().diff_time;
+  var last = $(data).attr().last;
+  var priority = $(data).attr().priority;
+  var update = $(data).attr().update;
+  var dataCall = [];
+  var numDatas = $(data).content("data");
 
+
+  //await DB.Upsert<PData>(data_id, { collection: 'PData'}, profile)
   return __sendSuccessLOG(info, data, send);
 };
 
