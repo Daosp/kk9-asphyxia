@@ -37,6 +37,7 @@ export const rankingNeighbors: EPR = async (info, data, send) => {
    *  - method="neighbors"
    */
 
+  return send.deny();
   return __sendSuccessLOG(info, data, send);
 };
 

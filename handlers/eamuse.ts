@@ -1,12 +1,60 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
+import { cardmng } from "../model/bd_types";
 export const cardmngGetdatalist: EPR = async (info, data, send) => {
+  const dataId : string = $(data).attr().data_id;
+  if (!dataId) {
+      return send.deny();
+  }
+  var countData: Number = 0;
+  DB.Count(dataId,{
+      collection: 'cardmng',
+  }).then(value => countData);
+  var record: ProfileDoc<cardmng> = {_id:"",__refid:"",collection:"cardmng",mcode:"",regtime:"",lasttime:"",exptime:"",expflag:false};
+  if(countData == 0){
+      await DB.Upsert<cardmng>(
+          dataId, // refid
+          {
+              collection: 'cardmng',
+              mcode:"KK9",
+          },
+          {
+            $set: {
+              regtime:formatCurrentDateTimeUTC(),
+              lasttime:formatCurrentDateTimeUTC(),
+              exptime:formatCurrentDateTimeUTC(60*60*24*366*7),
+              expflag:false
+            }
+          }
+      );
+      DB.FindOne<cardmng>(dataId,{collection: 'cardmng',}).then(value => record);
+  } else {
+      DB.FindOne<cardmng>(dataId,{collection: 'cardmng',}).then(value => record);
+      record.lasttime = formatCurrentDateTimeUTC();
+      record.exptime = formatCurrentDateTimeUTC(60*60*24*366*7);
+
+      await DB.Update<cardmng>(
+          dataId,
+          {
+              collection: 'cardmng',
+              mcode: 'KK9',
+          },
+          {
+            $set: {
+              regtime: record.regtime,
+              lasttime:record.lasttime,
+              exptime:record.exptime,
+              expflag:record.expflag
+            }
+          }
+      );
+  }
   var item ={
-    "mcode":K.ITEM("str","user"),
-    "dataid":K.ITEM("str",$(data).attr().refid),
-    "regtime":K.ITEM("str","2026-10-04 12:12:12+0"),
-    "lasttime":K.ITEM("str","2026-10-04 12:12:12+0"),
-    "exptime":K.ITEM("str","2026-10-05 12:12:12+0"),
-    "expflag":K.ITEM("u8",0),
+    "mcode":K.ITEM("str","KK9"),
+    "dataid":dataId,
+    "regtime":record.regtime,
+    "lasttime":record.lasttime,
+    "exptime":record.exptime,
+    "expflag":record.expflag,
   };
   var response = {
     "item":item

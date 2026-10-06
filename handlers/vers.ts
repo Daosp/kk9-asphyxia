@@ -20,7 +20,7 @@ export const versSend: EPR = async (info, data, send) => {
    *  - v_patch: 0
    * 
    */
-
+  
   return __sendSuccessLOG(info, data, send);
 };
 
