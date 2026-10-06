@@ -28,6 +28,5 @@ export const populationReport: EPR = async (info, data, send) => {
     })
   });
   return send.object(response);
-  return __sendSuccessLOG(info, data, send);
 };
 

@@ -21,7 +21,6 @@ export const customizeGet: EPR = async (info, data, send) => {
   console.log(U.toXML(response));
   
   return send.object(response);
-  //return __logInfoData(info, data, send);
 };
 
 export const customizeCheck: EPR = async (info, data, send) => {

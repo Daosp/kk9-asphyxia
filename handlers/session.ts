@@ -11,11 +11,10 @@ export const sessionLogin: EPR = async (info, data, send) => {
 
 export const sessionLogout: EPR = async (info, data, send) => {
   var response = K.ATTR({
-    login_ok:"1",
+    login_ok:"0",
     expire_sec:"86400"
   });
   return send.object(response);
-  //return __sendSuccessLOG(info, data, send);
 };
 
 export const sessionRefresh: EPR = async (info, data, send) => {

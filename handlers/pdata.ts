@@ -39,7 +39,6 @@ export const pdataRead: EPR = async (info, data, send) => {
       data:inner,
     });
 
-    // Отправляем готовый XML
     return send.object(response);
     return __sendSuccessLOG(info, data, send);
 };
@@ -158,7 +157,6 @@ export const pdataCreate: EPR = async (info, data, send) => {
     },
   });
   return send.success();
-  //return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataRanking: EPR = async (info, data, send) => {
@@ -178,12 +176,7 @@ export const pdataRanking: EPR = async (info, data, send) => {
     return send.deny();
   }
   console.log("refid: ".concat(dataId));
-  /*var count: Number = 0;
-  await DB.Count<pdata_profile>(dataId,{collection: "pdata_profile"}).then(value => count);
-  if(count == 0){
-    console.warn('pdataRanking: NOT FIND dataId (count '.concat(count.toString()).concat(")"));
-    return send.deny();
-  };*/
+  
   const record = await DB.FindOne<pdata_profile>(dataId,{collection: "pdata_profile"});
   if (_.isNil(record)) {
     console.warn('pdataRanking: DONT HAVE RECORD');

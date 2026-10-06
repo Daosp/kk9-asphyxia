@@ -52,7 +52,6 @@ export const proenterNow: EPR = async (info, data, send) => {
     }),
   });
   return send.object(response);
-  return __sendSuccessLOG(info, data, send);
 };
 
 export const proenterQuit: EPR = async (info, data, send) => {

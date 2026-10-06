@@ -13,7 +13,6 @@ export const vipStatus: EPR = async (info, data, send) => {
     "enable":K.ITEM("bool",0)
   }
   return send.object(response)
-  //return __logInfoData(info, data, send);
 };
 
 export const vipAdd_point: EPR = async (info, data, send) => {

@@ -24,7 +24,6 @@ export const clubShopinfo: EPR = async (info, data, send) => {
     shop_score:K.ATTR({rank_in_area:"1",rank_in_world:"1",score:"999999",border:"1",num:"1",})
   };
   return send.object(response);
-  return __sendSuccessLOG(info, data, send);
 };
 
 export const clubSendinfo: EPR = async (info, data, send) => {
