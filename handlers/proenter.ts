@@ -32,12 +32,13 @@ export const proenterNow: EPR = async (info, data, send) => {
    * DATA:
    *  - method="now"
    */
+  return __sendSuccessLOG(info, data, send);
   const time = formatCurrentDateTimeUTC();
   const expireTime = formatCurrentDateTimeUTC(60*60);
   const response = K.ATTR({
-    now_time:time,
+    now_time:"0",
     expire:expireTime,
-  },{
+  }/*,{
     data: K.ATTR({
       pro_id:"123123",
       game_mode:"1",
@@ -47,10 +48,10 @@ export const proenterNow: EPR = async (info, data, send) => {
     }),
     top: K.ATTR({
       pro_id:"123123",
-      game_mode:"1",
+      game_mode:"hai",
       stamp:"2026-08-20 12:00:00+0"
     }),
-  });
+  }*/);
   return send.object(response);
 };
 

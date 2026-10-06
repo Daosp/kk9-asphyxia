@@ -1,4 +1,4 @@
-import { __sendSuccessLOG, __logingInfoData } from './__test__';
+import { __sendSuccessLOG, __logingInfoData,formatCurrentDateTimeUTC } from './__test__';
 export const customizeGet: EPR = async (info, data, send) => {
   /**
    * kk9customize.get
@@ -13,7 +13,34 @@ export const customizeGet: EPR = async (info, data, send) => {
    */
 
   var response = {
-    "customize_id":K.ITEM("s8",1)
+    customize_id:K.ITEM("s8",123),/*
+    panel:{
+      base:K.ITEM("s8",1),
+      corner:K.ITEM("s8",2),
+      midle:K.ITEM("s8",3),
+      medal_nr:K.ITEM("s8",2),
+      medal:[
+        K.ITEM("s8",10),
+        K.ITEM("s8",11),
+      ],
+      enable_pro_marker:K.ITEM("s8",1),
+      pro_marker:K.ITEM("s8",77),
+      date:K.ITEM("str","2026-08-20 12:00:00+0")
+    },
+    table:{
+      table:K.ITEM("s8",100),
+      hai:K.ITEM("s8",200),
+      date:K.ITEM("str","2026-08-20 12:00:00+0")
+    },
+    irodori:{
+      call:K.ITEM("s8",300),
+      comment:K.ITEM("s8",400),
+      date:K.ITEM("str","2026-08-20 12:00:00+0")
+    },
+    gouka:{
+      movebg:K.ITEM("s8",500),
+      date:K.ITEM("str","2026-08-20 12:00:00+0")
+    }*/
   };
   __logingInfoData(info, data);
   console.log('-=RESPONSE=-');
@@ -44,6 +71,20 @@ export const customizeShop_buy: EPR = async (info, data, send) => {
 };
 
 export const customizeOshigacha_confirm: EPR = async (info, data, send) => {
+  /**
+   * kk9customize.oshigacha_confirm
+   * Подача информации о кастомизации?
+   * 
+   * receiver returns failure
+   * 
+   * DATA:
+   * <data_id __type="str">___refid____</data_id>
+   */
+  var response = K.ATTR({
+    article:"0"
+  },{
+    master:K.ITEM("str","0"),
+  });
   return __sendSuccessLOG(info, data, send);
 };
 

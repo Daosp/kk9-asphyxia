@@ -9,9 +9,13 @@ export const vipStart: EPR = async (info, data, send) => {
 };
 
 export const vipStatus: EPR = async (info, data, send) => {
-  var response = {
-    "enable":K.ITEM("bool",0)
-  }
+  var response = K.ATTR({
+    //point:"999999",
+    //total_point:"999999",
+    //vip_rank:"9"
+  },{
+    enable:K.ITEM("bool",false)
+  })
   return send.object(response)
 };
 
