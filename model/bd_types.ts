@@ -21,3 +21,10 @@ export interface cardmng {
   "exptime":string;
   "expflag":boolean;
 }
+
+export interface msgs {
+  collection: "msgs";
+  "stamp":string;
+  "label":string;
+  "msg":string;
+}

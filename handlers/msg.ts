@@ -1,4 +1,5 @@
-import { __sendSuccessLOG } from './__test__';
+import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
+import { msgs } from "../model/bd_types";
 export const msgPut: EPR = async (info, data, send) => {
   /**
    * kk9msg.put
@@ -28,7 +29,20 @@ export const msgPut: EPR = async (info, data, send) => {
    *  - method="put"
    *  - msg="DJP_ERR_LOG,line:326 reqid:2 ret:-1"
    */
-
+  const label = $(data).attr().label;
+  const msg = $(data).attr().msg;
+  await DB.Upsert<msgs>(
+      {
+          collection: 'msgs',
+      },
+      {
+        $set: {
+          "stamp":formatCurrentDateTimeUTC(),
+          "label":label,
+          "msg":msg
+        }
+      }
+  );
   return __sendSuccessLOG(info, data, send);
 };
 
