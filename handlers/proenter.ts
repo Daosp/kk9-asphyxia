@@ -1,4 +1,4 @@
-import { __sendSuccessLOG } from './__test__';
+import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
 export const proenterRegist: EPR = async (info, data, send) => {
   /**
    * kk9proenter.regist
@@ -32,7 +32,26 @@ export const proenterNow: EPR = async (info, data, send) => {
    * DATA:
    *  - method="now"
    */
-
+  const time = formatCurrentDateTimeUTC();
+  const expireTime = formatCurrentDateTimeUTC(60*60);
+  const response = K.ATTR({
+    now_time:time,
+    expire:expireTime,
+  },{
+    data: K.ATTR({
+      pro_id:"123123",
+      game_mode:"1",
+      league:"0",
+      entry_time:"2026-08-20 12:00:00+0",
+      party:"0",
+    }),
+    top: K.ATTR({
+      pro_id:"123123",
+      game_mode:"1",
+      stamp:"2026-08-20 12:00:00+0"
+    }),
+  });
+  return send.object(response);
   return __sendSuccessLOG(info, data, send);
 };
 
