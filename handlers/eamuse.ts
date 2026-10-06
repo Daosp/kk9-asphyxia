@@ -1,65 +1,68 @@
-import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
+import { __sendSuccessLOG, formatCurrentDateTimeUTC, __logingInfoData } from './__test__';
 import { cardmng } from "../model/bd_types";
 export const cardmngGetdatalist: EPR = async (info, data, send) => {
-  const dataId : string = $(data).attr().data_id;
+  __logingInfoData(info, data);
+  const dataId : string = $(data).attr().refid;
   if (!dataId) {
-      return send.deny();
+    console.warn('cardmngGetdatalist: dataId is NULL');
+    return send.deny();
   }
-  var countData: Number = 0;
-  DB.Count(dataId,{
-      collection: 'cardmng',
-  }).then(value => countData);
-  var record: ProfileDoc<cardmng> = {_id:"",__refid:"",collection:"cardmng",mcode:"",regtime:"",lasttime:"",exptime:"",expflag:false};
-  if(countData == 0){
+  const time = formatCurrentDateTimeUTC();
+  const expTime = formatCurrentDateTimeUTC(60*60*24*366*7);
+
+  const record = await DB.FindOne<cardmng>(dataId,{collection: 'cardmng',});
+  if(_.isNil(record)){
       await DB.Upsert<cardmng>(
           dataId, // refid
           {
-              collection: 'cardmng',
-              mcode:"KK9",
+              collection: 'cardmng'
           },
           {
             $set: {
-              regtime:formatCurrentDateTimeUTC(),
-              lasttime:formatCurrentDateTimeUTC(),
-              exptime:formatCurrentDateTimeUTC(60*60*24*366*7),
+              regtime:time,
+              lasttime:time,
+              exptime:expTime,
               expflag:false
             }
           }
       );
-      DB.FindOne<cardmng>(dataId,{collection: 'cardmng',}).then(value => record);
-  } else {
-      DB.FindOne<cardmng>(dataId,{collection: 'cardmng',}).then(value => record);
-      record.lasttime = formatCurrentDateTimeUTC();
-      record.exptime = formatCurrentDateTimeUTC(60*60*24*366*7);
+    return send.object({
+      "item":{
+        "mcode":K.ITEM("str","KK9"),
+        "dataid":K.ITEM("str",dataId),
+        "regtime":K.ITEM("str",time),
+        "lasttime":K.ITEM("str",time),
+        "exptime":K.ITEM("str",expTime),
+        "expflag":K.ITEM("u8",0),
+      }
+    });
+  };
 
-      await DB.Update<cardmng>(
-          dataId,
-          {
-              collection: 'cardmng',
-              mcode: 'KK9',
-          },
-          {
-            $set: {
-              regtime: record.regtime,
-              lasttime:record.lasttime,
-              exptime:record.exptime,
-              expflag:record.expflag
-            }
-          }
-      );
-  }
-  var item ={
-    "mcode":K.ITEM("str","KK9"),
-    "dataid":dataId,
-    "regtime":record.regtime,
-    "lasttime":record.lasttime,
-    "exptime":record.exptime,
-    "expflag":record.expflag,
-  };
-  var response = {
-    "item":item
-  };
-  return send.object(response);
+  await DB.Update<cardmng>(
+      dataId,
+      {
+          collection: 'cardmng'
+      },
+      {
+        $set: {
+          regtime:record.regtime,
+          lasttime:time,
+          exptime:expTime,
+          expflag:false
+        }
+      }
+  );
+
+    return send.object({
+      "item":{
+        "mcode":K.ITEM("str","KK9"),
+        "dataid":K.ITEM("str",dataId),
+        "regtime":K.ITEM("str",record.regtime),
+        "lasttime":K.ITEM("str",time),
+        "exptime":K.ITEM("str",expTime),
+        "expflag":K.ITEM("u8",0),
+      }
+    })
   //return __logInfoData(info, data, send);
 };
 

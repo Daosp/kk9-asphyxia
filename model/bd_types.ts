@@ -1,7 +1,6 @@
 export interface pdata_data {
   collection: "pdata_data";
   node_id: number;
-
   content: string;
 }
 
@@ -15,16 +14,15 @@ export interface pdata_profile {
 
 export interface cardmng {
   collection: "cardmng";
-  "mcode":string;
-  "regtime":string;
-  "lasttime":string;
-  "exptime":string;
-  "expflag":boolean;
+  regtime:string;
+  lasttime:string;
+  exptime:string;
+  expflag:boolean;
 }
 
 export interface msgs {
   collection: "msgs";
-  "stamp":string;
-  "label":string;
-  "msg":string;
+  stamp:string;
+  label:string;
+  msg:string;
 }

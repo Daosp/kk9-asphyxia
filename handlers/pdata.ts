@@ -4,39 +4,43 @@ export const pdataRead: EPR = async (info, data, send) => {
     // Извлекаем refid (data_id). Игра обычно присылает тот же data_id,
     // который использовался при записи.
     const dataId = $(data).attr().data_id;
+    if (!dataId) {return send.deny();}
 
-    if (!dataId) {
-        return send.deny();
-    }
-
-    // Забираем все сохранённые записи по refid
-    const records = await DB.Find<pdata_data>(dataId, {
-        collection: 'pdata_data',
-    });
+    const records = await DB.Find<pdata_data>(dataId,{collection: "pdata_data"});
+    if (_.isNil(records)) {
+      console.warn('pdataRead: DONT HAVE RECORD');
+      return send.deny();
+    };
 
     // Записи в БД сортируем по node_id как число,
     // чтобы порядок соответствовал исходному файлу (0,1,2,...15)
-    records.sort((a: any, b: any) => Number(a.node_id) - Number(b.node_id));
+    records.sort(
+      (
+        a: ProfileDoc<pdata_data>,
+        b: ProfileDoc<pdata_data>
+      ) => Number(a.node_id) - Number(b.node_id)
+    );
 
     const timeStr = formatCurrentDateTimeUTC();
 
     var inner: KITEM<'bin'>[] = [];
 
     for (const rec of records) {
-        var buf: Buffer = U.EncodeString(rec.content, "utf8");
+        var buf: Buffer = Buffer.from(rec.content,"binary");
         var nodeId: string = rec.node_id.toString();
         var nodeIdId: string = "node_id";
         var attrMap: KAttrMap = {[nodeIdId]:nodeId};
         var addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
         inner.push(addData);
+        console.log('pdataRead: Node ID'.concat(nodeId).concat(" added"));
     };
 
-    var xml = K.ATTR({time:timeStr},{
+    var response = K.ATTR({time:timeStr},{
       data:inner,
     });
 
     // Отправляем готовый XML
-    return send.xml(U.toXML(xml));
+    return send.object(response);
     return __sendSuccessLOG(info, data, send);
 };
 
@@ -51,7 +55,6 @@ export const pdataWrite: EPR = async (info, data, send) => {
    *  <data>K.ARRAY</data>
    * </data>
    */
-    // Извлекаем data_id из атрибутов корневого тега <kk9pdata>
     const dataId : string = $(data).attr().data_id;
     if (!dataId) {
         return send.deny();
@@ -60,56 +63,55 @@ export const pdataWrite: EPR = async (info, data, send) => {
     // Находим все дочерние теги <data>
     const dataNodes = $(data).elements('data');
     var lengthDataNodes = dataNodes.length;
-    var dataCounterArray = Array.from({length: lengthDataNodes}, (v, k) => k)
-    if (dataNodes.length === 0) {
+    console.log("pdataWrite: Num of records: ".concat(lengthDataNodes.toString()));
+    if (lengthDataNodes === 0) {
         return send.success();
     }
-    var dataAddr = "";
-    var countData: Number = 0;
-    // Проходим по каждому тегу <data> и сохраняем его содержимое
-    for (const counter of dataCounterArray) {
-        dataAddr = "data.".concat(counter.toString());
-        const nodeId = parseInt($(data).attr(dataAddr).node_id);
-        const content = U.DecodeString($(data).buffer(dataAddr),"utf8"); // hex-строка с бинарными данными в виде строки
-        DB.Count(dataId,{
-            collection: 'pdata_data',
-            node_id: nodeId,
-        }).then(value => countData);
-        if(countData == 0){
-            await DB.Upsert<pdata_data>(
-                dataId, // refid
-                {
-                    collection: 'pdata_data',
-                    node_id: nodeId,
-                },
-                {
-                  $set: {
-                    node_id: nodeId,
-                    content: content,
-                  }
-                }
-            );
-        } else {
-            await DB.Update<pdata_data>(
-                dataId, // refid
-                {
-                    collection: 'pdata_data',
-                    node_id: nodeId,
-                },
-                {
-                  $set: {
-                    node_id: nodeId,
-                    content: content,
-                  }
-                }
-            );
-        }
+
+    var id = 0;
+    for(const node of dataNodes){
+      const dataAddr = parseInt(node.attr().node_id);
+      console.log("Node ID: ".concat(dataAddr.toString()));
+
+      const dataBuffer = $(data).buffer("data.".concat(id.toString())).toString("binary");
+      const record = await DB.FindOne<pdata_data>(dataId,{collection: 'pdata_data', node_id:dataAddr});
+      if (_.isNil(record)) {
+        console.log('pdataWrite: new record');
+        await DB.Upsert<pdata_data>(
+            dataId, // refid
+            {
+                collection: 'pdata_data',
+                node_id: dataAddr,
+            },
+            {
+              $set: {
+                content: dataBuffer,
+              }
+            }
+        );
+        continue;
+      };
+      const content = record.content;
+      const node_id = record.node_id;
+      if (dataBuffer == content) continue;
+
+      console.log('pdataWrite: update record');
+      await DB.Update<pdata_data>(
+          dataId, // refid
+          {
+              collection: 'pdata_data',
+              node_id: dataAddr,
+          },
+          {
+            $set: {
+              content: dataBuffer,
+            }
+          }
+      );
+
+      id++;
     }
 
-    const records = await DB.Find(dataId, { collection: 'pdata_data' });
-    console.log(records);
-
-    // Отправляем успешный ответ игре
     send.success();
 };
 
@@ -120,18 +122,17 @@ export const pdataConv: EPR = async (info, data, send) => {
 
 export const pdataCheck: EPR = async (info, data, send) => {
   var dataId: string = $(data).attr().data_id;
-  var record: ProfileDoc<pdata_profile> = {_id:"",__refid:"",collection:"pdata_profile",disable:false,passwd:"",stat:"",conv:""};
-  var count = 0;
-  await DB.Count<pdata_profile>(dataId,{collection: "pdata_profile"}).then(value => count);
-  if(count != 1){return send.deny()};
-  await DB.FindOne<pdata_profile>(dataId,{collection: "pdata_profile"}).then(value => record);
+  if (!dataId) {
+    console.warn('pdataCheck: dataId is NULL');
+    return send.deny();
+  }
+  const record = await DB.FindOne<pdata_profile>(dataId,{collection: "pdata_profile"});
+  if (_.isNil(record)) return send.deny();
   var response = K.ATTR({
     disable:Number(record.disable).toString(),
     passwd:record.passwd,
     stat:record.stat,
     conv:record.conv
-  },{
-    ctime:""
   });
   return send.object(response);
 };
@@ -142,15 +143,22 @@ export const pdataCheck_recovery: EPR = async (info, data, send) => {
 };
 
 export const pdataCreate: EPR = async (info, data, send) => {
+  __logingInfoData(info, data);
   var dataId: string = $(data).attr().data_id;
+  if (!dataId) {
+    console.warn('pdataCreate: dataId is NULL');
+    return send.deny();
+  }
   await DB.Upsert<pdata_profile>(dataId,{collection: "pdata_profile"},{
-    disable:false,
-    passwd:"",
-    stat:"",
-    conv:"",
+    $set:{
+      disable:false,
+      passwd:"",
+      stat:"0",
+      conv:"0",
+    },
   });
-
-  return __sendSuccessLOG(info, data, send);
+  return send.success();
+  //return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataRanking: EPR = async (info, data, send) => {
@@ -163,9 +171,27 @@ export const pdataRanking: EPR = async (info, data, send) => {
    *  - data_id="AD8972E47E435A6B"
    *  - method="ranking"
    */
-  var response = K.ATTR({"stat":"0"});
+  __logingInfoData(info, data);
+  const dataId: string = $(data).attr().data_id;
+  if (!dataId) {
+    console.warn('pdataRanking: dataId is NULL');
+    return send.deny();
+  }
+  console.log("refid: ".concat(dataId));
+  /*var count: Number = 0;
+  await DB.Count<pdata_profile>(dataId,{collection: "pdata_profile"}).then(value => count);
+  if(count == 0){
+    console.warn('pdataRanking: NOT FIND dataId (count '.concat(count.toString()).concat(")"));
+    return send.deny();
+  };*/
+  const record = await DB.FindOne<pdata_profile>(dataId,{collection: "pdata_profile"});
+  if (_.isNil(record)) {
+    console.warn('pdataRanking: DONT HAVE RECORD');
+    return send.deny();
+  };
+
+  var response = K.ATTR({"stat":record.stat});
   return send.object(response);
-  //return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataMisc_info: EPR = async (info, data, send) => {
