@@ -1,3 +1,4 @@
+import { iteratee } from 'lodash';
 import { __sendSuccessLOG } from './__test__';
 export const enqueteSee: EPR = async (info, data, send) => {
   return __sendSuccessLOG(info, data, send);
@@ -12,6 +13,12 @@ export const enqueteNow: EPR = async (info, data, send) => {
    *  - data_id="6AC255D500000000"
    *  - method="now"
    */
+  var response = K.ATTR({
+    foo:"bar"
+  },{
+    foo:K.ITEM("str","bar")
+  });
+  return send.object(response);
   return __sendSuccessLOG(info, data, send);
 };
 

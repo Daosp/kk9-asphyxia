@@ -10,9 +10,13 @@
 
 ### In Progress
 
-- [ ] Enquetes and questions (kk9enquete & kk9question)
+- [ ] Customization (kk9customization)
 
 ### Done ✓
 
 - [x] kk9pdata
 - [x] vers (nothing)
+
+### Postponed
+
+- [ ] Enquetes and questions (kk9enquete & kk9question)
