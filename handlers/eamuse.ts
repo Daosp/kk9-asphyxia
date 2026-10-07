@@ -1,5 +1,5 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC, __logingInfoData } from './__test__';
-import { cardmng } from "../model/bd_types";
+import { cardmng } from "../model/bd_types_profile";
 export const cardmngGetdatalist: EPR = async (info, data, send) => {
   __logingInfoData(info, data);
   const dataId : string = $(data).attr().refid;

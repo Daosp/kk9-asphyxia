@@ -13,7 +13,7 @@ export const customizeGet: EPR = async (info, data, send) => {
    */
 
   var response = {
-    customize_id:K.ITEM("s8",123),/*
+    customize_id:K.ITEM("s8",123),
     panel:{
       base:K.ITEM("s8",1),
       corner:K.ITEM("s8",2),
@@ -24,23 +24,23 @@ export const customizeGet: EPR = async (info, data, send) => {
         K.ITEM("s8",11),
       ],
       enable_pro_marker:K.ITEM("s8",1),
-      pro_marker:K.ITEM("s8",77),
+      pro_marker:K.ITEM("s8",2),
       date:K.ITEM("str","2026-08-20 12:00:00+0")
     },
     table:{
-      table:K.ITEM("s8",100),
-      hai:K.ITEM("s8",200),
+      table:K.ITEM("s8",1),
+      hai:K.ITEM("s8",2),
       date:K.ITEM("str","2026-08-20 12:00:00+0")
     },
     irodori:{
-      call:K.ITEM("s8",300),
-      comment:K.ITEM("s8",400),
+      call:K.ITEM("s8",2),
+      comment:K.ITEM("s8",2),
       date:K.ITEM("str","2026-08-20 12:00:00+0")
     },
     gouka:{
-      movebg:K.ITEM("s8",500),
+      movebg:K.ITEM("s8",2),
       date:K.ITEM("str","2026-08-20 12:00:00+0")
-    }*/
+    }
   };
   __logingInfoData(info, data);
   console.log('-=RESPONSE=-');

@@ -1,8 +1,7 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC, __logingInfoData } from './__test__';
-import { pdata_data, pdata_profile } from "../model/bd_types";
+import { pdata_data, pdata_profile } from "../model/bd_types_profile";
 export const pdataRead: EPR = async (info, data, send) => {
-    // Извлекаем refid (data_id). Игра обычно присылает тот же data_id,
-    // который использовался при записи.
+    __logingInfoData(info, data);
     const dataId = $(data).attr().data_id;
     if (!dataId) {return send.deny();}
 
@@ -12,35 +11,27 @@ export const pdataRead: EPR = async (info, data, send) => {
       return send.deny();
     };
 
-    // Записи в БД сортируем по node_id как число,
-    // чтобы порядок соответствовал исходному файлу (0,1,2,...15)
-    records.sort(
-      (
-        a: ProfileDoc<pdata_data>,
-        b: ProfileDoc<pdata_data>
-      ) => Number(a.node_id) - Number(b.node_id)
-    );
+    var lengthDataNodes = records.length;
+    console.log("pdataRead: Num of nodes: ".concat(lengthDataNodes.toString()));
+    if (lengthDataNodes === 0) {return send.deny();};
 
     const timeStr = formatCurrentDateTimeUTC();
 
-    var inner: KITEM<'bin'>[] = [];
+    var innerData: KITEM<'bin'>[] = [];
 
     for (const rec of records) {
-        var buf: Buffer = Buffer.from(rec.content,"binary");
-        var nodeId: string = rec.node_id.toString();
-        var nodeIdId: string = "node_id";
-        var attrMap: KAttrMap = {[nodeIdId]:nodeId};
-        var addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
-        inner.push(addData);
-        console.log('pdataRead: Node ID'.concat(nodeId).concat(" added"));
+        const buf: Buffer = Buffer.from(rec.content,"binary");
+        const attrMap: KAttrMap = {['node_id']:rec._id};
+        const addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
+        innerData.push(addData);
+        console.log('pdataRead: Node ID'.concat(rec._id).concat(" added"));
     };
 
     var response = K.ATTR({time:timeStr},{
-      data:inner,
+      data:innerData,
     });
-
+    console.log('pdataRead: data send');
     return send.object(response);
-    return __sendSuccessLOG(info, data, send);
 };
 
 export const pdataWrite: EPR = async (info, data, send) => {
@@ -50,56 +41,27 @@ export const pdataWrite: EPR = async (info, data, send) => {
    * DATA:
    *  - data_id="AD8972E47E435A6B"
    *  - method="ranking"
-   * <data __type="bin" node_id=0>
-   *  <data>K.ARRAY</data>
-   * </data>
+   * <data __type="bin" __sixe="123" node_id="0">buffer</data>
+   * <data __type="bin" __sixe="123" node_id="2">buffer</data>
+   * ...
    */
+    __logingInfoData(info, data);
     const dataId : string = $(data).attr().data_id;
-    if (!dataId) {
-        return send.deny();
-    }
+    if (!dataId) {return send.deny();}
 
     // Находим все дочерние теги <data>
-    const dataNodes = $(data).elements('data');
-    var lengthDataNodes = dataNodes.length;
-    console.log("pdataWrite: Num of records: ".concat(lengthDataNodes.toString()));
-    if (lengthDataNodes === 0) {
-        return send.success();
-    }
+    var lengthDataNodes = $(data).elements('data').length;
+    console.log("pdataWrite: Num of nodes: ".concat(lengthDataNodes.toString()));
+    if (lengthDataNodes === 0) {return send.success();}
 
-    var id = 0;
-    for(const node of dataNodes){
-      const dataAddr = parseInt(node.attr().node_id);
-      console.log("Node ID: ".concat(dataAddr.toString()));
-
-      const dataBuffer = $(data).buffer("data.".concat(id.toString())).toString("binary");
-      const record = await DB.FindOne<pdata_data>(dataId,{collection: 'pdata_data', node_id:dataAddr});
-      if (_.isNil(record)) {
-        console.log('pdataWrite: new record');
-        await DB.Upsert<pdata_data>(
-            dataId, // refid
-            {
-                collection: 'pdata_data',
-                node_id: dataAddr,
-            },
-            {
-              $set: {
-                content: dataBuffer,
-              }
-            }
-        );
-        continue;
-      };
-      const content = record.content;
-      const node_id = record.node_id;
-      if (dataBuffer == content) continue;
-
-      console.log('pdataWrite: update record');
-      await DB.Update<pdata_data>(
-          dataId, // refid
+    for(var _i = 0; _i < lengthDataNodes; _i++){
+      const dataAddr = $(data).attr("data.".concat(_i.toString())).node_id;
+      const dataBuffer = $(data).buffer("data.".concat(_i.toString())).toString("binary");
+      await DB.Upsert<pdata_data>(
+          dataId,
           {
               collection: 'pdata_data',
-              node_id: dataAddr,
+              _id: dataAddr,
           },
           {
             $set: {
@@ -107,9 +69,9 @@ export const pdataWrite: EPR = async (info, data, send) => {
             }
           }
       );
-
-      id++;
-    }
+      console.log("pdataWrite: Node ID".concat(dataAddr).concat(" upserted"));
+    };
+    console.log('pdataWrite: data writed');
 
     send.success();
 };

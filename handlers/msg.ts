@@ -1,5 +1,5 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
-import { msgs } from "../model/bd_types";
+import { msgs } from "../model/bd_types_profile";
 export const msgPut: EPR = async (info, data, send) => {
   /**
    * kk9msg.put
@@ -14,16 +14,12 @@ export const msgPut: EPR = async (info, data, send) => {
    */
   const label = $(data).attr().label;
   const msg = $(data).attr().msg;
-  await DB.Upsert<msgs>(
+  await DB.Insert<msgs>(
       {
-          collection: 'msgs',
-      },
-      {
-        $set: {
-          "stamp":formatCurrentDateTimeUTC(),
-          "label":label,
-          "msg":msg
-        }
+        collection: 'msgs',
+        "stamp":formatCurrentDateTimeUTC(),
+        "label":label,
+        "msg":msg
       }
   );
   return __sendSuccessLOG(info, data, send);

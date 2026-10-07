@@ -1,7 +1,7 @@
 export interface pdata_data {
   collection: "pdata_data";
-  node_id: number;
   content: string;
+  _id: string;
 }
 
 export interface pdata_profile {
