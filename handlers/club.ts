@@ -1,4 +1,12 @@
 import { __sendSuccessLOG } from './__test__';
+const DEFAULT_SHOP = {
+  area: '13',
+  comment1: 'ＫＫ９ ＰＲＯＪＥＣＴ－ＫＫ９＠ＡＳＰＨＹＸＩＡ－ＬＥＴ＇Ｓ ＧＯ',
+  comment2: 'ＤＡＯＳＰ－ＲＥＭＡＳＴＥＲ－ＧＵＬＬＭＡＮＸ',
+  comment3: 'ＡＲＥ ＹＯＵ ＬＩＫＥ ＭＡＨＪＯＮＧ？',
+  name: 'ＤＡＯＳＰ'
+};
+
 export const clubShopinfo: EPR = async (info, data, send) => {
   /**
    * kk9club.shopinfo
@@ -9,16 +17,18 @@ export const clubShopinfo: EPR = async (info, data, send) => {
    *  - method="shopinfo"
    */
   //var response = K.ATTR({"area":"13","comment1":"","comment2":"","comment3":"","loc_id":"ea","method":"sendinfo","shop_name":"ＡＡ"})
+  const settings = await DB.FindOne({ shop_settings: true });
+  const shopInfo = { ...DEFAULT_SHOP, ...(settings && settings.shop ? settings.shop : {}) };
   var response = {
     shop:K.ATTR({
       "exist":"1",
-      "area":"13",
-      "comment1":"ＫＫ９ ＰＲＯＪＥＣＴ－ＫＫ９＠ＡＳＰＨＹＸＩＡ－ＬＥＴ＇Ｓ ＧＯ",
-      "comment2":"ＤＡＯＳＰ－ＲＥＭＡＳＴＥＲ－ＧＵＬＬＭＡＮＸ",
-      "comment3":"ＡＲＥ ＹＯＵ ＬＩＫＥ ＭＡＨＪＯＮＧ？",
+      "area":shopInfo.area,
+      "comment1":shopInfo.comment1,
+      "comment2":shopInfo.comment2,
+      "comment3":shopInfo.comment3,
       "loc_id":"ea",
       "method":"sendinfo",
-      "name":"ＤＡＯＳＰ"
+      "name":shopInfo.name
     }),
 
     shop_score:K.ATTR({rank_in_area:"1",rank_in_world:"1",score:"999999",border:"1",num:"1",})

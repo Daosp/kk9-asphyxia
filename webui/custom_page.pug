@@ -16,6 +16,7 @@
 
 //DATA//
   data: DB.FindOne({ clicked: { $exists: true } })
+  shop: DB.FindOne({ shop_settings: true })
 
 .content
   h3 Custom Page
@@ -28,6 +29,34 @@
   p
     button.button.is-primary#plugin-random
       | Use emit() to get a random number
+
+  section.section
+    h4.title.is-4 Магазин
+    form#shop-settings
+      .field
+        label.label(for="shop-name") Название
+        .control
+          input.input#shop-name(type="text" name="name" maxlength="64" value=(shop && shop.shop ? shop.shop.name : 'ＤＡＯＳＰ'))
+      .field
+        label.label(for="shop-area") Регион
+        .control
+          input.input#shop-area(type="text" name="area" maxlength="8" value=(shop && shop.shop ? shop.shop.area : '13'))
+      .field
+        label.label(for="shop-comment1") Комментарий 1
+        .control
+          input.input#shop-comment1(type="text" name="comment1" maxlength="128" value=(shop && shop.shop ? shop.shop.comment1 : 'ＫＫ９ ＰＲＯＪＥＣＴ－ＫＫ９＠ＡＳＰＨＹＸＩＡ－ＬＥＴ＇Ｓ ＧＯ'))
+      .field
+        label.label(for="shop-comment2") Комментарий 2
+        .control
+          input.input#shop-comment2(type="text" name="comment2" maxlength="128" value=(shop && shop.shop ? shop.shop.comment2 : 'ＤＡＯＳＰ－ＲＥＭＡＳＴＥＲ－ＧＵＬＬＭＡＮＸ'))
+      .field
+        label.label(for="shop-comment3") Комментарий 3
+        .control
+          input.input#shop-comment3(type="text" name="comment3" maxlength="128" value=(shop && shop.shop ? shop.shop.comment3 : 'ＡＲＥ ＹＯＵ ＬＩＫＥ ＭＡＨＪＯＮＧ？'))
+      .field
+        .control
+          button.button.is-primary(type="submit") Сохранить
+      p#shop-save-status(aria-live="polite")
 
 //- You can include custom javascripts and send data back to plugin using emit()
     see profile_name.pug for sending data using form

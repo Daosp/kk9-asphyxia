@@ -37,6 +37,7 @@ export function register() {
   /* A plugin can have multiple contributors. */
   R.Contributor('Daosp', 'https://github.com/Daosp');
   R.Contributor('Remaster', 'https://github.com/remaster1');
+  R.Contributor('gluu', 'https://github.com/Gullmanx');
 
   /* Register plugin configuration */
   R.Config('event', {
@@ -181,6 +182,20 @@ export function register() {
   R.WebUIEvent('click', async data => {
     console.log('WebUI Button Clicked');
     await DB.Update({ clicked: { $exists: true } }, { $inc: { clicked: 1 } });
+  });
+
+  R.WebUIEvent('shop-update', async data => {
+    const shop = {
+      area: typeof data.area === 'string' ? data.area.slice(0, 8) : '13',
+      name: typeof data.name === 'string' ? data.name.slice(0, 64) : '',
+      comment1: typeof data.comment1 === 'string' ? data.comment1.slice(0, 128) : '',
+      comment2: typeof data.comment2 === 'string' ? data.comment2.slice(0, 128) : '',
+      comment3: typeof data.comment3 === 'string' ? data.comment3.slice(0, 128) : ''
+    };
+    await DB.Upsert(
+      { shop_settings: true },
+      { $set: { shop_settings: true, shop } }
+    );
   });
 
   /* Use --dev argument to enable console output. */
