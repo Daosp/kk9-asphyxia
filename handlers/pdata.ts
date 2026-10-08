@@ -23,7 +23,6 @@ export const pdataRead: EPR = async (info, data, send) => {
         const buf: Buffer = Buffer.from(rec.content,"hex");
         const attrMap: KAttrMap = {['node_id']:rec.node_id};
         const addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
-        innerData.push(addData);
         console.log('pdataRead: Node ID'.concat(rec.node_id).concat(" added"));
     };
 
@@ -45,35 +44,35 @@ export const pdataWrite: EPR = async (info, data, send) => {
    * <data __type="bin" __sixe="123" node_id="2">buffer</data>
    * ...
    */
-    __logingInfoData(info, data);
-    const dataId : string = $(data).attr().data_id;
-    if (!dataId) {return send.deny();}
+  console.log("pdataWrite: START");
+  const dataId : string = $(data).attr().data_id;
+  if (!dataId) {return send.deny();}
 
-    // Находим все дочерние теги <data>
-    var lengthDataNodes = $(data).elements('data').length;
-    console.log("pdataWrite: Num of nodes: ".concat(lengthDataNodes.toString()));
-    if (lengthDataNodes === 0) {return send.success();}
+  // Находим все дочерние теги <data>
+  var lengthDataNodes = $(data).elements('data').length;
+  console.log("pdataWrite: Num of nodes: ".concat(lengthDataNodes.toString()));
+  if (lengthDataNodes === 0) {return send.success();}
 
-    for(var _i = 0; _i < lengthDataNodes; _i++){
-      const dataAddr = $(data).attr("data.".concat(_i.toString())).node_id;
-      const dataBuffer = $(data).buffer("data.".concat(_i.toString())).toString("hex");
-      await DB.Upsert<pdata_data>(
-          dataId,
-          {
-              collection: 'pdata_data',
-              node_id: dataAddr,
-          },
-          {
-            $set: {
-              content: dataBuffer,
-            }
+  for(var _i = 0; _i < lengthDataNodes; _i++){
+    const dataAddr = $(data).attr("data.".concat(_i.toString())).node_id;
+    const dataBuffer = $(data).buffer("data.".concat(_i.toString())).toString("hex");
+    await DB.Upsert<pdata_data>(
+        dataId,
+        {
+            collection: 'pdata_data',
+            node_id: dataAddr,
+        },
+        {
+          $set: {
+            content: dataBuffer,
           }
-      );
-      console.log("pdataWrite: Node ID".concat(dataAddr).concat(" upserted"));
-    };
-    console.log('pdataWrite: data writed');
-
-    send.success();
+        }
+    );
+    console.log("pdataWrite: Node ID".concat(dataAddr).concat(" upserted"));
+  };
+  console.log('pdataWrite: data writed');
+  console.log("pdataWrite: END");
+  send.success();
 };
 
 export const pdataConv: EPR = async (info, data, send) => {

@@ -13,6 +13,7 @@ export const vipStart: EPR = async (info, data, send) => {
         point:0,
         point_total:0,
         vip_rank:0,
+        enable:true,
       }
     });
     return send.object({
@@ -33,6 +34,11 @@ export const vipStatus: EPR = async (info, data, send) => {
   if (!dataId) {return send.deny();}
   const rDB = await DB.FindOne<vip>(dataId,{collection:"vip"});
   if (_.isNil(rDB)) return send.object({enable:K.ITEM("bool",false)});
+  var content: {
+    [key: string]: any | Object; // любой строковый ключ с любым значением
+  } = {
+    enable:K.ITEM("bool",rDB.enable)
+  };
   const rDBmI = await DB.Find<vip_menuItems>(dataId,{collection:"vip_menuItems"});
   var menuItemIs: Object[] = [];
   if (!_.isNil(rDB)) for(const r of rDBmI)menuItemIs.push({
@@ -43,7 +49,7 @@ export const vipStatus: EPR = async (info, data, send) => {
     point:K.ITEM("u8",r.point),
     need_rank:K.ITEM("u8",r.need_rank)
   });
-  var mI = menuItemIs.length == 0 ? "" : {i:menuItemIs};
+  content.menu = {item:{i:menuItemIs}};
 
   const rDBmG = await DB.Find<vip_menuGoods>(dataId,{collection:"vip_menuGoods"});
   var menuGoodsIs: Object[] = [];
@@ -54,7 +60,7 @@ export const vipStatus: EPR = async (info, data, send) => {
       need_rank:K.ITEM("u8",r.need_rank)
     })
   }
-  var mG = menuGoodsIs.length == 0 ? "" : {i:menuGoodsIs};
+  content.menu = {goods:{i:menuGoodsIs}};
 
   const rDBI = await DB.Find<vip_items>(dataId,{collection:"vip_items"});
   var itemIs: Object[] = [];
@@ -70,7 +76,7 @@ export const vipStatus: EPR = async (info, data, send) => {
       expire:K.ITEM("str",r.expire)
     })
   }
-  var i = itemIs.length == 0 ? "" : {i:itemIs};
+  content.item = {i:itemIs};
 
   const rDBG = await DB.Find<vip_goods>(dataId,{collection:"vip_goods"});
   var goodsIs: Object[] = [];
@@ -81,21 +87,13 @@ export const vipStatus: EPR = async (info, data, send) => {
       stamp:K.ITEM("str",r.stamp)
     })
   }
-  var g = goodsIs.length == 0 ? "" : {i:goodsIs};
+  content.goods = {i:goodsIs};
 
   return send.object(K.ATTR({
     point: rDB.point.toString(),
     total_point: rDB.point_total.toString(),
     vip_rank: rDB.vip_rank.toString()
-  },{
-    enable:K.ITEM("bool",rDB.enable),
-    menu:{
-      item: mI,
-      goods: mG
-    },
-    item: i,
-    goods: g
-  }));
+  },content));
 };
 
 export const vipAdd_point: EPR = async (info, data, send) => {
