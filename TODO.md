@@ -5,6 +5,9 @@
 - [ ] What are f*ck is DJP and SDJP?!?!?! (kk9djp & kk9sdjp)
 - [ ] What is "flags"? (kk9flags)
 - [ ] Multiplayer (lobby, kk9ranking, )
+- [ ] KBIN
+- [ ] Shop (kk9shop)
+
 
 ### In Progress
 
