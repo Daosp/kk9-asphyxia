@@ -23,7 +23,6 @@ export const pdataRead: EPR = async (info, data, send) => {
         const buf: Buffer = Buffer.from(rec.content,"hex");
         const attrMap: KAttrMap = {['node_id']:rec.node_id};
         const addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
-        innerData.push(addData);
         console.log('pdataRead: Node ID'.concat(rec.node_id).concat(" added"));
     };
 
