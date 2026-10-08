@@ -1,4 +1,5 @@
 import { __sendSuccessLOG } from './__test__';
+import { shop } from "../model/bd_types_shop";
 const DEFAULT_SHOP = {
   area: '13',
   comment1: 'ＫＫ９ ＰＲＯＪＥＣＴ－ＫＫ９＠ＡＳＰＨＹＸＩＡ－ＬＥＴ＇Ｓ ＧＯ',
@@ -17,8 +18,9 @@ export const clubShopinfo: EPR = async (info, data, send) => {
    *  - method="shopinfo"
    */
   //var response = K.ATTR({"area":"13","comment1":"","comment2":"","comment3":"","loc_id":"ea","method":"sendinfo","shop_name":"ＡＡ"})
-  const settings = await DB.FindOne({ shop_settings: true });
-  const shopInfo = { ...DEFAULT_SHOP, ...(settings && settings.shop ? settings.shop : {}) };
+
+  const settings = await DB.FindOne<shop>({ collection: "shop", loc_id: $(data).attr().loc_id });
+  const shopInfo = { ...DEFAULT_SHOP, ...(settings && settings ? settings : {}) };
   var response = {
     shop:K.ATTR({
       "exist":"1",
@@ -26,8 +28,7 @@ export const clubShopinfo: EPR = async (info, data, send) => {
       "comment1":shopInfo.comment1,
       "comment2":shopInfo.comment2,
       "comment3":shopInfo.comment3,
-      "loc_id":"ea",
-      "method":"sendinfo",
+      "loc_id":$(data).attr().loc_id,
       "name":shopInfo.name
     }),
 
@@ -50,6 +51,19 @@ export const clubSendinfo: EPR = async (info, data, send) => {
    *  - method="sendinfo"
    *  - shop_name="ＡＡＡ"
    */
+  DB.Upsert<shop>({
+    collection: "shop",
+    loc_id: $(data).attr().loc_id
+  }, {
+    $set: {
+      "exist":true,
+      "area":$(data).attr().area,
+      "comment1":$(data).attr().comment1,
+      "comment2":$(data).attr().comment2,
+      "comment3":$(data).attr().comment3,
+      "name":$(data).attr().name
+    }
+  })
 
   return __sendSuccessLOG(info, data, send);
 };
