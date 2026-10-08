@@ -20,11 +20,11 @@ export const pdataRead: EPR = async (info, data, send) => {
     var innerData: KITEM<'bin'>[] = [];
 
     for (const rec of records) {
-        const buf: Buffer = Buffer.from(rec.content,"binary");
-        const attrMap: KAttrMap = {['node_id']:rec._id};
+        const buf: Buffer = Buffer.from(rec.content,"hex");
+        const attrMap: KAttrMap = {['node_id']:rec.node_id};
         const addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
         innerData.push(addData);
-        console.log('pdataRead: Node ID'.concat(rec._id).concat(" added"));
+        console.log('pdataRead: Node ID'.concat(rec.node_id).concat(" added"));
     };
 
     var response = K.ATTR({time:timeStr},{
@@ -56,12 +56,12 @@ export const pdataWrite: EPR = async (info, data, send) => {
 
     for(var _i = 0; _i < lengthDataNodes; _i++){
       const dataAddr = $(data).attr("data.".concat(_i.toString())).node_id;
-      const dataBuffer = $(data).buffer("data.".concat(_i.toString())).toString("binary");
+      const dataBuffer = $(data).buffer("data.".concat(_i.toString())).toString("hex");
       await DB.Upsert<pdata_data>(
           dataId,
           {
               collection: 'pdata_data',
-              _id: dataAddr,
+              node_id: dataAddr,
           },
           {
             $set: {

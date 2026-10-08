@@ -12,7 +12,7 @@ export const msgPut: EPR = async (info, data, send) => {
    *  - method="put"
    *  - msg="VERS_RETRY:ea,0,0,0,0,1,38,0\n"
    */
-  const label = $(data).attr().label;
+  /*const label = $(data).attr().label;
   const msg = $(data).attr().msg;
   await DB.Insert<msgs>(
       {
@@ -21,7 +21,7 @@ export const msgPut: EPR = async (info, data, send) => {
         "label":label,
         "msg":msg
       }
-  );
+  );*/
   return __sendSuccessLOG(info, data, send);
 };
 
