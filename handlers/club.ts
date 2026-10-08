@@ -51,17 +51,19 @@ export const clubSendinfo: EPR = async (info, data, send) => {
    *  - method="sendinfo"
    *  - shop_name="ＡＡＡ"
    */
+  
+  const shopInfo = { ...DEFAULT_SHOP, ...($(data).attr() && $(data).attr() ? $(data).attr() : {}) };
   DB.Upsert<shop>({
     collection: "shop",
     loc_id: $(data).attr().loc_id
   }, {
     $set: {
       "exist":true,
-      "area":$(data).attr().area,
-      "comment1":$(data).attr().comment1,
-      "comment2":$(data).attr().comment2,
-      "comment3":$(data).attr().comment3,
-      "name":$(data).attr().name
+      "area":shopInfo.area,
+      "comment1":shopInfo.comment1,
+      "comment2":shopInfo.comment2,
+      "comment3":shopInfo.comment3,
+      "name":shopInfo.name
     }
   })
 
