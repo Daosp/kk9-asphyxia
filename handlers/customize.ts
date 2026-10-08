@@ -13,33 +13,30 @@ export const customizeGet: EPR = async (info, data, send) => {
    */
 
   var response = {
-    customize_id:K.ITEM("s8",123),
+    customize_id:K.ITEM("u32",123),
     panel:{
-      base:K.ITEM("s8",1),
-      corner:K.ITEM("s8",2),
-      midle:K.ITEM("s8",3),
-      medal_nr:K.ITEM("s8",2),
-      medal:[
-        K.ITEM("s8",10),
-        K.ITEM("s8",11),
-      ],
-      enable_pro_marker:K.ITEM("s8",1),
-      pro_marker:K.ITEM("s8",2),
-      date:K.ITEM("str","2026-08-20 12:00:00+0")
+      base:K.ITEM("u32",1),
+      corner:K.ITEM("u32",2),
+      midle:K.ITEM("u32",3),
+      medal_nr:K.ITEM("u32",2),
+      medal:K.ARRAY("u32",[1,2]),
+      enable_pro_marker:K.ITEM("u32",1),
+      pro_marker:K.ITEM("u32",2),
+      date:K.ITEM("str","\0")
     },
     table:{
-      table:K.ITEM("s8",1),
-      hai:K.ITEM("s8",2),
-      date:K.ITEM("str","2026-08-20 12:00:00+0")
+      table:K.ITEM("u32",1),
+      hai:K.ITEM("u32",2),
+      date:K.ITEM("str","\0")
     },
     irodori:{
-      call:K.ITEM("s8",2),
-      comment:K.ITEM("s8",2),
-      date:K.ITEM("str","2026-08-20 12:00:00+0")
+      call:K.ITEM("u32",2),
+      comment:K.ITEM("u32",2),
+      date:K.ITEM("str","\0")
     },
     gouka:{
-      movebg:K.ITEM("s8",2),
-      date:K.ITEM("str","2026-08-20 12:00:00+0")
+      movebg:K.ITEM("u32",2),
+      date:K.ITEM("str","\0")
     }
   };
   __logingInfoData(info, data);
