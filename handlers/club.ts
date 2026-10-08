@@ -13,9 +13,9 @@ export const clubShopinfo: EPR = async (info, data, send) => {
     shop:K.ATTR({
       "exist":"1",
       "area":"13",
-      "comment1":"ＤＡＯ",
-      "comment2":"ＳＰ",
-      "comment3":"ＤＡＯＳＰ",
+      "comment1":"ＫＫ９ ＰＲＯＪＥＣＴ－ＫＫ９＠ＡＳＰＨＹＸＩＡ－ＬＥＴ＇Ｓ ＧＯ",
+      "comment2":"ＤＡＯＳＰ－ＲＥＭＡＳＴＥＲ－ＧＵＬＬＭＡＮＸ",
+      "comment3":"ＡＲＥ ＹＯＵ ＬＩＫＥ ＭＡＨＪＯＮＧ？",
       "loc_id":"ea",
       "method":"sendinfo",
       "name":"ＤＡＯＳＰ"
