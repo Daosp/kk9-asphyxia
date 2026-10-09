@@ -15,36 +15,41 @@ export const customizeGet: EPR = async (info, data, send) => {
    * <pro_id __type="s32">0</pro_id>
    */
   const UnixTime = Math.floor(new Date().getTime() / 1000);
-  const dirList = await IO.ReadDir("../userdata_xml");
-  const fileName: string = dataId+"__14.xml";
   var response: {
     [key: string]: any | Object; // любой строковый ключ с любым значением
   } = {}
-  if(dirList.find((fl) => fl.name == fileName) == undefined){
-    response = {
-      customize_id:K.ITEM("u32",1),
-    }
-    return send.object(response);
-  }
-  const cB = await IO.ReadFile("../userdata_xml/"+fileName);
-  if(cB == null){
-    response = {
-      customize_id:K.ITEM("u32",1),
-    }
-    return send.object(response);
-  }
-  const cDR = cB != null ? $(U.parseXML(cB.toString("utf-8"))) : "";
-  const customDR = cDR != "" ? $(U.parseXML(cB.toString("utf-8"))) : new KDataReader({});
-
-  console.log(customDR.obj().toString());
 
   response = {
     customize_id:K.ITEM("u32",1),
+    panel:{
+      base:K.ITEM("u32",1000002),//1000000-1000005
+      corner:K.ITEM("u32",2000002),//2000000-2000005
+      midle:K.ITEM("u32",3000002),//3000000-3000005
+      medal_nr:K.ITEM("u32",1),
+      medal:K.ARRAY("u32",[40000001]), //4000000-4000009 ???
+      //enable_pro_marker:K.ITEM("u32",100),
+      //pro_marker:K.ITEM("u32",100),
+      date:K.ITEM("u32",UnixTime)
+    },
+    table:{
+      hai:K.ITEM("u32",5000002),//5000000-5000005
+      table:K.ITEM("u32",6000002),//6000000-6000224
+      date:K.ITEM("u32",UnixTime)
+    },
+    irodori:{
+      call:K.ITEM("u32",7000000), //7000000-7000001 ???
+      comment:K.ITEM("u32",8000000), //8000000-8000000 ???
+      date:K.ITEM("u32",UnixTime)
+    },
+    gouka:{
+      movebg:K.ITEM("u32",9000000), //9000000-9000000 ???
+      date:K.ITEM("u32",UnixTime)
+    }
   }
 /*
 response = {
   customize_id:K.ITEM("u32",1),
-  /*panel:{
+  panel:{
     base:K.ITEM("u32",1000006),//1000000
     corner:K.ITEM("u32",2000006),//2000000
     midle:K.ITEM("u32",3000006),//3000000
