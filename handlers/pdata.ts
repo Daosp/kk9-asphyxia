@@ -1,5 +1,9 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC, __logingInfoData } from './__test__';
 import { pdata_data, pdata_profile } from "../model/bd_types_profile";
+import { customAll as customAllBuffer, custom } from "../model/bd_types_custom";
+
+
+
 export const pdataRead: EPR = async (info, data, send) => {
     console.log('pdataRead: END');
     const dataId = $(data).attr().data_id;
@@ -21,6 +25,7 @@ export const pdataRead: EPR = async (info, data, send) => {
 
     for (const rec of records) {
         const buf: Buffer = Buffer.from(rec.content,"hex");
+        if(rec.node_id == "14"){buf.set(customAllBuffer, 0xBE68)}
         const attrMap: KAttrMap = {['node_id']:rec.node_id};
         const addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
         innerData.push(addData);
@@ -45,7 +50,7 @@ export const pdataWrite: EPR = async (info, data, send) => {
    * <data __type="bin" __sixe="123" node_id="2">buffer</data>
    * ...
    */
-    __logingInfoData(info, data);
+    console.log('pdataWrite: START');
     const dataId : string = $(data).attr().data_id;
     if (!dataId) {return send.deny();}
 
@@ -57,7 +62,7 @@ export const pdataWrite: EPR = async (info, data, send) => {
     for(var _i = 0; _i < lengthDataNodes; _i++){
       const dataAddr = $(data).attr("data.".concat(_i.toString())).node_id;
       const dataBuffer = $(data).buffer("data.".concat(_i.toString())).toString("hex");
-      await DB.Upsert<pdata_data>(
+      DB.Upsert<pdata_data>(
           dataId,
           {
               collection: 'pdata_data',
@@ -71,7 +76,7 @@ export const pdataWrite: EPR = async (info, data, send) => {
       );
       console.log("pdataWrite: Node ID".concat(dataAddr).concat(" upserted"));
     };
-    console.log('pdataWrite: data writed');
+    console.log('pdataWrite: END');
 
     send.success();
 };
@@ -110,7 +115,7 @@ export const pdataCreate: EPR = async (info, data, send) => {
     console.warn('pdataCreate: dataId is NULL');
     return send.deny();
   }
-  await DB.Upsert<pdata_profile>(dataId,{collection: "pdata_profile"},{
+  DB.Upsert<pdata_profile>(dataId,{collection: "pdata_profile"},{
     $set:{
       disable:false,
       passwd:"",
@@ -118,6 +123,27 @@ export const pdataCreate: EPR = async (info, data, send) => {
       conv:"0",
     },
   });
+  const UnixTime = Math.floor(new Date().getTime() / 1000);
+  if(await DB.Count<custom>(dataId,{collection:"custom"}) > 0){return send.success();}
+  DB.Insert<custom>(
+      dataId,
+      {
+          collection: 'custom',
+          customId: "0",
+          base: "1000000",
+          corner: "2000000",
+          midle: "3000000",
+          date_p: UnixTime,
+          hai: "5000000",
+          table: "6000000",
+          date_t: UnixTime,
+          call: "7000000",
+          comment: "8000000",
+          date_i: UnixTime,
+          movebg: "9000000",
+          date_g: UnixTime
+      }
+  );
   return send.success();
 };
 

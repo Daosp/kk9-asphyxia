@@ -1,63 +1,92 @@
-//-
-  Custom web component for plugin page
-  The following frontend components are already avaliable:
-    * Bulma                [https://bulma.io/]
-    * MaterialDesignIcons  [https://materialdesignicons.com/]
-    * jQuery               [https://jquery.com/]
-    * axios                [https://github.com/axios/axios]
-    * GeoPattern           [https://github.com/btmills/geopattern]
-    * jdenticon            [https://jdenticon.com/]
-  You can include your own js, css or images as well.
-  
-  To request data from database, use //DATA// to indicate a comment block for capture and follow:
-    fieldName: expression
-
-  Then fieldName will be avaliable for the template engine when rendering.
-
 //DATA//
-  data: DB.FindOne({ clicked: { $exists: true } })
-  shop: DB.FindOne({ shop_settings: true })
+  shop: DB.FindOne({ collection: 'shop' })
+-
+  const prefecture = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31',
+    '32',
+    '33',
+    '34',
+    '35',
+    '36',
+    '37',
+    '38',
+    '39',
+    '40',
+    '41',
+    '42',
+    '43',
+    '44',
+    '45',
+    '46',
+    '47'
+  ];
 
 .content
-  h3 Custom Page
-  p Clicked: #{data.clicked}
-  p
-    button.button.is-primary#plugin-click
-      | Send "click" event and refresh
-
-  p#random-number RandomNumber: Click the button below to get a random number
-  p
-    button.button.is-primary#plugin-random
-      | Use emit() to get a random number
+  h3 Club Page
 
   section.section
-    h4.title.is-4 Магазин
+    h4.title.is-4 Club
     form#shop-settings
+      input(type='hidden' name='loc_id' value='ea')
+      input(type='hidden' name='exist' value=true)
       .field
-        label.label(for="shop-name") Название
+        label.label(for='shop-name') Название
         .control
-          input.input#shop-name(type="text" name="name" maxlength="64" value=(shop && shop.shop ? shop.shop.name : 'ＤＡＯＳＰ'))
+          input.input#shop-name(type='text' name='name' maxlength='64' value=(shop.name))
       .field
-        label.label(for="shop-area") Регион
+        label.label(for='shop-area') Регион
         .control
-          input.input#shop-area(type="text" name="area" maxlength="8" value=(shop && shop.shop ? shop.shop.area : '13'))
+          .select
+            select(name='area', id='area')
+              each i in prefecture 
+                option(selected=(i==shop.area)) #{i}
       .field
-        label.label(for="shop-comment1") Комментарий 1
+        label.label(for='shop-comment1') Комментарий 1
         .control
-          input.input#shop-comment1(type="text" name="comment1" maxlength="128" value=(shop && shop.shop ? shop.shop.comment1 : 'ＫＫ９ ＰＲＯＪＥＣＴ－ＫＫ９＠ＡＳＰＨＹＸＩＡ－ＬＥＴ＇Ｓ ＧＯ'))
+          input.input#shop-comment1(type='text' name='comment1' maxlength='128' value=(shop.comment1))
       .field
-        label.label(for="shop-comment2") Комментарий 2
+        label.label(for='shop-comment2') Комментарий 2
         .control
-          input.input#shop-comment2(type="text" name="comment2" maxlength="128" value=(shop && shop.shop ? shop.shop.comment2 : 'ＤＡＯＳＰ－ＲＥＭＡＳＴＥＲ－ＧＵＬＬＭＡＮＸ'))
+          input.input#shop-comment2(type='text' name='comment2' maxlength='128' value=(shop.comment2))
       .field
-        label.label(for="shop-comment3") Комментарий 3
+        label.label(for='shop-comment3') Комментарий 3
         .control
-          input.input#shop-comment3(type="text" name="comment3" maxlength="128" value=(shop && shop.shop ? shop.shop.comment3 : 'ＡＲＥ ＹＯＵ ＬＩＫＥ ＭＡＨＪＯＮＧ？'))
+          input.input#shop-comment3(type='text' name='comment3' maxlength='128' value=(shop.comment3))
       .field
         .control
-          button.button.is-primary(type="submit") Сохранить
-      p#shop-save-status(aria-live="polite")
+          button.button.is-primary(type='submit') Сохранить
+      p#shop-save-status(aria-live='polite')
 
 //- You can include custom javascripts and send data back to plugin using emit()
     see profile_name.pug for sending data using form
-script(src="static/js/custom_page.js")
+script(src='static/js/custom_page.js')

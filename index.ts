@@ -29,6 +29,8 @@ import { haiRec, haiRec_movie, haiGet } from './handlers/hai';
 import { twitterUser, twitterTweet } from './handlers/twitter';
 
 import { cardmngGetdatalist, facilityGet } from './handlers/eamuse';
+import { shop } from './model/bd_types_shop';
+import { custom } from './model/bd_types_custom';
 
 export function register() {
   /* Register game code */
@@ -187,14 +189,72 @@ export function register() {
   R.WebUIEvent('shop-update', async data => {
     const shop = {
       area: typeof data.area === 'string' ? data.area.slice(0, 8) : '13',
-      name: typeof data.name === 'string' ? data.name.slice(0, 64) : '',
-      comment1: typeof data.comment1 === 'string' ? data.comment1.slice(0, 128) : '',
-      comment2: typeof data.comment2 === 'string' ? data.comment2.slice(0, 128) : '',
-      comment3: typeof data.comment3 === 'string' ? data.comment3.slice(0, 128) : ''
+      name: typeof data.name === 'string' ? data.name.slice(0, 64) : 'ＥＲＲＯＲ',
+      exist: typeof data.exist === 'boolean' ? data.exist : true,
+      loc_id: typeof data.loc_id === 'string' ? data.loc_id.slice(0, 32) : "ea",
+      comment1: typeof data.comment1 === 'string' ? data.comment1.slice(0, 128) : 'ＥＲＲＯＲ',
+      comment2: typeof data.comment2 === 'string' ? data.comment2.slice(0, 128) : 'ＥＲＲＯＲ',
+      comment3: typeof data.comment3 === 'string' ? data.comment3.slice(0, 128) : 'ＥＲＲＯＲ'
     };
-    await DB.Upsert(
-      { shop_settings: true },
-      { $set: { shop_settings: true, shop } }
+    await DB.Upsert<shop>(
+      { collection: "shop" },
+      { $set: shop }
+    );
+  });
+
+  
+  R.WebUIEvent('custom-update', async data => {
+    const custom = {
+      refid: typeof data.refid === 'string' ? data.refid.slice(0, 32) : "",
+      customId: typeof data.customId === 'number' ? data.customId : "1",
+      base: typeof data.base === 'string' ? data.base : "1000000",
+      corner: typeof data.corner === 'string' ? data.corner : "2000000",
+      midle: typeof data.midle === 'string' ? data.midle : "3000000",
+      hai: typeof data.hai === 'string' ? data.hai : "5000000",
+      table: typeof data.table === 'string' ? data.table : "6000000",
+      call: typeof data.call === 'string' ? data.call : "7000000",
+      comment: typeof data.comment === 'string' ? data.comment : "8000000",
+      movebg: typeof data.movebg === 'string' ? data.movebg : "9000000",
+    };
+    const UnixTime = Math.floor(new Date().getTime() / 1000);
+    const record = await DB.FindOne<custom>(custom.refid, { collection: "custom" });
+    if (record.base != custom.base || record.corner != custom.corner || record.midle != custom.midle){
+      var timeP = UnixTime
+    } else {
+      var timeP = record.date_p
+    }
+    if (record.hai != custom.hai || record.table != custom.table){
+      var timeT = UnixTime
+    } else {
+      var timeT = record.date_p
+    }
+    if (record.call != custom.call || record.comment != custom.comment){
+      var timeI = UnixTime
+    } else {
+      var timeI = record.date_p
+    }
+    if (record.movebg != custom.movebg){
+      var timeG = UnixTime
+    } else {
+      var timeG = record.date_p
+    }
+    DB.Upsert<custom>(custom.refid,
+      { collection: "custom" },
+      { $set: {
+        customId:custom.customId,
+        base:custom.base,
+        corner:custom.corner,
+        midle:custom.midle,
+        date_p:timeP,
+        hai:custom.hai,
+        table:custom.table,
+        date_t:timeT,
+        call:custom.call,
+        comment:custom.comment,
+        date_i:timeI,
+        movebg:custom.movebg,
+        date_g:timeG
+      } }
     );
   });
 

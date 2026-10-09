@@ -1,7 +1,9 @@
 import { __sendSuccessLOG, __logingInfoData,formatCurrentDateTimeUTC } from './__test__';
+import { custom } from "../model/bd_types_custom";
+
 export const customizeGet: EPR = async (info, data, send) => {
   __logingInfoData(info, data);
-  const dataId = $(data).str("data_id");
+  const dataId = $(data).attr().data_id;
   if (!dataId) {return send.deny();}
   /**
    * kk9customize.get
@@ -14,67 +16,40 @@ export const customizeGet: EPR = async (info, data, send) => {
    *  - method="get"
    * <pro_id __type="s32">0</pro_id>
    */
-  const UnixTime = Math.floor(new Date().getTime() / 1000);
   var response: {
     [key: string]: any | Object; // любой строковый ключ с любым значением
   } = {}
+  //BE68 - offset
+  var record = await DB.FindOne<custom>(dataId,{collection: 'custom',});
 
   response = {
     customize_id:K.ITEM("u32",1),
     panel:{
-      base:K.ITEM("u32",1000002),//1000000-1000005
-      corner:K.ITEM("u32",2000002),//2000000-2000005
-      midle:K.ITEM("u32",3000002),//3000000-3000005
-      medal_nr:K.ITEM("u32",1),
-      medal:K.ARRAY("u32",[40000001]), //4000000-4000009 ???
+      base:K.ITEM("u32",parseInt(record.base)),//1000000-1000005
+      corner:K.ITEM("u32",parseInt(record.corner)),//2000000-2000005
+      midle:K.ITEM("u32",parseInt(record.midle)),//3000000-3000005
+      //medal_nr:K.ITEM("u32",1),
+      //medal:K.ARRAY("u32",[40000001]), //4000000-4000009 ???
       //enable_pro_marker:K.ITEM("u32",100),
       //pro_marker:K.ITEM("u32",100),
-      date:K.ITEM("u32",UnixTime)
+      date:K.ITEM("u32",record.date_p)
     },
     table:{
-      hai:K.ITEM("u32",5000002),//5000000-5000005
-      table:K.ITEM("u32",6000002),//6000000-6000224
-      date:K.ITEM("u32",UnixTime)
+      hai:K.ITEM("u32",parseInt(record.hai)),//5000000-5000005
+      table:K.ITEM("u32",parseInt(record.table)),//6000000-6000224
+      date:K.ITEM("u32",record.date_t)
     },
     irodori:{
-      call:K.ITEM("u32",7000000), //7000000-7000001 ???
-      comment:K.ITEM("u32",8000000), //8000000-8000000 ???
-      date:K.ITEM("u32",UnixTime)
+      call:K.ITEM("u32",parseInt(record.call)), //7000000-7000001 ???
+      comment:K.ITEM("u32",parseInt(record.comment)), //8000000-8000000 ???
+      date:K.ITEM("u32",record.date_i)
     },
     gouka:{
-      movebg:K.ITEM("u32",9000000), //9000000-9000000 ???
-      date:K.ITEM("u32",UnixTime)
+      movebg:K.ITEM("u32",parseInt(record.movebg)), //9000000-9000000 ???
+      date:K.ITEM("u32",record.date_g)
     }
   }
 /*
-response = {
-  customize_id:K.ITEM("u32",1),
-  panel:{
-    base:K.ITEM("u32",1000006),//1000000
-    corner:K.ITEM("u32",2000006),//2000000
-    midle:K.ITEM("u32",3000006),//3000000
-    medal_nr:K.ITEM("u32",0),
-    medal:K.ARRAY("u32",[]), //4010016
-    //enable_pro_marker:K.ITEM("u32",100),
-    //pro_marker:K.ITEM("u32",100),
-    date:K.ITEM("u32",UnixTime)
-  },
-  table:{
-    hai:K.ITEM("u32",5000006),//5000000
-    table:K.ITEM("u32",6000006),//6000000
-    date:K.ITEM("u32",UnixTime)
-  },
-  irodori:{
-    call:K.ITEM("u32",6), //7000000
-    comment:K.ITEM("u32",6), //8000000
-    date:K.ITEM("u32",UnixTime)
-  },
-  gouka:{
-    movebg:K.ITEM("u32",6), //9000000
-    date:K.ITEM("u32",UnixTime)
-  }
-};
-
 <customize_data>
 	<panel_data>
 		<base_parts>0</base_parts>

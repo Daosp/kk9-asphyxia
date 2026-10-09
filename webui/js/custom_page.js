@@ -13,10 +13,21 @@ $('#plugin-random').on('click', () => {
 $('#shop-settings').on('submit', event => {
   event.preventDefault();
   const shop = Object.fromEntries(new FormData(event.currentTarget).entries());
-  $('#shop-save-status').text('Сохранение...');
+  $('#shop-save-status').text('Saving...');
   emit('shop-update', shop).then(() => {
-    $('#shop-save-status').text('Настройки магазина сохранены');
+    $('#shop-save-status').text('Shop saved');
   }).catch(() => {
-    $('#shop-save-status').text('Не удалось сохранить настройки');
+    $('#shop-save-status').text('No save');
+  });
+});
+
+$('#custom-settings').on('submit', event => {
+  event.preventDefault();
+  const custom = Object.fromEntries(new FormData(event.currentTarget).entries());
+  $('#custom-save-status').text('Saving...');
+  emit('custom-update', custom).then(() => {
+    $('#custom-save-status').text('Customization saved');
+  }).catch(() => {
+    $('#custom-save-status').text('No save');
   });
 });
