@@ -2,4 +2,5 @@ asphyxia-core.d.ts
 tsconfig.json
 *.code-workspace
 *.zip
+*.7z
 userdata_xml/*.xml
