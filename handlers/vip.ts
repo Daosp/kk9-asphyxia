@@ -1,5 +1,5 @@
 import { __sendSuccessLOG, __logingInfoData } from './__test__';
-import { vip, vip_menuItems, vip_menuGoods, vip_items, vip_goods } from "../model/bd_types_vip";
+import { vip, vip_menuItems, vip_menuGoods, vip_items, vip_goods, ranks } from "../model/bd_types_vip";
 export const vipStart: EPR = async (info, data, send) => {
   __logingInfoData(info, data);
   const dataId = $(data).str("data_id");
@@ -41,31 +41,33 @@ export const vipStatus: EPR = async (info, data, send) => {
   };
   const rDBmI = await DB.Find<vip_menuItems>(dataId,{collection:"vip_menuItems"});
   var menuItemIs: Object[] = [];
-  if (!_.isNil(rDB)) for(const r of rDBmI)menuItemIs.push({
-    name:K.ITEM("str",r.name),
-    box:K.ITEM("str",r.box),
-    type:K.ITEM("str",r.type),
-    expire_stamp:K.ITEM("str",r.expire_stamp),
-    point:K.ITEM("u8",r.point),
-    need_rank:K.ITEM("u8",r.need_rank)
-  });
-  content.menu = {item:{i:menuItemIs}};
+  if (!_.isNil(rDB)) {
+    for(const r of rDBmI)menuItemIs.push({
+      name:K.ITEM("str",r.name),
+      box:K.ITEM("str",r.box),
+      type:K.ITEM("str",r.type),
+      expire_stamp:K.ITEM("str",r.expire_stamp),
+      point:K.ITEM("u8",r.point),
+      need_rank:K.ITEM("u8",r.need_rank)
+    });
+    content.menu = {item:{i:menuItemIs}};
+  }
 
   const rDBmG = await DB.Find<vip_menuGoods>(dataId,{collection:"vip_menuGoods"});
   var menuGoodsIs: Object[] = [];
-  if (!_.isNil(rDBmG)) for(const r of rDBmG){
-    menuGoodsIs.push({
+  if (!_.isNil(rDBmG)) {
+    for(const r of rDBmG) menuGoodsIs.push({
       name:K.ITEM("str",r.name),
       point:K.ITEM("u8",r.point),
       need_rank:K.ITEM("u8",r.need_rank)
     })
+    content.menu = {goods:{i:menuGoodsIs}};
   }
-  content.menu = {goods:{i:menuGoodsIs}};
 
   const rDBI = await DB.Find<vip_items>(dataId,{collection:"vip_items"});
   var itemIs: Object[] = [];
-  if (!_.isNil(rDB))for(const r of rDBI){
-    itemIs.push({
+  if (!_.isNil(rDB)){
+    for(const r of rDBI) itemIs.push({
       data_id:K.ITEM("str",r.data_id),
       name:K.ITEM("str",r.name),
       box:K.ITEM("str",r.box),
@@ -75,19 +77,19 @@ export const vipStatus: EPR = async (info, data, send) => {
       stamp:K.ITEM("str",r.stamp),
       expire:K.ITEM("str",r.expire)
     })
+    content.item = {i:itemIs};
   }
-  content.item = {i:itemIs};
 
   const rDBG = await DB.Find<vip_goods>(dataId,{collection:"vip_goods"});
   var goodsIs: Object[] = [];
-  if (!_.isNil(rDBG)) for(const r of rDBG){
-    goodsIs.push({
+  if (!_.isNil(rDBG)) {
+    for(const r of rDBG) goodsIs.push({
       name:K.ITEM("str",r.name),
       nr:K.ITEM("u8",r.nr),
       stamp:K.ITEM("str",r.stamp)
     })
+    content.goods = {i:goodsIs};
   }
-  content.goods = {i:goodsIs};
 
   return send.object(K.ATTR({
     point: rDB.point.toString(),
@@ -106,9 +108,8 @@ export const vipAdd_point: EPR = async (info, data, send) => {
   var addPointSUM = 0;
   for(const t of Ts){
     const r = K.ATTR({
-      tid:t.attr().tid
-    },{
-      already:K.ITEM("bool",false)
+      tid:t.attr().tid,
+      already:"0"
     });
     addPointSUM += t.number("point");
     innerR.push(r);
@@ -116,12 +117,17 @@ export const vipAdd_point: EPR = async (info, data, send) => {
   }
   const point_Result = responseDB.point + addPointSUM;
   const Tpoint_Result = responseDB.point_total + addPointSUM;
+  var rankVip = 0;
+  if(Tpoint_Result <= 5000)rankVip++;
+  if(Tpoint_Result <= 20000)rankVip++;
+  if(Tpoint_Result <= 50000)rankVip++;
   DB.Upsert<vip>(dataId,{
     collection:"vip"
   },{
     $set:{
       point:point_Result,
-      point_total:Tpoint_Result
+      point_total:Tpoint_Result,
+      vip_rank:rankVip
     }
   });
   return send.object(K.ATTR({

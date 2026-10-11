@@ -1,3 +1,10 @@
+export const ranks ={
+  0:"bronze",
+  1:"silver",
+  2:"gold",
+  3:"platinum"
+}
+
 export interface vip {
   collection: "vip";
   enable:boolean;
