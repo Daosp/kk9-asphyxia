@@ -3,7 +3,6 @@
 ### Todo FUNCTIONS
 
 - [ ] What are f*ck is DJP and SDJP?!?!?! (kk9djp & kk9sdjp)
-- [ ] What is "flags"? (kk9flags)
 - [ ] Multiplayer (lobby, kk9ranking, ...)
 
 
@@ -22,3 +21,4 @@
 ### Postponed
 
 - [ ] Enquetes and questions (kk9enquete & kk9question)
+- [ ] Game Setup Flags (kk9flags)
