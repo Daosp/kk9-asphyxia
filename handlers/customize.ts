@@ -178,6 +178,46 @@ export const customizeGet: EPR = async (info, data, send) => {
 };
 
 export const customizeCheck: EPR = async (info, data, send) => {
+  __logingInfoData(info, data);
+  const dataId = $(data).attr().data_id;
+  if (!dataId) {return send.deny();}
+  /**
+   * kk9customize.check
+   * 
+   * DATA:
+   *  - data_id="6AC255D500000000"
+   *  - method="get"
+   * <pro_id __type="s32">0</pro_id>
+   */
+  var response: {
+    [key: string]: any | Object; // любой строковый ключ с любым значением
+  } = {}
+  //BE68 - offset
+  var record = await DB.FindOne<custom>(dataId,{collection: 'custom',});
+
+  response = {
+    customize_id:K.ITEM("u32",1),
+    panel:{
+      base:K.ITEM("u32",parseInt(record.base),{avail:"1"}),//1000000-1000005
+      corner:K.ITEM("u32",parseInt(record.corner),{avail:"1"}),//2000000-2000005
+      midle:K.ITEM("u32",parseInt(record.midle),{avail:"1"}),//3000000-3000005
+      date:K.ITEM("u32",record.date_p)
+    },
+    table:{
+      hai:K.ITEM("u32",parseInt(record.hai),{avail:"1"}),//5000000-5000005
+      table:K.ITEM("u32",parseInt(record.table),{avail:"1"}),//6000000-6000224
+      date:K.ITEM("u32",record.date_t)
+    },
+    irodori:{
+      call:K.ITEM("u32",parseInt(record.call),{avail:"1"}), //7000000-7000001 ???
+      comment:K.ITEM("u32",parseInt(record.comment),{avail:"1"}), //8000000-8000000 ???
+      date:K.ITEM("u32",record.date_i)
+    },
+    gouka:{
+      movebg:K.ITEM("u32",parseInt(record.movebg),{avail:"1"}), //9000000-9000000 ???
+      date:K.ITEM("u32",record.date_g)
+    }
+  }
   return __sendSuccessLOG(info, data, send);
 };
 

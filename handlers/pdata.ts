@@ -22,10 +22,25 @@ export const pdataRead: EPR = async (info, data, send) => {
     const timeStr = formatCurrentDateTimeUTC();
 
     var innerData: KITEM<'bin'>[] = [];
+    const recCustom = await DB.FindOne<custom>(dataId,{collection: 'custom',});
 
     for (const rec of records) {
         const buf: Buffer = Buffer.from(rec.content,"hex");
-        if(rec.node_id == "14"){buf.set(customAllBuffer, 0xBE68)}
+        if(rec.node_id == "14"){
+          buf.writeUInt32BE(parseInt(recCustom.base),0xBDE0);
+          buf.writeUInt32BE(parseInt(recCustom.corner),0xBDE4);
+          buf.writeUInt32BE(parseInt(recCustom.midle),0xBDE8);
+          buf.writeUInt32BE(recCustom.date_p,0xBE2C);
+          buf.writeUInt32BE(parseInt(recCustom.hai),0xBD30);
+          buf.writeUInt32BE(parseInt(recCustom.table),0xBD34);
+          buf.writeUInt32BE(recCustom.date_t,0xBD38);
+          buf.writeUInt32BE(parseInt(recCustom.call),0xBD3C);
+          buf.writeUInt32BE(parseInt(recCustom.comment),0xBD40);
+          buf.writeUInt32BE(recCustom.date_i,0xBD44);
+          buf.writeUInt32BE(parseInt(recCustom.movebg),0xBD48);
+          buf.writeUInt32BE(recCustom.date_g,0xBD4C);
+          buf.set(customAllBuffer, 0xBE68);
+        }
         const attrMap: KAttrMap = {['node_id']:rec.node_id};
         const addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
         innerData.push(addData);

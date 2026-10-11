@@ -15,7 +15,11 @@ export const msgPut: EPR = async (info, data, send) => {
   const msg = $(data).attr().msg;
   const stamp = formatCurrentDateTimeUTC();
   const str = stamp + " - " + label + " : " + msg + "\n";
+<<<<<<< HEAD
   IO.WriteFile("./logMSG.txt",str,{flag:"a"});
+=======
+  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
+>>>>>>> b41a254719ecc6a7bd5fba09cc9bcdd2bba5feeb
   return __sendSuccessLOG(info, data, send);
 };
 
