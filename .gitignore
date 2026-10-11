@@ -3,4 +3,5 @@ tsconfig.json
 *.code-workspace
 *.zip
 *.7z
+logMSG.txt
 userdata_xml/*.xml
