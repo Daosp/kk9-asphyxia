@@ -22,11 +22,11 @@ export const pdataRead: EPR = async (info, data, send) => {
     const timeStr = formatCurrentDateTimeUTC();
 
     var innerData: KITEM<'bin'>[] = [];
-    const recCustom = await DB.FindOne<custom>(dataId,{collection: 'custom',});
 
     for (const rec of records) {
         const buf: Buffer = Buffer.from(rec.content,"hex");
-        if(rec.node_id == "14"){
+        if(rec.node_id == "14" && false){
+          const recCustom = await DB.FindOne<custom>(dataId,{collection: 'custom',});
           buf.writeUInt32BE(parseInt(recCustom.base),0xBDE0);
           buf.writeUInt32BE(parseInt(recCustom.corner),0xBDE4);
           buf.writeUInt32BE(parseInt(recCustom.midle),0xBDE8);
