@@ -1,5 +1,6 @@
 //DATA//
   custom: DB.FindOne(refid, { collection: 'custom' })
+  profile: DB.FindOne(refid, { login_count: { $exists: true } })
 
 -
   const names = {
@@ -421,62 +422,195 @@
     '3000003',
     '3000005'
   ];
+  const tableItems = Array.from(new Set([
+    ...table,
+    ...Array.from({ length: 41 }, (_, index) => String(6000183 + index))
+  ]));
+  const medalItems = Array.from({ length: 16 }, (_, index) => String(4010001 + index));
+  const selectedMedals = Array.isArray(custom && custom.medals) ? custom.medals.slice(0, 8).map(String) : [];
 
 //-
   You can include your own stylesheet
 link(rel='stylesheet' href='static/css/profile_name.css')
+link(rel='stylesheet' href='static/css/profile_customize.css')
 
-div
-  h3 Customization
-  section.section
-    form#custom-settings(method='post')
-      input(type='hidden' name='refid' value=refid)
-      input(type='hidden' name='collection' value='custom')
-      input(type='hidden' name='call' value='7000000')
-      input(type='hidden' name='comment' value='8000000')
-      input(type='hidden' name='movebg' value='9000000')
-      .field
-        label.label Customization ID
-        .control
-          input.input(type='text' name='name', value=custom.customId)
-      .field
-        label.label Hai (tiles)
-        .control
-          .select
-            select(name='hai', id='hai')
-              each i in hai
-                option(selected=(i==custom.hai) value=i) #{names[i]}
-      .field
-        label.label Table
-        .control
-          .select
-            select(name='table', id='table')
-              each i in table 
-                option(selected=(i==custom.table) value=i) #{names[i]}
-      .field
-        label.label base
-        .control
-          .select
-            select(name='base', id='base')
-              each i in base 
-                option(selected=(i==custom.base) value=i) #{names[i]}
-      .field
-        label.label corner
-        .control
-          .select
-            select(name='corner', id='corner')
-              each i in corner 
-                option(selected=(i==custom.corner) value=i) #{names[i]}
-      .field
-        label.label midle
-        .control
-          .select
-            select(name='midle', id='midle')
-              each i in midle 
-                option(selected=(i==custom.midle) value=i) #{names[i]}
-      .field
-        .control
-          button.button.is-primary(type='submit') Save
-      p#custom-save-status(aria-live='polite')
+.content
+  section.section.customize-page#profile-customization(data-profile-refid=refid)
+    .customize-title
+      h2 Visual Customization
 
-script(src='static/js/custom_page.js')
+    .customize-layout
+      aside.customize-preview
+        .customize-preview-heading
+          h3 Preview
+          button.customize-reset(type="button" id="customize-reset") Reset preview
+        p#profile-selection-status.customize-set-preview(role="status" aria-live="polite") Detecting signed-in profile...
+
+        .customize-preview-board
+          h4 Table Background & Tiles
+          .customize-board-images
+            img#customize-preview-table(src='static/images/table/table/' + (custom && custom.table ? custom.table : '6000000') + '.png' alt="Table background preview")
+            img#customize-preview-hai(src='static/images/table/hai/' + (custom && custom.hai ? custom.hai : '5000000') + '.png' alt="Tile preview")
+
+        .customize-preview-panel
+          h4 Player Panel
+          .customize-panel-images
+            img.panel-corner1(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num1.png' alt="")
+            img.panel-corner2(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num2.png' alt="")
+            img.panel-corner3(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num3.png' alt="")
+            img.panel-corner4(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num4.png' alt="")
+            img.panel-side1(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num1.png' alt="")
+            img.panel-side2(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num2.png' alt="")
+            img.panel-side3(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num3.png' alt="")
+            img.panel-side4(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num4.png' alt="")
+            img.panel-center(src='static/images/panel/base/' + (custom && custom.base ? custom.base : '1000000') + '.png' alt="")
+            - for (let slot = 0; slot < 8; slot++)
+              - const medalId = selectedMedals[slot]
+              img(class='panel-medal medal-' + (slot + 1) src='static/images/medals/' + medalId + '_type4.png' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId data-medal-preview=slot)
+
+      .customize-selector
+        nav.customize-categories(role="tablist" aria-label="Customization categories")
+          button.customize-category.is-active(type="button" role="tab" aria-selected="true" data-customize-tab="table") Table Background
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="hai") Tiles
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="panel") Player Panel
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="medal") Medals
+
+        form#custom-settings(method='post' data-page-refid=refid)
+          input(type='hidden' name='refid' value=refid)
+          input(type='hidden' name='collection' value='custom')
+          input(type='hidden' name='call' value='7000000')
+          input(type='hidden' name='comment' value='8000000')
+          input(type='hidden' name='movebg' value='9000000')
+          input#customize-value-table(type='hidden' name='table' value=(custom && custom.table ? custom.table : '6000000'))
+          input#customize-value-hai(type='hidden' name='hai' value=(custom && custom.hai ? custom.hai : '5000000'))
+          input#customize-value-base(type='hidden' name='base' value=(custom && custom.base ? custom.base : '1000000'))
+          input#customize-value-corner(type='hidden' name='corner' value=(custom && custom.corner ? custom.corner : '2000000'))
+          input#customize-value-midle(type='hidden' name='midle' value=(custom && custom.midle ? custom.midle : '3000000'))
+          input#customize-value-custom-id(type='hidden' name='customId' value=(custom && custom.customId ? custom.customId : '1'))
+
+          .customize-category-content#customize-table-panel(data-customize-panel="table")
+            .customize-page-links
+              button(type="button" data-page-prev disabled) Previous
+              span.is-current(data-page-status) Page 1
+              button(type="button" data-page-next) Next
+            .customize-item-list
+              table.customize-items
+                thead
+                  tr
+                    th.customize-item-image Image
+                    th.customize-item-details Part name
+                    th.customize-item-status Game setting
+                    th.customize-item-action Action
+                tbody
+                  each i in tableItems
+                    tr(data-customize-row="table")
+                      td.customize-item-image
+                        img(src='static/images/table/table/' + i + '.png' alt=(names[i] || 'Table ' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Table ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="table" data-item-id=i data-item-image='static/images/table/table/' + i + '.png' aria-pressed=String(i) === String(custom && custom.table ? custom.table : '6000000'))
+                          | Preview
+
+          .customize-category-content#customize-hai-panel(data-customize-panel="hai" hidden)
+            .customize-item-list
+              table.customize-items
+                thead
+                  tr
+                    th.customize-item-image Image
+                    th.customize-item-details Part name
+                    th.customize-item-status Game setting
+                    th.customize-item-action Action
+                tbody
+                  each i in hai
+                    tr
+                      td.customize-item-image
+                        img(src='static/images/table/hai/' + i + '.png' alt=(names[i] || 'Tile set ' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Tile set ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="hai" data-item-id=i data-item-image='static/images/table/hai/' + i + '.png' aria-pressed=String(i) === String(custom && custom.hai ? custom.hai : '5000000'))
+                          | Preview
+
+          .customize-category-content#customize-panel-panel(data-customize-panel="panel" hidden)
+            h4.customize-part-title Panel Base
+            .customize-item-list
+              table.customize-items
+                tbody
+                  each i in base
+                    tr
+                      td.customize-item-image
+                        img(src='static/images/panel/base/' + i + '.png' alt=(names[i] || 'Panel base ' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Panel base ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="base" data-item-id=i data-item-image='static/images/panel/base/' + i + '.png' aria-pressed=String(i) === String(custom && custom.base ? custom.base : '1000000'))
+                          | Preview
+            h4.customize-part-title Panel Corners
+            .customize-item-list
+              table.customize-items
+                tbody
+                  each i in corner
+                    tr
+                      td.customize-item-image
+                        img(src='static/images/panel/corner/' + i + '_num1.png' alt=(names[i] || 'Panel corners ' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Panel corners ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="corner" data-item-id=i aria-pressed=String(i) === String(custom && custom.corner ? custom.corner : '2000000'))
+                          | Preview
+            h4.customize-part-title Panel Sides
+            .customize-item-list
+              table.customize-items
+                tbody
+                  each i in midle
+                    tr
+                      td.customize-item-image
+                        img(src='static/images/panel/midle/' + i + '_num1.png' alt=(names[i] || 'Panel sides ' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Panel sides ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="midle" data-item-id=i aria-pressed=String(i) === String(custom && custom.midle ? custom.midle : '3000000'))
+                          | Preview
+
+          .customize-category-content#customize-medal-panel(data-customize-panel="medal" hidden)
+            .customize-medal-selection
+              h4.customize-part-title Medal Display
+              p Preview only. Select a slot, then choose a medal. Medal choices are not saved.
+              .customize-medal-slots
+                - for (let slot = 0; slot < 8; slot++)
+                  - const medalId = selectedMedals[slot] || ''
+                  .customize-medal-slot(data-medal-slot=slot data-medal-id=medalId)
+                    button.customize-medal-slot-select(type="button" data-medal-slot-select=slot aria-pressed=String(slot === 0))
+                      span Slot #{slot + 1}
+                      img(data-medal-slot-image=slot src='static/images/medals/' + medalId + '_type4.png' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId)
+                      span(data-medal-slot-label=slot)= medalId ? (names[medalId] || 'Medal ' + medalId) : 'Empty'
+                    button.customize-medal-clear(type="button" data-medal-clear=slot disabled=!medalId) Clear
+              p#customize-medal-status(aria-live="polite") Slot 1 selected
+              .customize-medal-grid
+                each i in medalItems
+                  button.customize-medal-choice(type="button" data-medal-choice=i aria-pressed=String(selectedMedals.includes(i)))
+                    img(src='static/images/medals/' + i + '_type4.png' alt=(names[i] || 'Medal ' + i))
+                    span= names[i] || 'Medal ' + i
+                    small Item ID: #{i}
+
+          .field
+            label.label(for="customize-custom-id") Customization ID
+            .control
+              input.input#customize-custom-id(type="number" min="1" step="1" value=(custom && custom.customId ? custom.customId : '1'))
+          .field
+            .control
+              button.button.is-primary(type='submit' disabled) Save
+          p#custom-save-status(aria-live='polite')
+
+script(src='static/js/profile_name.js')
