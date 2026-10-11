@@ -15,7 +15,7 @@ export const msgPut: EPR = async (info, data, send) => {
   const msg = $(data).attr().msg;
   const stamp = formatCurrentDateTimeUTC();
   const str = stamp + " - " + label + " : " + msg + "\n";
-  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
+  IO.WriteFile("./logMSG.txt",str,{flag:"a"});
   return __sendSuccessLOG(info, data, send);
 };
 
@@ -25,7 +25,7 @@ export const msgRec: EPR = async (info, data, send) => {
   const rec = $(data).attr().rec;
   const stamp = formatCurrentDateTimeUTC();
   const str = stamp+" - "+label+"("+shop_id+") : " + rec + "\n";
-  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
+  IO.WriteFile("./logMSG.txt",str,{flag:"a"});
 
   return __sendSuccessLOG(info, data, send);
 };
@@ -35,7 +35,7 @@ export const msgRecbin: EPR = async (info, data, send) => {
   const dataM = $(data).content;
   const stamp = formatCurrentDateTimeUTC();
   const str = stamp+" - recbin("+loc_id+") : " + dataM.toString() + "\n";
-  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
+  IO.WriteFile("./logMSG.txt",str,{flag:"a"});
   return __sendSuccessLOG(info, data, send);
 };
 
@@ -48,7 +48,7 @@ export const msgStat: EPR = async (info, data, send) => {
   for(const msg in $(data).elements("msg")){
     strings += stamp+" - "+$(msg).attr().label+"("+loc_id+", "+data_id+") : " + $(msg).content.toString() + "\n";
   }
-  IO.WriteFile("../logMSG.txt",strings,{flag:"a"});
+  IO.WriteFile("./logMSG.txt",strings,{flag:"a"});
 
   return __sendSuccessLOG(info, data, send);
 };
@@ -61,7 +61,7 @@ export const msgTrade: EPR = async (info, data, send) => {
   for(const t in $(data).elements("t")){
     strings += stamp+" - "+label+"("+data_id+" with "+ $(t).attr().data_id +") : " + $(t).content.toString() + "\n";
   }
-  IO.WriteFile("../logMSG.txt",strings,{flag:"a"});
+  IO.WriteFile("./logMSG.txt",strings,{flag:"a"});
 
   return __sendSuccessLOG(info, data, send);
 };
