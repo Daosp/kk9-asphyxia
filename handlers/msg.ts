@@ -1,5 +1,4 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
-import { msgs } from "../model/bd_types_profile";
 export const msgPut: EPR = async (info, data, send) => {
   /**
    * kk9msg.put
@@ -12,35 +11,57 @@ export const msgPut: EPR = async (info, data, send) => {
    *  - method="put"
    *  - msg="VERS_RETRY:ea,0,0,0,0,1,38,0\n"
    */
-  /*const label = $(data).attr().label;
+  const label = $(data).attr().label;
   const msg = $(data).attr().msg;
-  await DB.Insert<msgs>(
-      {
-        collection: 'msgs',
-        "stamp":formatCurrentDateTimeUTC(),
-        "label":label,
-        "msg":msg
-      }
-  );*/
+  const stamp = formatCurrentDateTimeUTC();
+  const str = stamp + " - " + label + " : " + msg + "\n";
+  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
   return __sendSuccessLOG(info, data, send);
 };
 
 export const msgRec: EPR = async (info, data, send) => {
+  const label = $(data).attr().label;
+  const shop_id = $(data).attr().loc_id;
+  const rec = $(data).attr().rec;
+  const stamp = formatCurrentDateTimeUTC();
+  const str = stamp+" - "+label+"("+shop_id+") : " + rec + "\n";
+  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
 
   return __sendSuccessLOG(info, data, send);
 };
 
 export const msgRecbin: EPR = async (info, data, send) => {
-
+  const loc_id = $(data).attr().loc_id;
+  const dataM = $(data).content;
+  const stamp = formatCurrentDateTimeUTC();
+  const str = stamp+" - recbin("+loc_id+") : " + dataM.toString() + "\n";
+  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
   return __sendSuccessLOG(info, data, send);
 };
 
 export const msgStat: EPR = async (info, data, send) => {
+  const data_id = $(data).attr().data_id;
+  //const ref_id = $(data).attr().ref_id;
+  const loc_id = $(data).attr().loc_id;
+  const stamp = formatCurrentDateTimeUTC();
+  var strings = ""
+  for(const msg in $(data).elements("msg")){
+    strings += stamp+" - "+$(msg).attr().label+"("+loc_id+", "+data_id+") : " + $(msg).content.toString() + "\n";
+  }
+  IO.WriteFile("../logMSG.txt",strings,{flag:"a"});
 
   return __sendSuccessLOG(info, data, send);
 };
 
 export const msgTrade: EPR = async (info, data, send) => {
+  const data_id = $(data).attr().data_id;
+  const label = $(data).attr().label;
+  const stamp = formatCurrentDateTimeUTC();
+  var strings = ""
+  for(const t in $(data).elements("t")){
+    strings += stamp+" - "+label+"("+data_id+" with "+ $(t).attr().data_id +") : " + $(t).content.toString() + "\n";
+  }
+  IO.WriteFile("../logMSG.txt",strings,{flag:"a"});
 
   return __sendSuccessLOG(info, data, send);
 };
