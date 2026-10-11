@@ -1,5 +1,4 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
-import { msgs } from "../model/bd_types_profile";
 export const msgPut: EPR = async (info, data, send) => {
   /**
    * kk9msg.put
@@ -12,16 +11,11 @@ export const msgPut: EPR = async (info, data, send) => {
    *  - method="put"
    *  - msg="VERS_RETRY:ea,0,0,0,0,1,38,0\n"
    */
-  /*const label = $(data).attr().label;
+  const label = $(data).attr().label;
   const msg = $(data).attr().msg;
-  await DB.Insert<msgs>(
-      {
-        collection: 'msgs',
-        "stamp":formatCurrentDateTimeUTC(),
-        "label":label,
-        "msg":msg
-      }
-  );*/
+  const stamp = formatCurrentDateTimeUTC();
+  const str = stamp + " - " + label + " : " + msg + "\n";
+  IO.WriteFile("../logMSG.txt",str,{flag:"a"});
   return __sendSuccessLOG(info, data, send);
 };
 
