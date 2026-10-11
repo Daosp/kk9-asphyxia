@@ -14,7 +14,7 @@ export const customizeGet: EPR = async (info, data, send) => {
    * DATA:
    *  - data_id="6AC255D500000000"
    *  - method="get"
-   * <pro_id __type="s32">0</pro_id>
+   * <pro_id __type="s32">0</pro_id> от 1 до 154
    */
   var response: {
     [key: string]: any | Object; // любой строковый ключ с любым значением
@@ -29,7 +29,7 @@ export const customizeGet: EPR = async (info, data, send) => {
       corner:K.ITEM("u32",parseInt(record.corner)),//2000000-2000005
       midle:K.ITEM("u32",parseInt(record.midle)),//3000000-3000005
       //medal_nr:K.ITEM("u32",1),
-      //medal:K.ARRAY("u32",[40000001]), //4000000-4000009 ???
+      //medal:K.ARRAY("u32",[40000001]), //4010000-4010016 ???
       //enable_pro_marker:K.ITEM("u32",100),
       //pro_marker:K.ITEM("u32",100),
       date:K.ITEM("u32",record.date_p)
@@ -174,7 +174,8 @@ export const customizeGet: EPR = async (info, data, send) => {
   console.log('-=RESPONSE=-');
   console.log(JSON.stringify(response));
   
-  return send.object(response);
+  const res = K.ATTR({expire:"0"},response)
+  return send.object(res);
 };
 
 export const customizeCheck: EPR = async (info, data, send) => {
