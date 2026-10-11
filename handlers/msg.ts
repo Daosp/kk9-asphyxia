@@ -32,9 +32,9 @@ export const msgRec: EPR = async (info, data, send) => {
 
 export const msgRecbin: EPR = async (info, data, send) => {
   const loc_id = $(data).attr().loc_id;
-  const dataM = $(data).content;
+  const dataM = $(data).buffer("data").toString("hex");
   const stamp = formatCurrentDateTimeUTC();
-  const str = stamp+" - recbin("+loc_id+") : " + dataM.toString() + "\n";
+  const str = stamp+" - recbin("+loc_id+") : " + dataM + "\n";
   IO.WriteFile("./logMSG.txt",str,{flag:"a"});
   return __sendSuccessLOG(info, data, send);
 };
@@ -44,9 +44,10 @@ export const msgStat: EPR = async (info, data, send) => {
   //const ref_id = $(data).attr().ref_id;
   const loc_id = $(data).attr().loc_id;
   const stamp = formatCurrentDateTimeUTC();
+  const msgs = $(data).elements("msg");
   var strings = ""
-  for(const msg in $(data).elements("msg")){
-    strings += stamp+" - "+$(msg).attr().label+"("+loc_id+", "+data_id+") : " + $(msg).content.toString() + "\n";
+  for(const i in msgs){
+    strings += stamp+" - "+msgs[i].attr().label+"("+loc_id+", "+data_id+") : " + msgs[i].content.toString() + "\n";
   }
   IO.WriteFile("./logMSG.txt",strings,{flag:"a"});
 
@@ -57,9 +58,10 @@ export const msgTrade: EPR = async (info, data, send) => {
   const data_id = $(data).attr().data_id;
   const label = $(data).attr().label;
   const stamp = formatCurrentDateTimeUTC();
+  const ts = $(data).elements("t");
   var strings = ""
-  for(const t in $(data).elements("t")){
-    strings += stamp+" - "+label+"("+data_id+" with "+ $(t).attr().data_id +") : " + $(t).content.toString() + "\n";
+  for(const i in ts){
+    strings += stamp+" - "+label+"("+data_id+" with "+ ts[i].attr().data_id +") : " + ts[i].content.toString() + "\n";
   }
   IO.WriteFile("./logMSG.txt",strings,{flag:"a"});
 
