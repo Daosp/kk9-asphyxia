@@ -26,3 +26,24 @@ export interface custom {
   movebg:string;
   date_g:number;
 }
+
+export interface custom_Medal {
+  collection: "custom_Medal";
+  medalNR:number;
+  medal0:string;
+  medal1:string;
+  medal2:string;
+  medal3:string;
+  medal4:string;
+  medal5:string;
+  medal6:string;
+  medal7:string;
+  medal8:string;
+  medal9:string;
+  medal10:string;
+  medal11:string;
+  medal12:string;
+  medal13:string;
+  medal14:string;
+  medal15:string;
+}

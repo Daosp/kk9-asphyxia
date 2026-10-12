@@ -1,6 +1,6 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC, __logingInfoData } from './__test__';
 import { pdata_data, pdata_profile } from "../model/bd_types_profile";
-import { customAll as customAllBuffer, custom } from "../model/bd_types_custom";
+import { customAll as customAllBuffer, custom, custom_Medal } from "../model/bd_types_custom";
 
 
 
@@ -139,7 +139,6 @@ export const pdataCreate: EPR = async (info, data, send) => {
     },
   });
   const UnixTime = Math.floor(new Date().getTime() / 1000);
-  if(await DB.Count<custom>(dataId,{collection:"custom"}) > 0){return send.success();}
   DB.Insert<custom>(
       dataId,
       {
@@ -157,6 +156,29 @@ export const pdataCreate: EPR = async (info, data, send) => {
           date_i: UnixTime,
           movebg: "9000000",
           date_g: UnixTime
+      }
+  );
+  DB.Insert<custom_Medal>(
+      dataId,
+      {
+          collection: 'custom_Medal',
+          medalNR: 0,
+          medal0:"",
+          medal1:"",
+          medal2:"",
+          medal3:"",
+          medal4:"",
+          medal5:"",
+          medal6:"",
+          medal7:"",
+          medal8:"",
+          medal9:"",
+          medal10:"",
+          medal11:"",
+          medal12:"",
+          medal13:"",
+          medal14:"",
+          medal15:"",
       }
   );
   return send.success();
