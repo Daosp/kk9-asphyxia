@@ -46,8 +46,21 @@ export const msgStat: EPR = async (info, data, send) => {
   const stamp = formatCurrentDateTimeUTC();
   const msgs = $(data).elements("msg");
   var strings = ""
+  var msg: string = "";
   for(const i in msgs){
-    strings += stamp+" - "+msgs[i].attr().label+"("+loc_id+", "+data_id+") : " + msgs[i].content.toString() + "\n";
+    const msgI = msgs[i].content;
+    if(Buffer.isBuffer(msgI)){
+      msg = msgI.toString("hex");
+    }else if(Array.isArray(msgI)){
+      switch (typeof msgI){
+        case "string":
+          msg = msgI;
+          break;
+        default:
+          msg = msgI.toString();
+      }
+    }
+    strings += stamp+" - "+msgs[i].attr().label+" ("+loc_id+", "+data_id+") : " + msg + "\n";
   }
   IO.WriteFile("./logMSG.txt",strings,{flag:"a"});
 
