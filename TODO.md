@@ -23,11 +23,11 @@
 
 ### In Progress
 
-- [ ] Customization (Fight Club Arrangement) (kk9customization)
 - [ ] Club info (kk9club)
 
 ### Done ✓
 
+- [x] Customization (Fight Club Arrangement) (kk9customization)
 - [x] Basic work of customization (Fight Club Arrangement) (kk9customization)
 - [x] kk9pdata
 - [x] kk9vers (nothing)
