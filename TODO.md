@@ -2,14 +2,20 @@
 
 ### Todo FUNCTIONS
 
-- [ ] Dragon Jackpot Points and Super Dragon Jackpot Points (kk9djp & kk9sdjp)
-- [ ] Multiplayer (lobby, kk9ranking, kk9pro, kk9proenter)
-- [ ] Parties (kk9party)
-- [ ] Event schedule (kk9event)
+- [ ] Points (kk9djp & kk9sdjp)
+    - [ ] DJ points (kk9djp)
+    - [ ] SDJ points (kk9sdjp)
+- [ ] Multiplayer (lobby, kk9ranking et cetera)
+    - [ ] Lobby (lobby)
+    - [ ] Tracking pro-players (kk9proenter)
+    - [ ] Ranking (kk9ranking)
+    - [ ] For pro-players? (kk9pro)
+    - [ ] Parties (kk9party)
+    - [ ] Event schedule (kk9event)
+    - [ ] What is it? (kk9channel)
 - [ ] Hai (Record of games?) (kk9hai)
 - [ ] What is it? (kk9identifier)
 - [ ] What is it? (kk9wdj)
-- [ ] What is it? (kk9channel)
 - [ ] PASELI minigames (kk9paseli)
 - [ ] SNS (kk9sns, kk9twitter)
 
@@ -17,13 +23,13 @@
 ### In Progress
 
 - [ ] Customization (kk9customization)
-- [ ] "Goods" (kk9vip)
-- [ ] Shop (kk9club)
+- [ ] FIGHT CLUB VIP (kk9vip)
+- [ ] Club info (kk9club)
 
 ### Done ✓
 
 - [x] kk9pdata
-- [x] vers (nothing)
+- [x] kk9vers (nothing)
 - [x] kk9session (crutch)
 - [x] kk9population (crutch)
 - [x] kk9msg (write in logMSG.txt)
