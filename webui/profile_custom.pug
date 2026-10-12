@@ -720,6 +720,34 @@
     "3010119":"-",
     "3010120":"-",
     "3010121":"-",
+    "7000000":"Default",
+    "7000001":"Dream star",
+    "7010001":"Red sticker",
+    "7010002":"Modern",
+    "7010003":"Ink",
+    "7010004":"Comic",
+    "7010005":"Chat OwO",
+    "7010006":"Checkers",
+    "7010007":"-w-",
+    "7010008":"Bamboo",
+    "7010009":"Zinrai",
+    "8000000":"Default",
+    "8010001":"Blood fog",
+    "8010002":"Modern",
+    "8010003":"Sinobuz",
+    "8010004":"Nani?!?!?!",
+    "8010005":"Bubbles",
+    "8010006":"Empress",
+    "8010007":"Chat OwO",
+    "8010008":"Bamboo",
+    "9000000":"No animation",
+    "9010001":"Gold dragon",
+    "9010002":"Flowers",
+    "9010003":"Honors",
+    "9010004":"Flower tracery",
+    "9010005":"Dog in glasses",
+    "9010006":"Clockwork",
+    "9010010":"Galaxy",
   };
 
   const hai = [
@@ -1452,6 +1480,45 @@
     "3010120",
     "3010121",
   ];
+
+  const call = [
+    "7000000",
+    "7000001",
+    "7010001",
+    "7010002",
+    "7010003",
+    "7010004",
+    "7010005",
+    "7010006",
+    "7010007",
+    "7010008",
+    "7010009",
+  ];
+
+  const comment = [
+    "8000000",
+    "8010001",
+    "8010002",
+    "8010003",
+    "8010004",
+    "8010005",
+    "8010006",
+    "8010007",
+    "8010008",
+  ];
+
+  const movebg = [
+    "9000000",
+    "9010001",
+    "9010002",
+    "9010003",
+    "9010004",
+    "9010005",
+    "9010006",
+    "9010010",
+  ];
+
+
   const tableItems = Array.from(new Set([
     ...table,
     ...Array.from({ length: 41 }, (_, index) => String(6000183 + index))
@@ -1498,26 +1565,43 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
               - const medalId = selectedMedals[slot]
               img(class='panel-medal medal-' + (slot + 1) src='static/img/medals/' + medalId + '.webp' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId data-medal-preview=slot)
 
+        .customize-preview-board
+          h4 Call
+          .customize-board-images
+            img#customize-preview-call(src='static/img/irodori/call/' + (custom && custom.call ? custom.call : '7000000') + '.webp' alt="Call preview")
+            
+        .customize-preview-board
+          h4 Comment
+          .customize-board-images
+            img#customize-preview-comment(src='static/img/irodori/comment/' + (custom && custom.comment ? custom.comment : '8000000') + '.webp' alt="Comment preview")
+        
+        .customize-preview-board
+          h4 Animated table
+          .customize-board-images
+            img#customize-preview-movebg(src='static/img/gouka-movebg/' + (custom && custom.movebg ? custom.movebg : '9000000') + '.webp' alt="Anitable preview")
+
       .customize-selector
         nav.customize-categories(role="tablist" aria-label="Customization categories")
-          button.customize-category.is-active(type="button" role="tab" aria-selected="true" data-customize-tab="table") Table Background
+          button.customize-category.is-active(type="button" role="tab" aria-selected="true" data-customize-tab="table") Table
           button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="hai") Tiles
-          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="panel") Player Panel
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="panel") Pl. Panel
           button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="medal") Medals
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="call") Call
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="comment") Comm
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="movebg") Anitable
 
         form#custom-settings(method='post' data-page-refid=refid)
           input(type='hidden' name='refid' value=refid)
           input(type='hidden' name='collection' value='custom')
-          input#customize-custom-id(type='hidden' name='collection' value=(custom && custom.customId ? custom.customId : '1'))
-          input(type='hidden' name='call' value='7000000')
-          input(type='hidden' name='comment' value='8000000')
-          input(type='hidden' name='movebg' value='9000000')
+          input#customize-custom-id(type='hidden' name='customId' value=(custom && custom.customId ? custom.customId : '1'))
+          input#customize-value-call(type='hidden' name='call' value=(custom && custom.call ? custom.call : '7000000'))
+          input#customize-value-comment(type='hidden' name='comment' value=(custom && custom.comment ? custom.comment : '8000000'))
+          input#customize-value-movebg(type='hidden' name='movebg' value=(custom && custom.movebg ? custom.movebg : '9000000'))
           input#customize-value-table(type='hidden' name='table' value=(custom && custom.table ? custom.table : '6000000'))
           input#customize-value-hai(type='hidden' name='hai' value=(custom && custom.hai ? custom.hai : '5000000'))
           input#customize-value-base(type='hidden' name='base' value=(custom && custom.base ? custom.base : '1000000'))
           input#customize-value-corner(type='hidden' name='corner' value=(custom && custom.corner ? custom.corner : '2000000'))
           input#customize-value-midle(type='hidden' name='midle' value=(custom && custom.midle ? custom.midle : '3000000'))
-          input#customize-value-custom-id(type='hidden' name='customId' value=(custom && custom.customId ? custom.customId : '1'))
 
           .customize-category-content#customize-table-panel(data-customize-panel="table")
             .customize-page-links
@@ -1634,6 +1718,72 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                     img(src='static/img/medals/' + i + '.webp' alt=(names[i] || 'Medal ' + i))
                     span= names[i] || 'Medal ' + i
                     small Item ID: #{i}
+
+          .customize-category-content#customize-call-panel(data-customize-panel="call" hidden)
+            .customize-item-list
+              table.customize-items
+                thead
+                  tr
+                    th.customize-item-image Image
+                    th.customize-item-details Part name
+                    th.customize-item-status Game setting
+                    th.customize-item-action Action
+                tbody
+                  each i in call
+                    tr
+                      td.customize-item-image
+                        img(src='static/img/irodori/call/' + i + '.webp' alt=(names[i] || 'Call' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Call ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="call" data-item-id=i data-item-image='static/img/irodori/call/' + i + '.webp' aria-pressed=String(i) === String(custom && custom.call ? custom.call : '7000000'))
+                          | Preview
+
+          .customize-category-content#customize-comment-panel(data-customize-panel="comment" hidden)
+            .customize-item-list
+              table.customize-items
+                thead
+                  tr
+                    th.customize-item-image Image
+                    th.customize-item-details Part name
+                    th.customize-item-status Game setting
+                    th.customize-item-action Action
+                tbody
+                  each i in comment
+                    tr
+                      td.customize-item-image
+                        img(src='static/img/irodori/comment/' + i + '.webp' alt=(names[i] || 'Comment ' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Comment ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="comment" data-item-id=i data-item-image='static/img/irodori/comment/' + i + '.webp' aria-pressed=String(i) === String(custom && custom.comment ? custom.comment : '8000000'))
+                          | Preview
+
+          .customize-category-content#customize-movebg-panel(data-customize-panel="movebg" hidden)
+            .customize-item-list
+              table.customize-items
+                thead
+                  tr
+                    th.customize-item-image Image
+                    th.customize-item-details Part name
+                    th.customize-item-status Game setting
+                    th.customize-item-action Action
+                tbody
+                  each i in movebg
+                    tr
+                      td.customize-item-image
+                        img(src='static/img/gouka-movebg/' + i + '.webp' alt=(names[i] || 'Anitable' + i))
+                      td.customize-item-details
+                        strong= names[i] || 'Anitable ' + i
+                        p Item ID: #{i}
+                      td.customize-item-status
+                      td.customize-item-action
+                        button.customize-preview-button(type="button" data-customize-select="movebg" data-item-id=i data-item-image='static/img/gouka-movebg/' + i + '.webp' aria-pressed=String(i) === String(custom && custom.movebg ? custom.movebg : '9000000'))
+                          | Preview
 
           .field
             .control

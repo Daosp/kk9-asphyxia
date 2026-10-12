@@ -659,3 +659,10 @@
     width: 74px;
   }
 }
+
+.control {
+  display: flex;
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center;     /* Центрирование по вертикали */
+  height: 60px;           /* Обязательно задайте высоту родителю */
+}

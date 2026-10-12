@@ -13,7 +13,10 @@ const defaults = {
   hai: '5000000',
   base: '1000000',
   corner: '2000000',
-  midle: '3000000'
+  midle: '3000000',
+  call: '7000000',
+  comment: '8000000',
+  movebg: '9000000',
 };
 let tablePage = 0;
 let activeMedalSlot = 0;
@@ -34,6 +37,21 @@ const updatePreview = (key, id, image) => {
 
   if (key === 'base') {
     document.querySelector('.panel-center').src = image;
+    return;
+  }
+
+  if (key === 'call') {
+    document.querySelector('#customize-preview-call').src = image;
+    return;
+  }
+
+  if (key === 'comment') {
+    document.querySelector('#customize-preview-comment').src = image;
+    return;
+  }
+
+  if (key === 'movebg') {
+    document.querySelector('#customize-preview-movebg').src = image;
     return;
   }
 
