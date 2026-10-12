@@ -126,41 +126,45 @@ export const pdataWrite: EPR = async (info, data, send) => {
         const date_g   = dataBuffer.readUInt32BE(0xBE4C);
         const customId = dataBuffer.readUInt32BE(0xBE58);
         const rC = {
-          customId : customId.toString(),
-          base     : base.toString(),
-          corner   : corner.toString(),
-          midle    : midle.toString(),
-          date_p   : date_p,
-          hai      : hai.toString(),
-          table    : table.toString(),
-          date_t   : date_t,
-          call     : call.toString(),
-          comment  : comment.toString(),
-          date_i   : date_i,
-          movebg   : movebg.toString(),
-          date_g   : date_g
+          $set:{
+            customId  : customId.toString(),
+            base      : base.toString(),
+            corner    : corner.toString(),
+            midle     : midle.toString(),
+            date_p    : date_p,
+            hai       : hai.toString(),
+            table     : table.toString(),
+            date_t    : date_t,
+            call      : call.toString(),
+            comment   : comment.toString(),
+            date_i    : date_i,
+            movebg    : movebg.toString(),
+            date_g    : date_g
+          }
         }
         DB.Upsert<custom>(dataId,{collection:"custom"},rC);
         const arM = [medal0,medal1,medal2,medal3,medal4,medal5,medal6,medal7,medal8,medal9,medal10,medal11,medal12,medal13,medal14,medal15];
         const medal_nr = arM.filter(num => num > 0).length;
         DB.Upsert<custom_Medal>(dataId,{collection:"custom_Medal"},{
-          medal_nr: medal_nr,
-          medal0  : medal0,
-          medal1  : medal1,
-          medal2  : medal2,
-          medal3  : medal3,
-          medal4  : medal4,
-          medal5  : medal5,
-          medal6  : medal6,
-          medal7  : medal7,
-          medal8  : medal8,
-          medal9  : medal9,
-          medal10 : medal10,
-          medal11 : medal11,
-          medal12 : medal12,
-          medal13 : medal13,
-          medal14 : medal14,
-          medal15 : medal15
+          $set:{
+            medal_nr: medal_nr,
+            medal0  : medal0,
+            medal1  : medal1,
+            medal2  : medal2,
+            medal3  : medal3,
+            medal4  : medal4,
+            medal5  : medal5,
+            medal6  : medal6,
+            medal7  : medal7,
+            medal8  : medal8,
+            medal9  : medal9,
+            medal10 : medal10,
+            medal11 : medal11,
+            medal12 : medal12,
+            medal13 : medal13,
+            medal14 : medal14,
+            medal15 : medal15
+          }
         });
       }
       const dataStr = dataBuffer.toString("hex");
