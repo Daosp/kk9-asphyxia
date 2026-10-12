@@ -9,6 +9,7 @@
 - [ ] Hai (Record of games?) (kk9hai)
 - [ ] What is it? (kk9identifier)
 - [ ] What is it? (kk9wdj)
+- [ ] What is it? (kk9channel)
 - [ ] PASELI minigames (kk9paseli)
 - [ ] SNS (kk9sns, kk9twitter)
 
