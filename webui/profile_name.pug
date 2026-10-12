@@ -449,24 +449,24 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
         .customize-preview-board
           h4 Table Background & Tiles
           .customize-board-images
-            img#customize-preview-table(src='static/images/table/table/' + (custom && custom.table ? custom.table : '6000000') + '.png' alt="Table background preview")
-            img#customize-preview-hai(src='static/images/table/hai/' + (custom && custom.hai ? custom.hai : '5000000') + '.png' alt="Tile preview")
+            img#customize-preview-table(src='static/img/table/table/' + (custom && custom.table ? custom.table : '6000000') + '.webp' alt="Table background preview")
+            img#customize-preview-hai(src='static/img/table/hai/' + (custom && custom.hai ? custom.hai : '5000000') + '.webp' alt="Tile preview")
 
         .customize-preview-panel
           h4 Player Panel
           .customize-panel-images
-            img.panel-corner1(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num1.png' alt="")
-            img.panel-corner2(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num2.png' alt="")
-            img.panel-corner3(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num3.png' alt="")
-            img.panel-corner4(src='static/images/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num4.png' alt="")
-            img.panel-side1(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num1.png' alt="")
-            img.panel-side2(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num2.png' alt="")
-            img.panel-side3(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num3.png' alt="")
-            img.panel-side4(src='static/images/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num4.png' alt="")
-            img.panel-center(src='static/images/panel/base/' + (custom && custom.base ? custom.base : '1000000') + '.png' alt="")
+            img.panel-corner1(src='static/img/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num1.webp' alt="")
+            img.panel-corner2(src='static/img/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num2.webp' alt="")
+            img.panel-corner3(src='static/img/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num3.webp' alt="")
+            img.panel-corner4(src='static/img/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num4.webp' alt="")
+            img.panel-side1(src='static/img/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num1.webp' alt="")
+            img.panel-side2(src='static/img/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num2.webp' alt="")
+            img.panel-side3(src='static/img/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num3.webp' alt="")
+            img.panel-side4(src='static/img/panel/midle/' + (custom && custom.midle ? custom.midle : '3000000') + '_num4.webp' alt="")
+            img.panel-center(src='static/img/panel/base/' + (custom && custom.base ? custom.base : '1000000') + '.webp' alt="")
             - for (let slot = 0; slot < 8; slot++)
               - const medalId = selectedMedals[slot]
-              img(class='panel-medal medal-' + (slot + 1) src='static/images/medals/' + medalId + '_type4.png' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId data-medal-preview=slot)
+              img(class='panel-medal medal-' + (slot + 1) src='static/img/medals/' + medalId + '_type4.webp' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId data-medal-preview=slot)
 
       .customize-selector
         nav.customize-categories(role="tablist" aria-label="Customization categories")
@@ -505,13 +505,13 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                   each i in tableItems
                     tr(data-customize-row="table")
                       td.customize-item-image
-                        img(src='static/images/table/table/' + i + '.png' alt=(names[i] || 'Table ' + i))
+                        img(src='static/img/table/table/' + i + '.webp' alt=(names[i] || 'Table ' + i))
                       td.customize-item-details
                         strong= names[i] || 'Table ' + i
                         p Item ID: #{i}
                       td.customize-item-status
                       td.customize-item-action
-                        button.customize-preview-button(type="button" data-customize-select="table" data-item-id=i data-item-image='static/images/table/table/' + i + '.png' aria-pressed=String(i) === String(custom && custom.table ? custom.table : '6000000'))
+                        button.customize-preview-button(type="button" data-customize-select="table" data-item-id=i data-item-image='static/img/table/table/' + i + '.webp' aria-pressed=String(i) === String(custom && custom.table ? custom.table : '6000000'))
                           | Preview
 
           .customize-category-content#customize-hai-panel(data-customize-panel="hai" hidden)
@@ -527,13 +527,13 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                   each i in hai
                     tr
                       td.customize-item-image
-                        img(src='static/images/table/hai/' + i + '.png' alt=(names[i] || 'Tile set ' + i))
+                        img(src='static/img/table/hai/' + i + '.webp' alt=(names[i] || 'Tile set ' + i))
                       td.customize-item-details
                         strong= names[i] || 'Tile set ' + i
                         p Item ID: #{i}
                       td.customize-item-status
                       td.customize-item-action
-                        button.customize-preview-button(type="button" data-customize-select="hai" data-item-id=i data-item-image='static/images/table/hai/' + i + '.png' aria-pressed=String(i) === String(custom && custom.hai ? custom.hai : '5000000'))
+                        button.customize-preview-button(type="button" data-customize-select="hai" data-item-id=i data-item-image='static/img/table/hai/' + i + '.webp' aria-pressed=String(i) === String(custom && custom.hai ? custom.hai : '5000000'))
                           | Preview
 
           .customize-category-content#customize-panel-panel(data-customize-panel="panel" hidden)
@@ -544,13 +544,13 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                   each i in base
                     tr
                       td.customize-item-image
-                        img(src='static/images/panel/base/' + i + '.png' alt=(names[i] || 'Panel base ' + i))
+                        img(src='static/img/panel/base/' + i + '.webp' alt=(names[i] || 'Panel base ' + i))
                       td.customize-item-details
                         strong= names[i] || 'Panel base ' + i
                         p Item ID: #{i}
                       td.customize-item-status
                       td.customize-item-action
-                        button.customize-preview-button(type="button" data-customize-select="base" data-item-id=i data-item-image='static/images/panel/base/' + i + '.png' aria-pressed=String(i) === String(custom && custom.base ? custom.base : '1000000'))
+                        button.customize-preview-button(type="button" data-customize-select="base" data-item-id=i data-item-image='static/img/panel/base/' + i + '.webp' aria-pressed=String(i) === String(custom && custom.base ? custom.base : '1000000'))
                           | Preview
             h4.customize-part-title Panel Corners
             .customize-item-list
@@ -559,7 +559,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                   each i in corner
                     tr
                       td.customize-item-image
-                        img(src='static/images/panel/corner/' + i + '_num1.png' alt=(names[i] || 'Panel corners ' + i))
+                        img(src='static/img/panel/corner/' + i + '_num1.webp' alt=(names[i] || 'Panel corners ' + i))
                       td.customize-item-details
                         strong= names[i] || 'Panel corners ' + i
                         p Item ID: #{i}
@@ -574,7 +574,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                   each i in midle
                     tr
                       td.customize-item-image
-                        img(src='static/images/panel/midle/' + i + '_num1.png' alt=(names[i] || 'Panel sides ' + i))
+                        img(src='static/img/panel/midle/' + i + '_num1.webp' alt=(names[i] || 'Panel sides ' + i))
                       td.customize-item-details
                         strong= names[i] || 'Panel sides ' + i
                         p Item ID: #{i}
@@ -593,14 +593,14 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                   .customize-medal-slot(data-medal-slot=slot data-medal-id=medalId)
                     button.customize-medal-slot-select(type="button" data-medal-slot-select=slot aria-pressed=String(slot === 0))
                       span Slot #{slot + 1}
-                      img(data-medal-slot-image=slot src='static/images/medals/' + medalId + '.png' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId)
+                      img(data-medal-slot-image=slot src='static/img/medals/' + medalId + '.webp' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId)
                       span(data-medal-slot-label=slot)= medalId ? (names[medalId] || 'Medal ' + medalId) : 'Empty'
                     button.customize-medal-clear(type="button" data-medal-clear=slot disabled=!medalId) Clear
               p#customize-medal-status(aria-live="polite") Slot 1 selected
               .customize-medal-grid
                 each i in medalItems
                   button.customize-medal-choice(type="button" data-medal-choice=i aria-pressed=String(selectedMedals.includes(i)))
-                    img(src='static/images/medals/' + i + '.png' alt=(names[i] || 'Medal ' + i))
+                    img(src='static/img/medals/' + i + '.webp' alt=(names[i] || 'Medal ' + i))
                     span= names[i] || 'Medal ' + i
                     small Item ID: #{i}
 
