@@ -20,16 +20,13 @@ export const customizeGet: EPR = async (info, data, send) => {
     [key: string]: any | Object; // любой строковый ключ с любым значением
   } = {}
   //BE68 - offset
-  var rCust = await DB.FindOne<custom>(dataId,{collection: 'custom',});
-  
+  const rCust = await DB.FindOne<custom>(dataId,{collection: 'custom',});
   response = {
     customize_id:K.ITEM("u32",1),
     panel:{
       base:K.ITEM("u32",parseInt(rCust.base)),       //1000000-1000005
       corner:K.ITEM("u32",parseInt(rCust.corner)),   //2000000-2000005
       midle:K.ITEM("u32",parseInt(rCust.midle)),     //3000000-3000005
-      //medal_nr:K.ITEM("u32",1),
-      //medal:K.ARRAY("u32",[40000001]),              //4010001-4010016
       //enable_pro_marker:K.ITEM("u32",100),
       //pro_marker:K.ITEM("u32",100),
       date:K.ITEM("u32",rCust.date_p)
@@ -50,10 +47,10 @@ export const customizeGet: EPR = async (info, data, send) => {
     }
   }
 
-  var rMed = await DB.FindOne<custom_Medal>(dataId,{collection: 'custom_Medal',});
-  if (!_.isNil(rMed) && rMed.medalNR > 0) {
+  const rMed = await DB.FindOne<custom_Medal>(dataId,{collection: 'custom_Medal',});
+  if (!_.isNil(rMed) && rMed.medalNR > 0) {          //4010001-4010016
     response.panel.medal_nr = K.ITEM("u32",rMed.medalNR);
-    var medalArray: number[] = [rMed.medal0,rMed.medal1,rMed.medal2,rMed.medal3,rMed.medal4,rMed.medal5,rMed.medal6,rMed.medal7,rMed.medal8,rMed.medal9,rMed.medal10,rMed.medal11,rMed.medal12,rMed.medal13,rMed.medal14,rMed.medal15];
+    const medalArray: number[] = [rMed.medal0,rMed.medal1,rMed.medal2,rMed.medal3,rMed.medal4,rMed.medal5,rMed.medal6,rMed.medal7,rMed.medal8,rMed.medal9,rMed.medal10,rMed.medal11,rMed.medal12,rMed.medal13,rMed.medal14,rMed.medal15];
     response.panel.medal = K.ARRAY("u32",medalArray.slice(0, rMed.medalNR));
   }
 
