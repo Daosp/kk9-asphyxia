@@ -24,25 +24,25 @@ export const customizeGet: EPR = async (info, data, send) => {
   response = {
     customize_id:K.ITEM("u32",1),
     panel:{
-      base:K.ITEM("u32",parseInt(rCust.base)),       //1000000-1000005
-      corner:K.ITEM("u32",parseInt(rCust.corner)),   //2000000-2000005
-      midle:K.ITEM("u32",parseInt(rCust.midle)),     //3000000-3000005
+      base:K.ITEM("u32",parseInt(rCust.base)),       //1000000-1000005 , 1010001-1010005
+      corner:K.ITEM("u32",parseInt(rCust.corner)),   //2000000-2000005 , 2010001-2010005
+      midle:K.ITEM("u32",parseInt(rCust.midle)),     //3000000-3000005 , 3010001-3010005
       //enable_pro_marker:K.ITEM("u32",100),
       //pro_marker:K.ITEM("u32",100),
       date:K.ITEM("u32",rCust.date_p)
     },
     table:{
-      hai:K.ITEM("u32",parseInt(rCust.hai)),         //5000000-5000005
-      table:K.ITEM("u32",parseInt(rCust.table)),     //6000000-6000224
+      hai:K.ITEM("u32",parseInt(rCust.hai)),         //5000000-5000005 , 5010001-5010005
+      table:K.ITEM("u32",parseInt(rCust.table)),     //6000000-6000224 , 6010001-6010224
       date:K.ITEM("u32",rCust.date_t)
     },
     irodori:{
-      call:K.ITEM("u32",parseInt(rCust.call)),       //7000000-7000001 ???
-      comment:K.ITEM("u32",parseInt(rCust.comment)), //8000000-8000000 ???
+      call:K.ITEM("u32",parseInt(rCust.call)),       //7000000-7000001 , 7010001-7010001
+      comment:K.ITEM("u32",parseInt(rCust.comment)), //8000000-8000000 , 8010001-8010000
       date:K.ITEM("u32",rCust.date_i)
     },
     gouka:{
-      movebg:K.ITEM("u32",parseInt(rCust.movebg)),   //9000000-9000000 ???
+      movebg:K.ITEM("u32",parseInt(rCust.movebg)),   //9000000 , 9010001-9010003
       date:K.ITEM("u32",rCust.date_g)
     }
   }

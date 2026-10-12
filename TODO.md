@@ -18,16 +18,17 @@
 - [ ] What is it? (kk9wdj)
 - [ ] PASELI minigames (kk9paseli)
 - [ ] SNS (kk9sns, kk9twitter)
+- [ ] FIGHT CLUB VIP (kk9vip)
 
 
 ### In Progress
 
 - [ ] Customization (Fight Club Arrangement) (kk9customization)
-- [ ] FIGHT CLUB VIP (kk9vip)
 - [ ] Club info (kk9club)
 
 ### Done ✓
 
+- [x] Basic work of customization (Fight Club Arrangement) (kk9customization)
 - [x] kk9pdata
 - [x] kk9vers (nothing)
 - [x] kk9session (crutch)

@@ -25,21 +25,39 @@ export const pdataRead: EPR = async (info, data, send) => {
 
     for (const rec of records) {
         const buf: Buffer = Buffer.from(rec.content,"hex");
-        if(rec.node_id == "14" && false){
+        if(rec.node_id == "14"){
           const recCustom = await DB.FindOne<custom>(dataId,{collection: 'custom',});
-          buf.writeUInt32BE(parseInt(recCustom.base),0xBDE0);
-          buf.writeUInt32BE(parseInt(recCustom.corner),0xBDE4);
-          buf.writeUInt32BE(parseInt(recCustom.midle),0xBDE8);
-          buf.writeUInt32BE(recCustom.date_p,0xBE2C);
-          buf.writeUInt32BE(parseInt(recCustom.hai),0xBD30);
-          buf.writeUInt32BE(parseInt(recCustom.table),0xBD34);
-          buf.writeUInt32BE(recCustom.date_t,0xBD38);
-          buf.writeUInt32BE(parseInt(recCustom.call),0xBD3C);
-          buf.writeUInt32BE(parseInt(recCustom.comment),0xBD40);
-          buf.writeUInt32BE(recCustom.date_i,0xBD44);
-          buf.writeUInt32BE(parseInt(recCustom.movebg),0xBD48);
-          buf.writeUInt32BE(recCustom.date_g,0xBD4C);
-          buf.set(customAllBuffer, 0xBE68);
+          const recMedals = await DB.FindOne<custom_Medal>(dataId,{collection: 'custom_Medal',});
+          buf.writeUInt32BE(parseInt(recCustom.base)      ,0xBDE0);
+          buf.writeUInt32BE(parseInt(recCustom.corner)    ,0xBDE4);
+          buf.writeUInt32BE(parseInt(recCustom.midle)     ,0xBDE8);
+          buf.writeUInt32BE(         recMedals.medal0     ,0xBDEC);
+          buf.writeUInt32BE(         recMedals.medal1     ,0xBDF0);
+          buf.writeUInt32BE(         recMedals.medal2     ,0xBDF4);
+          buf.writeUInt32BE(         recMedals.medal3     ,0xBDF8);
+          buf.writeUInt32BE(         recMedals.medal4     ,0xBDFC);
+          buf.writeUInt32BE(         recMedals.medal5     ,0xBE00);
+          buf.writeUInt32BE(         recMedals.medal6     ,0xBE04);
+          buf.writeUInt32BE(         recMedals.medal7     ,0xBE08);
+          buf.writeUInt32BE(         recMedals.medal8     ,0xBE0C);
+          buf.writeUInt32BE(         recMedals.medal9     ,0xBE10);
+          buf.writeUInt32BE(         recMedals.medal10    ,0xBE14);
+          buf.writeUInt32BE(         recMedals.medal11    ,0xBE18);
+          buf.writeUInt32BE(         recMedals.medal12    ,0xBE1C);
+          buf.writeUInt32BE(         recMedals.medal13    ,0xBE20);
+          buf.writeUInt32BE(         recMedals.medal14    ,0xBE24);
+          buf.writeUInt32BE(         recMedals.medal15    ,0xBE28);
+          buf.writeUInt32BE(         recCustom.date_p     ,0xBE2C);
+          buf.writeUInt32BE(parseInt(recCustom.hai)       ,0xBE30);
+          buf.writeUInt32BE(parseInt(recCustom.table)     ,0xBE34);
+          buf.writeUInt32BE(         recCustom.date_t     ,0xBE38);
+          buf.writeUInt32BE(parseInt(recCustom.call)      ,0xBE3C);
+          buf.writeUInt32BE(parseInt(recCustom.comment)   ,0xBE40);
+          buf.writeUInt32BE(         recCustom.date_i     ,0xBE44);
+          buf.writeUInt32BE(parseInt(recCustom.movebg)    ,0xBE48);
+          buf.writeUInt32BE(         recCustom.date_g     ,0xBE4C);
+          buf.writeUInt32BE(parseInt(recCustom.customId)  ,0xBE58);
+          //buf.set(customAllBuffer, 0xBE68);
         }
         const attrMap: KAttrMap = {['node_id']:rec.node_id};
         const addData: KITEM<'bin'> = K.ITEM('bin',buf,attrMap);
@@ -76,7 +94,76 @@ export const pdataWrite: EPR = async (info, data, send) => {
 
     for(var _i = 0; _i < lengthDataNodes; _i++){
       const dataAddr = $(data).attr("data.".concat(_i.toString())).node_id;
-      const dataBuffer = $(data).buffer("data.".concat(_i.toString())).toString("hex");
+      const dataBuffer = $(data).buffer("data.".concat(_i.toString()));
+      if(dataAddr == "14"){
+        const base     = dataBuffer.readUInt32BE(0xBDE0);
+        const corner   = dataBuffer.readUInt32BE(0xBDE4);
+        const midle    = dataBuffer.readUInt32BE(0xBDE8);
+        const medal0   = dataBuffer.readUInt32BE(0xBDEC);
+        const medal1   = dataBuffer.readUInt32BE(0xBDF0);
+        const medal2   = dataBuffer.readUInt32BE(0xBDF4);
+        const medal3   = dataBuffer.readUInt32BE(0xBDF8);
+        const medal4   = dataBuffer.readUInt32BE(0xBDFC);
+        const medal5   = dataBuffer.readUInt32BE(0xBE00);
+        const medal6   = dataBuffer.readUInt32BE(0xBE04);
+        const medal7   = dataBuffer.readUInt32BE(0xBE08);
+        const medal8   = dataBuffer.readUInt32BE(0xBE0C);
+        const medal9   = dataBuffer.readUInt32BE(0xBE10);
+        const medal10  = dataBuffer.readUInt32BE(0xBE14);
+        const medal11  = dataBuffer.readUInt32BE(0xBE18);
+        const medal12  = dataBuffer.readUInt32BE(0xBE1C);
+        const medal13  = dataBuffer.readUInt32BE(0xBE20);
+        const medal14  = dataBuffer.readUInt32BE(0xBE24);
+        const medal15  = dataBuffer.readUInt32BE(0xBE28);
+        const date_p   = dataBuffer.readUInt32BE(0xBE2C);
+        const hai      = dataBuffer.readUInt32BE(0xBE30);
+        const table    = dataBuffer.readUInt32BE(0xBE34);
+        const date_t   = dataBuffer.readUInt32BE(0xBE38);
+        const call     = dataBuffer.readUInt32BE(0xBE3C);
+        const comment  = dataBuffer.readUInt32BE(0xBE40);
+        const date_i   = dataBuffer.readUInt32BE(0xBE44);
+        const movebg   = dataBuffer.readUInt32BE(0xBE48);
+        const date_g   = dataBuffer.readUInt32BE(0xBE4C);
+        const customId = dataBuffer.readUInt32BE(0xBE58);
+        const rC = {
+          customId : customId.toString(),
+          base     : base.toString(),
+          corner   : corner.toString(),
+          midle    : midle.toString(),
+          date_p   : date_p,
+          hai      : hai.toString(),
+          table    : table.toString(),
+          date_t   : date_t,
+          call     : call.toString(),
+          comment  : comment.toString(),
+          date_i   : date_i,
+          movebg   : movebg.toString(),
+          date_g   : date_g
+        }
+        DB.Upsert<custom>(dataId,{collection:"custom"},rC);
+        const arM = [medal0,medal1,medal2,medal3,medal4,medal5,medal6,medal7,medal8,medal9,medal10,medal11,medal12,medal13,medal14,medal15];
+        const medal_nr = arM.filter(num => num > 0).length;
+        DB.Upsert<custom_Medal>(dataId,{collection:"custom_Medal"},{
+          medal_nr: medal_nr,
+          medal0  : medal0,
+          medal1  : medal1,
+          medal2  : medal2,
+          medal3  : medal3,
+          medal4  : medal4,
+          medal5  : medal5,
+          medal6  : medal6,
+          medal7  : medal7,
+          medal8  : medal8,
+          medal9  : medal9,
+          medal10 : medal10,
+          medal11 : medal11,
+          medal12 : medal12,
+          medal13 : medal13,
+          medal14 : medal14,
+          medal15 : medal15
+        });
+      }
+      const dataStr = dataBuffer.toString("hex");
       DB.Upsert<pdata_data>(
           dataId,
           {
@@ -85,7 +172,7 @@ export const pdataWrite: EPR = async (info, data, send) => {
           },
           {
             $set: {
-              content: dataBuffer,
+              content: dataStr,
             }
           }
       );
