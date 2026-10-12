@@ -30,20 +30,20 @@ export interface custom {
 export interface custom_Medal {
   collection: "custom_Medal";
   medalNR:number;
-  medal0:string;
-  medal1:string;
-  medal2:string;
-  medal3:string;
-  medal4:string;
-  medal5:string;
-  medal6:string;
-  medal7:string;
-  medal8:string;
-  medal9:string;
-  medal10:string;
-  medal11:string;
-  medal12:string;
-  medal13:string;
-  medal14:string;
-  medal15:string;
+  medal0:number;
+  medal1:number;
+  medal2:number;
+  medal3:number;
+  medal4:number;
+  medal5:number;
+  medal6:number;
+  medal7:number;
+  medal8:number;
+  medal9:number;
+  medal10:number;
+  medal11:number;
+  medal12:number;
+  medal13:number;
+  medal14:number;
+  medal15:number;
 }
