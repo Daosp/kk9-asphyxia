@@ -1,4 +1,7 @@
 import { __sendSuccessLOG } from './__test__';
+
+// SDJP - Super Dragon Jackpot Points
+
 export const sdjpStat: EPR = async (info, data, send) => {
   /**
    * kk9sdjp.stat

@@ -1,4 +1,7 @@
 import { __sendSuccessLOG } from './__test__';
+
+// DJP - Dragon Jackpot Points
+
 export const djpAdd: EPR = async (info, data, send) => {
 
   return __sendSuccessLOG(info, data, send);

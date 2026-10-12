@@ -1,4 +1,5 @@
 import { __sendSuccessLOG } from './__test__';
+// Они даже не призываются...
 export const snsFellow_comment_send_pcb: EPR = async (info, data, send) => {
   return __sendSuccessLOG(info, data, send);
 };
