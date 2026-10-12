@@ -230,7 +230,7 @@ export const pdataCreate: EPR = async (info, data, send) => {
       dataId,
       {
           collection: 'custom',
-          customId: "0",
+          customId: "1",
           base: "1000000",
           corner: "2000000",
           midle: "3000000",

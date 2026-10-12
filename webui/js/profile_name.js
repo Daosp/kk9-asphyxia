@@ -42,7 +42,7 @@ const updatePreview = (key, id, image) => {
   const imageClass = isCorner ? 'panel-corner' : 'panel-side';
   for (let segment = 1; segment <= 4; segment++) {
     document.querySelector(`.${imageClass}${segment}`).src =
-      `static/images/panel/${folder}/${id}_num${segment}.png`;
+      `static/img/panel/${folder}/${id}_num${segment}.webp`;
   }
 };
 
@@ -82,7 +82,7 @@ const renderMedals = () => {
     const image = slot.querySelector('[data-medal-slot-image]');
     image.hidden = !medalId;
     if (medalId) {
-      image.src = `static/images/medals/${medalId}_type4.png`;
+      image.src = `static/img/medals/${medalId}.webp`;
       image.alt = `Medal ${medalId}`;
     }
     slot.querySelector('[data-medal-slot-label]').textContent = medalId ? `Medal ${medalId}` : 'Empty';
@@ -90,7 +90,7 @@ const renderMedals = () => {
     const preview = document.querySelector(`[data-medal-preview="${index}"]`);
     preview.hidden = !medalId;
     if (medalId) {
-      preview.src = `static/images/medals/${medalId}_type4.png`;
+      preview.src = `static/img/medals/${medalId}.webp`;
       preview.alt = `Medal ${medalId}`;
     }
   });

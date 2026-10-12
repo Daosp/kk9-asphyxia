@@ -1496,7 +1496,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
             img.panel-center(src='static/img/panel/base/' + (custom && custom.base ? custom.base : '1000000') + '.webp' alt="")
             - for (let slot = 0; slot < 8; slot++)
               - const medalId = selectedMedals[slot]
-              img(class='panel-medal medal-' + (slot + 1) src='static/img/medals/' + medalId + '_type4.webp' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId data-medal-preview=slot)
+              img(class='panel-medal medal-' + (slot + 1) src='static/img/medals/' + medalId + '.webp' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId data-medal-preview=slot)
 
       .customize-selector
         nav.customize-categories(role="tablist" aria-label="Customization categories")
@@ -1508,6 +1508,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
         form#custom-settings(method='post' data-page-refid=refid)
           input(type='hidden' name='refid' value=refid)
           input(type='hidden' name='collection' value='custom')
+          input#customize-custom-id(type='hidden' name='collection' value=(custom && custom.customId ? custom.customId : '1'))
           input(type='hidden' name='call' value='7000000')
           input(type='hidden' name='comment' value='8000000')
           input(type='hidden' name='movebg' value='9000000')
@@ -1634,10 +1635,6 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                     span= names[i] || 'Medal ' + i
                     small Item ID: #{i}
 
-          .field
-            label.label(for="customize-custom-id") Customization ID
-            .control
-              input.input#customize-custom-id(type="number" min="1" step="1" value=(custom && custom.customId ? custom.customId : '1'))
           .field
             .control
               button.button.is-primary(type='submit' disabled) Save
