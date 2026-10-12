@@ -14,6 +14,10 @@ export const vipStart: EPR = async (info, data, send) => {
         point_total:0,
         vip_rank:0,
         enable:true,
+        numMenuItems:0,
+        numMenuGoods:0,
+        numItems:0,
+        numGoods:0
       }
     });
     return send.object({
@@ -41,7 +45,7 @@ export const vipStatus: EPR = async (info, data, send) => {
   };
   const rDBmI = await DB.Find<vip_menuItems>(dataId,{collection:"vip_menuItems"});
   var menuItemIs: Object[] = [];
-  if (!_.isNil(rDB)) {
+  if (rDBmI.length > 0) {
     for(const r of rDBmI)menuItemIs.push({
       name:K.ITEM("str",r.name),
       box:K.ITEM("str",r.box),
@@ -55,7 +59,7 @@ export const vipStatus: EPR = async (info, data, send) => {
 
   const rDBmG = await DB.Find<vip_menuGoods>(dataId,{collection:"vip_menuGoods"});
   var menuGoodsIs: Object[] = [];
-  if (!_.isNil(rDBmG)) {
+  if (rDBmG.length > 0) {
     for(const r of rDBmG) menuGoodsIs.push({
       name:K.ITEM("str",r.name),
       point:K.ITEM("u8",r.point),
@@ -66,7 +70,7 @@ export const vipStatus: EPR = async (info, data, send) => {
 
   const rDBI = await DB.Find<vip_items>(dataId,{collection:"vip_items"});
   var itemIs: Object[] = [];
-  if (!_.isNil(rDB)){
+  if (rDBI.length > 0){
     for(const r of rDBI) itemIs.push({
       data_id:K.ITEM("str",r.data_id),
       name:K.ITEM("str",r.name),
@@ -82,7 +86,7 @@ export const vipStatus: EPR = async (info, data, send) => {
 
   const rDBG = await DB.Find<vip_goods>(dataId,{collection:"vip_goods"});
   var goodsIs: Object[] = [];
-  if (!_.isNil(rDBG)) {
+  if (rDBG.length > 0) {
     for(const r of rDBG) goodsIs.push({
       name:K.ITEM("str",r.name),
       nr:K.ITEM("u8",r.nr),

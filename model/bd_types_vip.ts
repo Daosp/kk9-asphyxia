@@ -11,6 +11,10 @@ export interface vip {
   point:number;
   point_total:number;
   vip_rank:number;
+  numMenuItems:number;
+  numMenuGoods:number;
+  numItems:number;
+  numGoods:number;
 }
 
 export interface vip_menuItems {

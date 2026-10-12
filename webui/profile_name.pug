@@ -593,14 +593,14 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                   .customize-medal-slot(data-medal-slot=slot data-medal-id=medalId)
                     button.customize-medal-slot-select(type="button" data-medal-slot-select=slot aria-pressed=String(slot === 0))
                       span Slot #{slot + 1}
-                      img(data-medal-slot-image=slot src='static/images/medals/' + medalId + '_type4.png' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId)
+                      img(data-medal-slot-image=slot src='static/images/medals/' + medalId + '.png' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId)
                       span(data-medal-slot-label=slot)= medalId ? (names[medalId] || 'Medal ' + medalId) : 'Empty'
                     button.customize-medal-clear(type="button" data-medal-clear=slot disabled=!medalId) Clear
               p#customize-medal-status(aria-live="polite") Slot 1 selected
               .customize-medal-grid
                 each i in medalItems
                   button.customize-medal-choice(type="button" data-medal-choice=i aria-pressed=String(selectedMedals.includes(i)))
-                    img(src='static/images/medals/' + i + '_type4.png' alt=(names[i] || 'Medal ' + i))
+                    img(src='static/images/medals/' + i + '.png' alt=(names[i] || 'Medal ' + i))
                     span= names[i] || 'Medal ' + i
                     small Item ID: #{i}
 
