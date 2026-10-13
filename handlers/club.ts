@@ -1,12 +1,5 @@
 import { __sendSuccessLOG } from './__test__';
 import { shop } from "../model/bd_types_shop";
-const DEFAULT_SHOP = {
-  area: '13',
-  comment1: 'ＫＫ９ ＰＲＯＪＥＣＴ－ＫＫ９＠ＡＳＰＨＹＸＩＡ－ＬＥＴ＇Ｓ ＧＯ',
-  comment2: 'ＤＡＯＳＰ－ＲＥＭＡＳＴＥＲ－ＧＵＬＬＭＡＮＸ',
-  comment3: 'ＡＲＥ ＹＯＵ ＬＩＫＥ ＭＡＨＪＯＮＧ？',
-  name: 'ＤＡＯＳＰ'
-};
 
 export const clubShopinfo: EPR = async (info, data, send) => {
   /**
@@ -20,16 +13,18 @@ export const clubShopinfo: EPR = async (info, data, send) => {
   //var response = K.ATTR({"area":"13","comment1":"","comment2":"","comment3":"","loc_id":"ea","method":"sendinfo","shop_name":"ＡＡ"})
 
   const settings = await DB.FindOne<shop>({ collection: "shop", loc_id: $(data).attr().loc_id });
-  const shopInfo = { ...DEFAULT_SHOP, ...(settings && settings ? settings : {}) };
+  if(_.isNil(settings)){
+    return send.success();
+  }
   var response = {
     shop:K.ATTR({
       "exist":"1",
-      "area":shopInfo.area,
-      "comment1":shopInfo.comment1,
-      "comment2":shopInfo.comment2,
-      "comment3":shopInfo.comment3,
+      "area":settings.area,
+      "comment1":settings.comment1,
+      "comment2":settings.comment2,
+      "comment3":settings.comment3,
       "loc_id":$(data).attr().loc_id,
-      "name":shopInfo.name
+      "name":settings.name
     }),
 
     shop_score:K.ATTR({rank_in_area:"1",rank_in_world:"1",score:"999999",border:"1",num:"1",})
@@ -52,18 +47,17 @@ export const clubSendinfo: EPR = async (info, data, send) => {
    *  - shop_name="ＡＡＡ"
    */
   
-  const shopInfo = { ...DEFAULT_SHOP, ...($(data).attr() && $(data).attr() ? $(data).attr() : {}) };
   DB.Upsert<shop>({
     collection: "shop",
     loc_id: $(data).attr().loc_id
   }, {
     $set: {
       "exist":true,
-      "area":shopInfo.area,
-      "comment1":shopInfo.comment1,
-      "comment2":shopInfo.comment2,
-      "comment3":shopInfo.comment3,
-      "name":shopInfo.name
+      "area":$(data).attr().area,
+      "comment1":$(data).attr().comment1,
+      "comment2":$(data).attr().comment2,
+      "comment3":$(data).attr().comment3,
+      "name":$(data).attr().shop_name
     }
   })
 
