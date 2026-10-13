@@ -98,14 +98,14 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * - timelimit =
    * - seq =
    * - addr =
-   * - time0u =
-   * - time1u =
-   * - time2u =
-   * - time3u =
-   * - time4u =
-   * - time5u =
-   * - time6u =
-   * - time7u =
+   * - time0 =
+   * - time1 =
+   * - time2 =
+   * - time3 =
+   * - time4 =
+   * - time5 =
+   * - time6 =
+   * - time7 =
    */
   const UnixTime: number = Math.floor(new Date().getTime() / 1000);
   const timelimit: number = 99;
@@ -116,14 +116,14 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     timelimit:timelimit.toString(),
     seq:"0",
     addr:"127.0.0.1:5700",
-    time0u:"",
-    time1u:"",
-    time2u:"",
-    time3u:"",
-    time4u:"",
-    time5u:"",
-    time6u:"",
-    time7u:""
+    time0:"",
+    time1:"",
+    time2:"",
+    time3:"",
+    time4:"",
+    time5:"",
+    time6:"",
+    time7:""
   }
   await send.object(K.ATTR(rAttr));
   while(Math.floor(new Date().getTime() / 1000) < maxTime){
@@ -234,14 +234,14 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * - timelimit =
    * - seq =
    * - addr =
-   * - time0u =
-   * - time1u =
-   * - time2u =
-   * - time3u =
-   * - time4u =
-   * - time5u =
-   * - time6u =
-   * - time7u =
+   * - time0 =
+   * - time1 =
+   * - time2 =
+   * - time3 =
+   * - time4 =
+   * - time5 =
+   * - time6 =
+   * - time7 =
    */
 
   return __sendSuccessLOG(info, data, send);
@@ -267,14 +267,14 @@ export const lobbyPoling: EPR = async (info, data, send) => {
    * - timelimit =
    * - seq =
    * - addr =
-   * - time0u =
-   * - time1u =
-   * - time2u =
-   * - time3u =
-   * - time4u =
-   * - time5u =
-   * - time6u =
-   * - time7u =
+   * - time0 =
+   * - time1 =
+   * - time2 =
+   * - time3 =
+   * - time4 =
+   * - time5 =
+   * - time6 =
+   * - time7 =
    */
 
   return __sendSuccessLOG(info, data, send);
