@@ -9,7 +9,7 @@ export const flagsGet: EPR = async (info, data, send) => {
    *  - method="get"
    */
   const response = K.ATTR({
-    expire:formatCurrentDateTimeUTC(60*60*24)
+    expire:(60*60).toString()
   },{
     data:[
       //K.ATTR({flag:"hide_name"}),

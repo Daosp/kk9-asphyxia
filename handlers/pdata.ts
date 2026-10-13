@@ -1,6 +1,7 @@
 import { __sendSuccessLOG, formatCurrentDateTimeUTC, __logingInfoData } from './__test__';
 import { pdata_data, pdata_profile } from "../model/bd_types_profile";
 import { customAll as customAllBuffer, custom, custom_Medal } from "../model/bd_types_custom";
+import { lobby_history } from "../model/bd_types_lobby";
 
 
 
@@ -304,6 +305,8 @@ export const pdataRanking: EPR = async (info, data, send) => {
 };
 
 export const pdataMisc_info: EPR = async (info, data, send) => {
+  const dataId : string = $(data).attr().data_id;
+  if (!dataId) {return send.deny();}
   /**
    * kk9pdata.misc_info
    * 
@@ -378,6 +381,21 @@ export const pdataMisc_info: EPR = async (info, data, send) => {
    *   </i>
    * </valid_item>
    */
+  var response: {
+    [key: string]: any | Object; // любой строковый ключ с любым значением
+  } = {}
+  const rDB_LH = await DB.Find<lobby_history>({$or:[{collection:"lobby_history",dataid1:dataId},{collection:"lobby_history",dataid2:dataId},{collection:"lobby_history",dataid3:dataId},{collection:"lobby_history",dataid4:dataId}]});
+  if(rDB_LH.length > 0){
+    var arrayLobby: object[] = [];
+    for (const i in rDB_LH) arrayLobby.push({
+      name:        K.ITEM("str",rDB_LH[i].name),
+      lobby_key:   K.ITEM("str",rDB_LH[i].lobby_key),
+      lobby_param: K.ITEM("s32",rDB_LH[i].lobby_param),
+      start_time:  K.ITEM("u32",rDB_LH[i].start_time),
+      end_time:    K.ITEM("u32",rDB_LH[i].end_time),
+    });
+    response.lobby.fixed = arrayLobby;
+  }
   
   return __sendSuccessLOG(info, data, send);
 };

@@ -106,7 +106,7 @@ export const customizeGet: EPR = async (info, data, send) => {
   console.log('-=RESPONSE=-');
   console.log(JSON.stringify(response));
   
-  const res = K.ATTR({expire:formatCurrentDateTimeUTC(60*60)},response)
+  const res = K.ATTR({expire:(60*60).toString()},response)
   return send.object(res);
 };
 

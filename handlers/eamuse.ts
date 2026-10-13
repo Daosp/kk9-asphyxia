@@ -71,7 +71,7 @@ export const facilityGet: EPR = async (info, data, send) => {
   var ipPort = $(data).attr().privateip.split(":");
   var item ={
     "@attr":{
-      expire:formatCurrentDateTimeUTC(60*60*24)
+      expire:"0"
     },
     "location":{
       id:K.ITEM("str","123123"),
