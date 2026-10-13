@@ -17,7 +17,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - eventmode = "0",
    *  - from_area = "13",
    *  - full_wait = "0",
-   *  - game_id = "A5B23874A5E46E9A",
+   *  - game_id = "A5B23874A5E46E9A", (is data_id)
    *  - game_id_type = "1",
    *  - gamemode = "3",
    *  - gameparam = "0",
@@ -91,8 +91,44 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * <kohaku_team __type="u8">0</lobby_key>
    * <kohaku_win_pro __type="u8">0</lobby_key>
    * <special_player __type="u8">0</lobby_key>
+   * 
+   * RESPONSE:
+   * - qid =
+   * - master = 
+   * - timelimit =
+   * - seq =
+   * - addr =
+   * - time0u =
+   * - time1u =
+   * - time2u =
+   * - time3u =
+   * - time4u =
+   * - time5u =
+   * - time6u =
+   * - time7u =
    */
-
+  const UnixTime: number = Math.floor(new Date().getTime() / 1000);
+  const timelimit: number = 99;
+  const maxTime: number = UnixTime+timelimit;
+  const rAttr = {
+    qid:"A5B23874A5E46E9A",
+    master :"A5B23874A5E46E9A",
+    timelimit:timelimit.toString(),
+    seq:"0",
+    addr:"127.0.0.1:5700",
+    time0u:"",
+    time1u:"",
+    time2u:"",
+    time3u:"",
+    time4u:"",
+    time5u:"",
+    time6u:"",
+    time7u:""
+  }
+  while(Math.floor(new Date().getTime() / 1000) < maxTime){
+    setTimeout(send.object,10,K.ATTR(rAttr));
+  }
+  return send.object(K.ATTR(rAttr));
   return __sendSuccessLOG(info, data, send);
 };
 
@@ -114,7 +150,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    *  - eventmode = "0",
    *  - from_area = "13",
    *  - full_wait = "0",
-   *  - game_id = "A5B23874A5E46E9A",
+   *  - game_id = "A5B23874A5E46E9A", (is data_id)
    *  - game_id_type = "1",
    *  - gamemode = "3",
    *  - gameparam = "0",
@@ -188,12 +224,57 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * <kohaku_team __type="u8">0</lobby_key>
    * <kohaku_win_pro __type="u8">0</lobby_key>
    * <special_player __type="u8">0</lobby_key>
+   * 
+   * RESPONSE:
+   * - stat =
+   * - qid =
+   * - wait =
+   * - master = 
+   * - timelimit =
+   * - seq =
+   * - addr =
+   * - time0u =
+   * - time1u =
+   * - time2u =
+   * - time3u =
+   * - time4u =
+   * - time5u =
+   * - time6u =
+   * - time7u =
    */
 
   return __sendSuccessLOG(info, data, send);
 };
 
 export const lobbyPoling: EPR = async (info, data, send) => {
+  /**
+   * lobby.poling
+   * ???
+   * 
+   * DATA:
+   *  - cancel = ?????,
+   *  - game_id = "A5B23874A5E46E9A", (is data_id)
+   *  - game_id_type = "1",
+   *  - magic = "KK9",
+   *  - qid = "0"
+   * 
+   * RESPONSE:
+   * - stat =
+   * - qid =
+   * - wait =
+   * - master = 
+   * - timelimit =
+   * - seq =
+   * - addr =
+   * - time0u =
+   * - time1u =
+   * - time2u =
+   * - time3u =
+   * - time4u =
+   * - time5u =
+   * - time6u =
+   * - time7u =
+   */
 
   return __sendSuccessLOG(info, data, send);
 };

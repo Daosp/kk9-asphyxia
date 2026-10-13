@@ -19,6 +19,7 @@
 - [ ] PASELI minigames (kk9paseli)
 - [ ] SNS (kk9sns, kk9twitter)
 - [ ] FIGHT CLUB VIP (kk9vip)
+- [ ] Oshigacha (Fight Club Arrangement) (kk9customization)
 
 
 ### In Progress
@@ -28,7 +29,6 @@
 
 ### Done ✓
 
-- [x] Customization (Fight Club Arrangement) (kk9customization)
 - [x] Basic work of customization (Fight Club Arrangement) (kk9customization)
 - [x] kk9pdata
 - [x] kk9vers (nothing)
