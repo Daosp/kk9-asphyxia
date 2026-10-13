@@ -1,11 +1,11 @@
 # TODO list of KK9-plugin project
 
-### Todo FUNCTIONS
+### Todo
 
 - [ ] Jackpots (kk9djp & kk9sdjp)
     - [ ] Dragon JackPot (kk9djp)
     - [ ] Super Dragon JackPot (kk9sdjp)
-- [ ] Multiplayer (lobby, kk9ranking et cetera)
+- [ ] Multiplayer (lobby, kk9ranking et cetera) 0/7
     - [ ] Lobby (lobby)
     - [ ] Tracking pro-players (kk9proenter)
     - [ ] Ranking (kk9ranking)
@@ -23,7 +23,8 @@
 
 ### In Progress
 
-- [ ] Club info (kk9club)
+- [ ] Multiplayer (lobby, kk9ranking et cetera) 0/7
+    - [ ] Lobby (lobby)
 
 ### Done ✓
 
@@ -35,6 +36,7 @@
 - [x] kk9population (crutch)
 - [x] kk9msg (write in logMSG.txt)
 - [x] Game Setup Flags (kk9flags) (crutch)
+- [x] Club info (kk9club)
 
 ### Postponed
 
