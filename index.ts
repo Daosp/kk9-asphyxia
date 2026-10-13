@@ -48,12 +48,8 @@ export function register() {
     options: ['EVENT_1', 'EVENT_2'],
   });
 
-  /*
-    Register user-provided datafile
-    This will allow user to upload their own data to the root of your plugin
-    This file, for example, will be uploaded to "plugins/example@identifier/uploaded/data.xml"
-   */
-  R.DataFile('uploaded/data.xml');
+  R.Route('cardmng.getdatalist', cardmngGetdatalist);
+  //R.Route('facility.get', facilityGet);
 
   /* Register your routes */
   R.Route('kk9vers.send', versSend);
@@ -167,18 +163,16 @@ export function register() {
   R.Route('kk9twitter.user', twitterUser);
   R.Route('kk9twitter.tweet', twitterTweet);
 
-  R.Route('cardmng.getdatalist', cardmngGetdatalist);
-  R.Route('facility.get', facilityGet);
-
   /*
     Register a unhandled handler that print all unhandled methods.
     You should remove it before you publish your plugin,
       unless you have specific reason not to.
    */
-  R.Unhandled();
-
-  /* Insert or clear a existing document in plugin space */
-  DB.Upsert({ clicked: { $exists: true } }, { $set: { clicked: 0 } });
+  R.Unhandled(async (info, data, send) => {
+    if (["eventlog"].includes(info.module)) return;
+    console.error(`Received Unhandled Response on ${info.method} by ${info.model}/${info.module}`)
+    console.error(`Received Request: ${JSON.stringify(data, null, 4)}`)
+  })
 
   /* Register a event and increment the click counter */
   R.WebUIEvent('click', async data => {

@@ -14,7 +14,8 @@ export const clubShopinfo: EPR = async (info, data, send) => {
 
   const settings = await DB.FindOne<shop>({ collection: "shop", loc_id: $(data).attr().loc_id });
   if(_.isNil(settings)){
-    return send.success();
+    const r = {shop:K.ATTR({"area":"13"})};
+    return send.object(r);
   }
   var response = {
     shop:K.ATTR({
