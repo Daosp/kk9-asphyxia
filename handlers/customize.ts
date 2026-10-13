@@ -51,7 +51,7 @@ export const customizeGet: EPR = async (info, data, send) => {
   if (!_.isNil(rMed) && rMed.medalNR > 0) {          //4010001-4010009
     response.panel.medal_nr = K.ITEM("u32",rMed.medalNR);
     const medalArray: number[] = [rMed.medal0,rMed.medal1,rMed.medal2,rMed.medal3,rMed.medal4,rMed.medal5,rMed.medal6,rMed.medal7,rMed.medal8,rMed.medal9,rMed.medal10,rMed.medal11,rMed.medal12,rMed.medal13,rMed.medal14,rMed.medal15];
-    response.panel.medal = K.ARRAY("u32",medalArray.slice(0, rMed.medalNR));
+    response.panel.medal = K.ARRAY("u32",medalArray.filter(medal => medal > 0).slice(0, rMed.medalNR));
   }
 
 /*

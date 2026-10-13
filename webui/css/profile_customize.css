@@ -51,6 +51,10 @@
   background: linear-gradient(90deg, #261f0e, #30270f);
 }
 
+.customize-preview [hidden] {
+  display: none;
+}
+
 .customize-preview-heading {
   position: relative;
   height: 72px;
@@ -139,6 +143,10 @@
   display: block;
   width: 406px;
   height: 305px;
+}
+
+.customize-board-images #customize-preview-hai {
+  z-index: 1;
 }
 
 .customize-preview-panel {

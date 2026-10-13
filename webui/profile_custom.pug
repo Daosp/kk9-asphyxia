@@ -1,5 +1,6 @@
 //DATA//
   custom: DB.FindOne(refid, { collection: 'custom' })
+  customMedals: DB.FindOne(refid, { collection: 'custom_Medal' })
   profile: DB.FindOne(refid, { login_count: { $exists: true } })
 
 -
@@ -1522,7 +1523,10 @@
     ...Array.from({ length: 41 }, (_, index) => String(6000183 + index))
   ]));
   const medalItems = Array.from({ length: 16 }, (_, index) => String(4010001 + index));
-  const selectedMedals = Array.isArray(custom && custom.medals) ? custom.medals.slice(0, 8).map(String) : [];
+  const selectedMedals = Array.from({ length: 16 }, (_, index) => {
+    const medalId = customMedals && customMedals[`medal${index}`];
+    return medalId ? String(medalId) : '';
+  });
 
 //-
   You can include your own stylesheet
@@ -1541,13 +1545,13 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
           button.customize-reset(type="button" id="customize-reset") Reset preview
         p#profile-selection-status.customize-set-preview(role="status" aria-live="polite") Detecting signed-in profile...
 
-        .customize-preview-board
+        .customize-preview-board(data-customize-preview="table hai")
           h4 Table Background & Tiles
           .customize-board-images
             img#customize-preview-table(src='static/img/table/table/' + (custom && custom.table ? custom.table : '6000000') + '.webp' alt="Table background preview")
             img#customize-preview-hai(src='static/img/table/hai/' + (custom && custom.hai ? custom.hai : '5000000') + '.webp' alt="Tile preview")
 
-        .customize-preview-panel
+        .customize-preview-panel(data-customize-preview="panel medal" hidden)
           h4 Player Panel
           .customize-panel-images
             img.panel-corner1(src='static/img/panel/corner/' + (custom && custom.corner ? custom.corner : '2000000') + '_num1.webp' alt="")
@@ -1563,17 +1567,17 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
               - const medalId = selectedMedals[slot]
               img(class='panel-medal medal-' + (slot + 1) src='static/img/medals/' + medalId + '.webp' alt=(names[medalId] || 'Medal ' + medalId) hidden=!medalId data-medal-preview=slot)
 
-        .customize-preview-board
+        .customize-preview-board(data-customize-preview="call" hidden)
           h4 Call
           .customize-board-images
             img#customize-preview-call(src='static/img/irodori/call/' + (custom && custom.call ? custom.call : '7000000') + '.webp' alt="Call preview")
             
-        .customize-preview-board
+        .customize-preview-board(data-customize-preview="comment" hidden)
           h4 Comment
           .customize-board-images
             img#customize-preview-comment(src='static/img/irodori/comment/' + (custom && custom.comment ? custom.comment : '8000000') + '.webp' alt="Comment preview")
         
-        .customize-preview-board
+        .customize-preview-board(data-customize-preview="movebg" hidden)
           h4 Animated table
           .customize-board-images
             img#customize-preview-movebg(src='static/img/gouka-movebg/' + (custom && custom.movebg ? custom.movebg : '9000000') + '.webp' alt="Anitable preview")
@@ -1600,6 +1604,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
           input#customize-value-base(type='hidden' name='base' value=(custom && custom.base ? custom.base : '1000000'))
           input#customize-value-corner(type='hidden' name='corner' value=(custom && custom.corner ? custom.corner : '2000000'))
           input#customize-value-midle(type='hidden' name='midle' value=(custom && custom.midle ? custom.midle : '3000000'))
+          input#customize-medal-values(type='hidden' name='medals' value=JSON.stringify(selectedMedals))
 
           .customize-category-content#customize-table-panel(data-customize-panel="table")
             .customize-page-links
@@ -1699,7 +1704,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
           .customize-category-content#customize-medal-panel(data-customize-panel="medal" hidden)
             .customize-medal-selection
               h4.customize-part-title Medal Display
-              p Preview only. Select a slot, then choose a medal. Medal choices are not saved.
+              p Select a slot, choose a medal, then save the customization to persist your choices.
               .customize-medal-slots
                 - for (let slot = 0; slot < 8; slot++)
                   - const medalId = selectedMedals[slot] || ''
