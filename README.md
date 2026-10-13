@@ -1,7 +1,7 @@
 # kk9@asphyxia
 
-[ENG](#English)
-[РУС](#Русский)
+[ENG](#english)
+[РУС](#русский)
 
 ### English
 Asphyxia's plugin for Mahjong Fight Club Extreme. We tested the following versions:
