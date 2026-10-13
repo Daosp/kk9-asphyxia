@@ -148,7 +148,7 @@ export const pdataWrite: EPR = async (info, data, send) => {
         const medal_nr = arM.filter(num => num > 0).length;
         DB.Upsert<custom_Medal>(dataId,{collection:"custom_Medal"},{
           $set:{
-            medal_nr: medal_nr,
+            medalNR: medal_nr,
             medal0  : medal0,
             medal1  : medal1,
             medal2  : medal2,

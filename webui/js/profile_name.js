@@ -7,6 +7,7 @@ const customIdValue = customForm.querySelector('#customize-value-custom-id');
 const tableRows = Array.from(document.querySelectorAll('[data-customize-row="table"]'));
 const medalSlots = Array.from(document.querySelectorAll('[data-medal-slot]'));
 const medalChoices = Array.from(document.querySelectorAll('[data-medal-choice]'));
+const medalValues = customForm.querySelector('#customize-medal-values');
 const tablePageSize = 8;
 const defaults = {
   table: '6000000',
@@ -20,7 +21,7 @@ const defaults = {
 };
 let tablePage = 0;
 let activeMedalSlot = 0;
-const selectedMedals = medalSlots.map(slot => slot.dataset.medalId || '');
+const selectedMedals = JSON.parse(medalValues.value);
 
 const getButtons = key => document.querySelectorAll(`[data-customize-select="${key}"]`);
 
@@ -116,6 +117,7 @@ const renderMedals = () => {
   medalChoices.forEach(choice => {
     choice.setAttribute('aria-pressed', String(selectedMedals.includes(choice.dataset.medalChoice)));
   });
+  medalValues.value = JSON.stringify(selectedMedals);
   document.querySelector('#customize-medal-status').textContent = `Slot ${activeMedalSlot + 1} selected`;
 };
 
@@ -128,6 +130,9 @@ document.querySelectorAll('[data-customize-tab]').forEach(tab => {
     });
     document.querySelectorAll('[data-customize-panel]').forEach(panel => {
       panel.hidden = panel.dataset.customizePanel !== tab.dataset.customizeTab;
+    });
+    document.querySelectorAll('[data-customize-preview]').forEach(preview => {
+      preview.hidden = !preview.dataset.customizePreview.split(' ').includes(tab.dataset.customizeTab);
     });
   });
 });
@@ -196,6 +201,7 @@ customForm.addEventListener('submit', async event => {
 
   const settings = Object.fromEntries(new FormData(customForm).entries());
   settings.customId = customId;
+  settings.medals = selectedMedals;
   saveButton.disabled = true;
   document.querySelector('#custom-save-status').textContent = 'Saving...';
   try {

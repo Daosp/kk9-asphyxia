@@ -30,7 +30,7 @@ import { twitterUser, twitterTweet } from './handlers/twitter';
 
 import { cardmngGetdatalist, facilityGet } from './handlers/eamuse';
 import { shop } from './model/bd_types_shop';
-import { custom } from './model/bd_types_custom';
+import { custom, custom_Medal } from './model/bd_types_custom';
 
 export function register() {
   /* Register game code */
@@ -216,6 +216,17 @@ export function register() {
       comment: typeof data.comment === 'string' ? data.comment : "8000000",
       movebg: typeof data.movebg === 'string' ? data.movebg : "9000000",
     };
+    if (!Array.isArray(data.medals) || data.medals.length !== 16) {
+      throw new Error('Customization must include exactly 16 medal slots');
+    }
+    const medals = data.medals.map((value: unknown) => {
+      if (value === '' || value === null || value === undefined) return 0;
+      const medalId = Number(value);
+      if (!Number.isSafeInteger(medalId) || medalId < 4010001 || medalId > 4010016) {
+        throw new Error(`Invalid medal ID: ${String(value)}`);
+      }
+      return medalId;
+    });
     const UnixTime = Math.floor(new Date().getTime() / 1000);
     const record = await DB.FindOne<custom>(custom.refid, { collection: "custom" });
     if (record.base != custom.base || record.corner != custom.corner || record.midle != custom.midle){
@@ -238,7 +249,7 @@ export function register() {
     } else {
       var timeG = record.date_p
     }
-    DB.Upsert<custom>(custom.refid,
+    await DB.Upsert<custom>(custom.refid,
       { collection: "custom" },
       { $set: {
         customId:custom.customId,
@@ -254,6 +265,28 @@ export function register() {
         date_i:timeI,
         movebg:custom.movebg,
         date_g:timeG
+      } }
+    );
+    await DB.Upsert<custom_Medal>(custom.refid,
+      { collection: "custom_Medal" },
+      { $set: {
+        medalNR: medals.filter(medal => medal > 0).length,
+        medal0: medals[0],
+        medal1: medals[1],
+        medal2: medals[2],
+        medal3: medals[3],
+        medal4: medals[4],
+        medal5: medals[5],
+        medal6: medals[6],
+        medal7: medals[7],
+        medal8: medals[8],
+        medal9: medals[9],
+        medal10: medals[10],
+        medal11: medals[11],
+        medal12: medals[12],
+        medal13: medals[13],
+        medal14: medals[14],
+        medal15: medals[15]
       } }
     );
   });
