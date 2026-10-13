@@ -110,9 +110,9 @@ export const lobbyQuery: EPR = async (info, data, send) => {
   const UnixTime: number = Math.floor(new Date().getTime() / 1000);
   const timelimit: number = 99;
   const maxTime: number = UnixTime+timelimit;
-  const rAttr = {
+  const rAttr: KAttrMap = {
     qid:"A5B23874A5E46E9A",
-    master :"A5B23874A5E46E9A",
+    master :"0",
     timelimit:timelimit.toString(),
     seq:"0",
     addr:"127.0.0.1:5700",
@@ -125,10 +125,11 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     time6u:"",
     time7u:""
   }
+  await send.object(K.ATTR(rAttr));
   while(Math.floor(new Date().getTime() / 1000) < maxTime){
-    setTimeout(send.object,10,K.ATTR(rAttr));
+    setTimeout(await send.object,10,K.ATTR(rAttr));
   }
-  return send.object(K.ATTR(rAttr));
+  return await send.object(K.ATTR(rAttr));
   return __sendSuccessLOG(info, data, send);
 };
 

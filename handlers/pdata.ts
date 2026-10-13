@@ -304,5 +304,80 @@ export const pdataRanking: EPR = async (info, data, send) => {
 };
 
 export const pdataMisc_info: EPR = async (info, data, send) => {
+  /**
+   * kk9pdata.misc_info
+   * 
+   * DATA:
+   *  - data_id="AD8972E47E435A6B"
+   * 
+   * RESPONSE:
+   * <lobby>
+   *   <fixed> --- не более 10 штук!!!
+   *     <name __type="str">______</name>
+   *     <lobby_key __type="str">______</lobby_key>
+   *     <lobby_param __type="s32">______</lobby_param>
+   *     <start_time __type="???">______</start_time>
+   *     <end_time __type="???">______</end_time>
+   *   </fixed>
+   *   <fixed>
+   *   ...
+   * </lobby>
+   * <bemani>
+   *   <summer_diary_2015 __type="???">______</summer_diary_2015>
+   * </bemani>
+   * <kac7th>
+   *   <enjoy_entry __type="???">______</enjoy_entry>
+   * </kac7th>
+   * <vote2017eapp>
+   *   <exist __type="???">______</exist>
+   *   <last_seq __type="???">______</last_seq>
+   *   <e seq="???"> - не более 5 штук
+   *     <nr __type="???">______</nr>
+   *     <explain __type="???">______</explain>
+   *     <kind __type="???">______</kind>
+   *   </e>
+   *   <e seq="???">
+   *     ....
+   * </vote2017eapp>
+   * <kirin_protest>
+   *   <str1 __type="???">______</str1>
+   *   <str2 __type="???">______</str2>
+   * </kirin_protest>
+   * ///mleague_pro - i cant understand
+   * <hgslot>
+   *   <enable __type="???">______</enable>
+   *   <add_play_cnt __type="???">______</add_play_cnt>
+   *   <rate_tenbou_4 __type="???">______</rate_tenbou_4>
+   *   <rate_tenbou_3 __type="???">______</rate_tenbou_3>
+   *   <rate_score_4 __type="???">______</rate_score_4>
+   *   <rate_score_3 __type="???">______</rate_score_3>
+   *   <yaku2 index="???"> - не более 9 штук
+   *     <rate_n __type="???">______</rate_n>
+   *     <rate_f __type="???">______</rate_f>
+   *     <star __type="???">______</star>
+   *   </yaku2>
+   *   <yaku2 index="???">
+   *     ...
+   * </hgslot>
+   * <pros>
+   *   <entry>
+   *     <p __type="???">______</p>
+   *   </entry>
+   *   <win>
+   *     <p __type="???">______</p>
+   *   </win>
+   * </pros>
+   * <valid_item>
+   *   <i>
+   *     <type __type="???">______</type>
+   *     <id __type="???">______</id>
+   *     <end_type __type="???">______</end_type>
+   *     <end_time __type="???">______</end_time>
+   *     <f __type="???">______</f> - не более 8 штук
+   *     ...
+   *   </i>
+   * </valid_item>
+   */
+  
   return __sendSuccessLOG(info, data, send);
 };
