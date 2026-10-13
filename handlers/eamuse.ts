@@ -74,7 +74,7 @@ export const facilityGet: EPR = async (info, data, send) => {
       expire:"0"
     },
     "location":{
-      id:K.ITEM("str","123123"),
+      id:K.ITEM("str","ea"),
       country:K.ITEM("str","JP"),
       region:K.ITEM("str","JP-13"),
       name:K.ITEM("str","ＤＡＯＳＰ"),
