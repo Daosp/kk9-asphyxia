@@ -1,7 +1,6 @@
 //DATA//
   custom: DB.FindOne(refid, { collection: 'custom' })
   customMedals: DB.FindOne(refid, { collection: 'custom_Medal' })
-  profile: DB.FindOne(refid, { login_count: { $exists: true } })
 
 -
   const names = {
@@ -730,7 +729,7 @@
     "9010006":"Clockwork",
     "9010010":"Galaxy",
   };
-
+  
   const base = [
     '1000000',
     '1000001',
@@ -857,7 +856,6 @@
     "1010118",
     "1010119",
     "1010120",
-    "1010121",
   ];
 
   const corner = [
@@ -986,7 +984,6 @@
     "2010118",
     "2010119",
     "2010120",
-    "2010121",
   ];
   
   const midle = [
@@ -1115,9 +1112,9 @@
     "3010118",
     "3010119",
     "3010120",
-    "3010121",
   ];
-
+  // Бесплатная каст. панелей - вся
+  // Платная каст. панелей    - Х010001 - Х010120
   const medal = [
     "4010001",
     "4010002",
@@ -1134,7 +1131,7 @@
     "4010014",
     "4010015",
     "4010016"
-  ];
+  ]; //всё есть
 
   const hai = [
     "5000000",
@@ -1157,7 +1154,7 @@
     "5010013",
     "5010014",
     "5010015",
-  ];
+  ]; //всё есть
 
   const table = [
     '6000000',
@@ -1329,19 +1326,6 @@
     '6000168',
     '6000169',
     '6000170',
-    '6000171',
-    '6000172',
-    '6000173',
-    '6000174',
-    '6000175',
-    '6000176',
-    '6000177',
-    '6000178',
-    '6000179',
-    '6000180',
-    '6000180',
-    '6000181',
-    '6000182',
     "6010001",
     "6010002",
     "6010003",
@@ -1479,6 +1463,9 @@
     "6020071",
     "6020072",
   ];
+  // Бесплатные столы - 6000000 - 6000170
+  // Платные столы    - все
+  // Подарочные столы - все
 
   const call = [
     "7000000",
@@ -1492,7 +1479,7 @@
     "7010007",
     "7010008",
     "7010009",
-  ];
+  ]; //всё есть
 
   const comment = [
     "8000000",
@@ -1590,7 +1577,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
           button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="medal") Medals
           button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="call") Call
           button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="comment") Comm
-          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="movebg") Anitable
+          button.customize-category(type="button" role="tab" aria-selected="false" data-customize-tab="movebg") Anitable (ONLY HG)
 
         form#custom-settings(method='post' data-page-refid=refid)
           input(type='hidden' name='refid' value=refid)
@@ -1620,7 +1607,7 @@ link(rel='stylesheet' href='static/css/profile_customize.css')
                     th.customize-item-status Game setting
                     th.customize-item-action Action
                 tbody
-                  each i in tableItems
+                  each i in table
                     tr(data-customize-row="table")
                       td.customize-item-image
                         img(src='static/img/table/table/' + i + '.webp' alt=(names[i] || 'Table ' + i))
