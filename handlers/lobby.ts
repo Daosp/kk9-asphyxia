@@ -1,5 +1,6 @@
 import { __sendSuccessLOG } from './__test__';
 import { lobby_history, lobby_search } from "../model/bd_types_lobby";
+import { matchesProperty } from 'lodash';
 export const lobbyQuery: EPR = async (info, data, send) => {
   /**
    * lobby.query
@@ -136,49 +137,18 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     ]
   });
   if(search.length > 0){
-    for(const i in search){
-      const query: Query<lobby_search> ={
-        collection:"lobby_search",
-        game_id: search[i].game_id
-      }
-      var update: Update<lobby_search> = {};
-      if(search[i].dataid2 == ""){
-        update = {
-          $set:{
-            dataid2: $(data).attr().game_id,
-            pa2: $(data).attr().pa1
-          }
-        }
-      } else if(search[i].dataid3 == ""){
-        update = {
-          $set:{
-            dataid3: $(data).attr().game_id,
-            pa3: $(data).attr().pa1
-          }
-        }
-      } else if(search[i].dataid4 == ""){
-        update = {
-          $set:{
-            dataid4: $(data).attr().game_id,
-            pa4: $(data).attr().pa1
-          }
-        }
-      } else {
-        continue
-      }
-      DB.Update<lobby_search>(query,update);
-      rAttr = {
-        qid: search[i].game_id,
-        master: "0",
-        timelimit: search[i].timelimit.toString(),
-        seq: seqIs(search[i].timelimit).toString(),
-        addr: search[i].pa1
-      }
-      return send.object(K.ATTR(rAttr));
+    rAttr = {
+      qid: search[0].qid,
+      master: "0",
+      timelimit: search[0].timelimit.toString(),
+      seq: seqIs(search[0].timelimit).toString(),
+      addr: search[0].pa1
     }
+    return send.object(K.ATTR(rAttr));
   }
   DB.Insert<lobby_search>({
     collection:"lobby_search",
+    qid:$(data).attr().game_id.slice(0,5)+"_"+UnixTime.toString(),
     timelimit: maxTime,
     game_id:$(data).attr().game_id,
     dataid1:$(data).attr().game_id,
@@ -322,15 +292,48 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * - time6 =
    * - time7 =
    */
-  DB.Update<lobby_search>({
+  
+  const query: Query<lobby_search> ={
     collection:"lobby_search",
-    game_id: $(data).attr().game_id
-  }, {
-    $set: {
-      started:true,
-      start_time: Math.floor(new Date().getTime() / 1000)
+    game_id: $(data).attr().game_id,
+    lobby_key: $(data).str("lobby_key"),
+    lobby_param: $(data).number("lobby_param"),
+  }
+  const dataIDs = [
+    $(data).str("prematch.data_id.0"),
+    $(data).str("prematch.data_id.1"),
+    $(data).str("prematch.data_id.2")
+  ];
+  const update: Update<lobby_search> = {
+    $set:{
+      dataid1 : $(data).attr().game_id,
+      dataid2 : dataIDs[0],
+      dataid3 : dataIDs[1],
+      dataid4 : dataIDs[2],
+      pa2: $(data).attr().pa1,
+      pa3: $(data).attr().pa2,
+      pa4: $(data).attr().pa3,
+      inhibit1 : $(data).str("inhibit.data_id.0"),
+      inhibit2 : $(data).str("inhibit.data_id.1"),
+      inhibit3 : $(data).str("inhibit.data_id.2"),
     }
-  })
+  };
+  const result = await DB.Upsert<lobby_search>(query,update);
+  var wait = "1"
+  if(
+    dataIDs[0] != dataIDs[1] &&
+    dataIDs[1] != dataIDs[2] &&
+    dataIDs[2] != ""
+  ) wait = "0";
+  return send.object(K.ATTR({
+    stat:"0",
+    qid: result.docs[0].qid,
+    wait: wait,
+    master: "0",
+    timelimit:  result.docs[0].timelimit.toString(),
+    seq:seqIs(result.docs[0].timelimit).toString(),
+    addr: result.docs[0].pa1
+  }))
 
   return __sendSuccessLOG(info, data, send);
 };
@@ -364,6 +367,15 @@ export const lobbyPoling: EPR = async (info, data, send) => {
    * - time6 =
    * - time7 =
    */
+  DB.Update<lobby_search>({
+    collection:"lobby_search",
+    game_id: $(data).attr().game_id
+  }, {
+    $set: {
+      started:true,
+      start_time: Math.floor(new Date().getTime() / 1000)
+    }
+  })
 
   return __sendSuccessLOG(info, data, send);
 };

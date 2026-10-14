@@ -13,6 +13,7 @@ export interface lobby_history {
 
 export interface lobby_search {
   collection: "lobby_search",
+  qid:string,
   timelimit: number,
   dataid1:string,
   dataid2:string,
