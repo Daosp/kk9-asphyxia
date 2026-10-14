@@ -68,11 +68,8 @@ export const cardmngGetdatalist: EPR = async (info, data, send) => {
 
 
 export const facilityGet: EPR = async (info, data, send) => {
-  var ipPort = $(data).attr().privateip.split(":");
+  __logingInfoData(info, data);
   var item ={
-    "@attr":{
-      expire:"0"
-    },
     "location":{
       id:K.ITEM("str","ea"),
       country:K.ITEM("str","JP"),
@@ -94,9 +91,9 @@ export const facilityGet: EPR = async (info, data, send) => {
       class:K.ITEM("u8",0),
     },
     "portfw":{
-      globalip:K.ITEM("ip4",ipPort[0]),
-      globalport:K.ITEM("u16",parseInt(ipPort[1])),
-      privateport:K.ITEM("u16",parseInt(ipPort[1])),
+      globalip:K.ITEM("ip4","127.0.0.1"),
+      globalport:K.ITEM("u16",5700),
+      privateport:K.ITEM("u16",5700),
     },
     "public":{
       flag:K.ITEM("u8",1),
@@ -119,9 +116,6 @@ export const facilityGet: EPR = async (info, data, send) => {
       }
     }
   };
-  var response = {
-    "item":item
-  };
-  return send.object(response);
+  return send.object(K.ATTR({expire:"0"},item));
   //return __logInfoData(info, data, send);
 };

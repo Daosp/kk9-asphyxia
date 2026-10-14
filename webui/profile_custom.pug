@@ -1504,11 +1504,6 @@
     "9010010",
   ];
 
-
-  const tableItems = Array.from(new Set([
-    ...table,
-    ...Array.from({ length: 41 }, (_, index) => String(6000183 + index))
-  ]));
   const medalItems = Array.from({ length: 16 }, (_, index) => String(4010001 + index));
   const selectedMedals = Array.from({ length: 16 }, (_, index) => {
     const medalId = customMedals && customMedals[`medal${index}`];

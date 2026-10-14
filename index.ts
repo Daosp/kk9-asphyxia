@@ -41,15 +41,10 @@ export function register() {
   R.Contributor('Remaster', 'https://github.com/remaster1');
   R.Contributor('gluu', 'https://github.com/Gullmanx');
 
-  /* Register plugin configuration */
-  R.Config('event', {
-    type: 'string',
-    default: 'EVENT_1',
-    options: ['EVENT_1', 'EVENT_2'],
-  });
+  DB.Remove({collection: "lobby_search"});
 
   R.Route('cardmng.getdatalist', cardmngGetdatalist);
-  //R.Route('facility.get', facilityGet);
+  R.Route('facility.get', facilityGet);
 
   /* Register your routes */
   R.Route('kk9vers.send', versSend);
