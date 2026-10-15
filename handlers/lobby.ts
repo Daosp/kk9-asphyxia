@@ -96,11 +96,11 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * 
    * RESPONSE:
    * - qid = //айди очереди? он вроде должен отличаться от game_id, который равен датаид заявителя
-   * - master = //не принимает датаид, но без ошибок принимает ip с портом. Очеввидно адрес мастер-кабинета (основателя лобби)
+   * - master = //это нахуй не айпи, тут число
    * - timelimit = // количество секунд до конца ожидания
    * - seq = //что то связанное с seq в pcbevent?
-   * - addr = //естественно ip с портом (точно ли? ошибки нет, но всё же), но кого? Подключаемого игрока?
-   * - time0 = //отсутствие не вызывает ошибки, но необходим ли он?
+   * - addr = //естественно ip с портом для игры
+   * - time0 = //отсутствие не вызывает ошибки, но необходим ли он? число
    * - time1 =
    * - time2 =
    * - time3 =
@@ -142,8 +142,8 @@ export const lobbyQuery: EPR = async (info, data, send) => {
   if(search.length > 0){
     const tl: number = search[0].timelimit < UnixTime ? 0 : search[0].timelimit - UnixTime;
     rAttr = {
-      qid: search[0].qid,
-      master: search[0].pa1,
+      qid: search[0].qid.toString(),
+      master: "1",
       timelimit: tl.toString(),
       seq: seqIs(search[0].timelimit).toString(),
       addr: $(data).attr().pa1
@@ -154,7 +154,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
   }
   DB.Insert<lobby_search>({
     collection:"lobby_search",
-    qid:$(data).attr().game_id.slice(0,5)+"_"+UnixTime.toString(),
+    qid:UnixTime,
     timelimit: maxTime,
     game_id:$(data).attr().game_id,
     dataid1:$(data).attr().game_id,
@@ -179,10 +179,10 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     end_time:0,
   });
   rAttr = {
-    qid: $(data).attr().game_id.slice(0,5)+"_"+UnixTime.toString(),
-    master: $(data).attr().pa1,
+    qid: UnixTime.toString(),
+    master: "1",
     timelimit: timelimit.toString(),
-    seq: seqIs(maxTime).toString(),
+    seq: seqIs(UnixTime).toString(),
     addr: $(data).attr().pa1
   }
   console.log("lobbyQuery: END");
@@ -357,7 +357,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
 
   return send.object(K.ATTR({
     stat:"0",
-    qid: doc.qid,
+    qid: doc.qid.toString(),
     wait: wait,
     master: master,
     timelimit: tl.toString(),
