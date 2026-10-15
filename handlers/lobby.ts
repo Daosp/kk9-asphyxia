@@ -109,8 +109,10 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * - time6 =
    * - time7 =
    */
+  console.log("lobbyQuery: START");
+  console.log(JSON.stringify($(data).obj));
   const UnixTime: number = Math.floor(new Date().getTime() / 1000);
-  const timelimit: number = 30;
+  const timelimit: number = U.GetConfig("TimeLimitSearchLobby");
   const maxTime: number = UnixTime+timelimit;
   var rAttr: KAttrMap = {};
   const search = await DB.Find<lobby_search>({
@@ -136,14 +138,18 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       }
     ]
   });
+  console.log(JSON.stringify(search[0]));
   if(search.length > 0){
+    const tl: number = search[0].timelimit < UnixTime ? 0 : search[0].timelimit - UnixTime;
     rAttr = {
       qid: search[0].qid,
-      master: "0",
-      timelimit: search[0].timelimit.toString(),
+      master: search[0].pa1,
+      timelimit: tl.toString(),
       seq: seqIs(search[0].timelimit).toString(),
       addr: search[0].pa1
-    }
+    };
+    console.log(JSON.stringify(rAttr));
+    console.log("lobbyQuery: END");
     return send.object(K.ATTR(rAttr));
   }
   DB.Insert<lobby_search>({
@@ -173,12 +179,13 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     end_time:0,
   });
   rAttr = {
-    qid: $(data).attr().game_id,
-    master: "1",
+    qid: $(data).attr().game_id.slice(0,5)+"_"+UnixTime.toString(),
+    master: $(data).attr().pa1,
     timelimit: timelimit.toString(),
-    seq: seqIs(timelimit).toString(),
+    seq: seqIs(maxTime).toString(),
     addr: $(data).attr().pa1
   }
+  console.log("lobbyQuery: END");
   return send.object(K.ATTR(rAttr));
 };
 
@@ -292,21 +299,21 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * - time6 =
    * - time7 =
    */
-  
-  const query: Query<lobby_search> ={
-    collection:"lobby_search",
-    game_id: $(data).attr().game_id,
-    lobby_key: $(data).str("lobby_key"),
-    lobby_param: $(data).number("lobby_param"),
-  }
+  console.log(JSON.stringify($(data).obj));
+  const UnixTime: number = Math.floor(new Date().getTime() / 1000);
   const dataIDs = [
     $(data).str("prematch.data_id.0"),
     $(data).str("prematch.data_id.1"),
     $(data).str("prematch.data_id.2")
   ];
-  const update: Update<lobby_search> = {
+  
+  var query: Query<lobby_search> = {
+    collection:"lobby_search",
+    game_id: $(data).attr().game_id,
+    started: false,
+  }
+  const result = await DB.Upsert<lobby_search>(query,{
     $set:{
-      dataid1 : $(data).attr().game_id,
       dataid2 : dataIDs[0],
       dataid3 : dataIDs[1],
       dataid4 : dataIDs[2],
@@ -316,26 +323,47 @@ export const lobbyAccept: EPR = async (info, data, send) => {
       inhibit1 : $(data).str("inhibit.data_id.0"),
       inhibit2 : $(data).str("inhibit.data_id.1"),
       inhibit3 : $(data).str("inhibit.data_id.2"),
+      lobby_key: $(data).str("lobby_key"),
+      lobby_param: $(data).number("lobby_param"),
     }
-  };
-  const result = await DB.Upsert<lobby_search>(query,update);
+  });
+  if (result.upsert == true && result.updated > 0){
+    var doc = result.docs[0]
+  } else return send.deny();
+  console.log(JSON.stringify(result));
+
   var wait = "1"
+  var master = "1"
   if(
-    dataIDs[0] != dataIDs[1] &&
-    dataIDs[1] != dataIDs[2] &&
+    $(data).attr().gamemode == "11" &&
+    dataIDs[0] != "" &&
+    dataIDs[1] != ""
+  ) wait = "0"; else if(
+    dataIDs[0] != "" &&
+    dataIDs[1] != "" &&
     dataIDs[2] != ""
-  ) wait = "0";
+  ) wait = "0"; else if(
+    doc.timelimit <= UnixTime
+  ) wait = "0"; else if(
+    dataIDs[0] == "" &&
+    dataIDs[1] == "" &&
+    dataIDs[2] == ""
+  ) {
+    wait = "0";
+    master = "0"
+  }
+  if(wait == "0") DB.Upsert<lobby_search>(query,{$set: {started: true}});
+  const tl: number = doc.timelimit < UnixTime ? 0 : doc.timelimit - UnixTime;
+
   return send.object(K.ATTR({
     stat:"0",
-    qid: result.docs[0].qid,
+    qid: doc.qid,
     wait: wait,
-    master: "0",
-    timelimit:  result.docs[0].timelimit.toString(),
-    seq:seqIs(result.docs[0].timelimit).toString(),
-    addr: result.docs[0].pa1
+    master: master,
+    timelimit: tl.toString(),
+    seq: seqIs(doc.timelimit).toString(),
+    addr: doc.pa1
   }))
-
-  return __sendSuccessLOG(info, data, send);
 };
 
 export const lobbyPoling: EPR = async (info, data, send) => {
