@@ -31,17 +31,16 @@ import { twitterUser, twitterTweet } from './handlers/twitter';
 import { cardmngGetdatalist, facilityGet } from './handlers/eamuse';
 import { shop } from './model/bd_types_shop';
 import { custom, custom_Medal } from './model/bd_types_custom';
+import { lobby_search } from './model/bd_types_lobby';
 
 export function register() {
   /* Register game code */
   R.GameCode('KK9');
 
   /* A plugin can have multiple contributors. */
-  R.Contributor('Daosp', 'https://github.com/Daosp');
-  R.Contributor('Remaster', 'https://github.com/remaster1');
-  R.Contributor('gluu', 'https://github.com/Gullmanx');
-
-  DB.Remove({collection: "lobby_search"});
+  R.Contributor('Daosp (programming)', 'https://github.com/Daosp');
+  R.Contributor('Remaster (decompiling)', 'https://github.com/remaster1');
+  R.Contributor('gluu (webui)', 'https://github.com/Gullmanx');
 
   R.Route('cardmng.getdatalist', cardmngGetdatalist);
   R.Route('facility.get', facilityGet);
@@ -283,9 +282,13 @@ export function register() {
   /* Use --dev argument to enable console output. */
   console.log('Plugin Registered');
 
-  /*
-    You can check the version of CORE using CORE_VERSION_MAJOR and CORE_VERSION_MINOR
-    Note: these value can be undefined, which means the CORE is version v1.18 and under
-   */
-  console.log(`Core Version: v${CORE_VERSION_MAJOR}.${CORE_VERSION_MINOR}`);
+  R.Config("TimeLimitSearchLobby",{
+    desc:"The time allotted for waiting in the lobby before a game",
+    default: 30,
+    type:"integer",
+    name:"Time limit on lobby",
+    range:[20,120]
+  })
+  const query: Query<lobby_search> = {collection: "lobby_search"};
+  DB.Remove<lobby_search>(query);
 }
