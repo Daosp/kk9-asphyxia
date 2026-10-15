@@ -95,12 +95,12 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * <special_player __type="u8">0</lobby_key>
    * 
    * RESPONSE:
-   * - qid =
-   * - master = 
-   * - timelimit =
-   * - seq =
-   * - addr =
-   * - time0 =
+   * - qid = //айди очереди? он вроде должен отличаться от game_id, который равен датаид заявителя
+   * - master = //не принимает датаид, но без ошибок принимает ip с портом. Очеввидно адрес мастер-кабинета (основателя лобби)
+   * - timelimit = // количество секунд до конца ожидания
+   * - seq = //что то связанное с seq в pcbevent?
+   * - addr = //естественно ip с портом (точно ли? ошибки нет, но всё же), но кого? Подключаемого игрока?
+   * - time0 = //отсутствие не вызывает ошибки, но необходим ли он?
    * - time1 =
    * - time2 =
    * - time3 =
@@ -146,7 +146,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       master: search[0].pa1,
       timelimit: tl.toString(),
       seq: seqIs(search[0].timelimit).toString(),
-      addr: search[0].pa1
+      addr: $(data).attr().pa1
     };
     console.log(JSON.stringify(rAttr));
     console.log("lobbyQuery: END");
