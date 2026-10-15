@@ -122,9 +122,9 @@ export const vipAdd_point: EPR = async (info, data, send) => {
   const point_Result = responseDB.point + addPointSUM;
   const Tpoint_Result = responseDB.point_total + addPointSUM;
   var rankVip = 0;
-  if(Tpoint_Result <= 5000)rankVip++;
-  if(Tpoint_Result <= 20000)rankVip++;
-  if(Tpoint_Result <= 50000)rankVip++;
+  if(Tpoint_Result >= 5000)rankVip++;
+  if(Tpoint_Result >= 20000)rankVip++;
+  if(Tpoint_Result >= 50000)rankVip++;
   DB.Upsert<vip>(dataId,{
     collection:"vip"
   },{
