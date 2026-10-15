@@ -99,11 +99,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * - master = //это нахуй не айпи, тут число
    * - timelimit = // количество секунд до конца ожидания
    * - seq = //что то связанное с seq в pcbevent?
-<<<<<<< HEAD
    * - addr = //естественно ip с портом для игры
-=======
-   * - addr = //естественно ip с портом (точно ли? ошибки нет, но всё же), но кого? Подключаемого игрока?
->>>>>>> f519468e05aa72e2fe80f8dd2b6835b5a6a2ac54
    * - time0 = //отсутствие не вызывает ошибки, но необходим ли он? число
    * - time1 =
    * - time2 =
@@ -365,7 +361,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     wait: wait,
     master: master,
     timelimit: tl.toString(),
-    seq: seqIs(doc.timelimit).toString(),
+    seq: seqIs(doc.qid).toString(),
     addr: doc.pa1
   }))
 };
