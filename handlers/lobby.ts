@@ -95,19 +95,19 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * <special_player __type="u8">0</lobby_key>
    * 
    * RESPONSE:
-   * - qid = //айди очереди? он вроде должен отличаться от game_id, который равен датаид заявителя
-   * - master = //это нахуй не айпи, тут число
-   * - timelimit = // количество секунд до конца ожидания
-   * - seq = //что то связанное с seq в pcbevent?
-   * - addr = //естественно ip с портом для игры
-   * - time0 = //отсутствие не вызывает ошибки, но необходим ли он? число
-   * - time1 =
-   * - time2 =
-   * - time3 =
-   * - time4 =
-   * - time5 =
-   * - time6 =
-   * - time7 =
+   * - qid       = 4 bites - 0x34 //айди очереди? он вроде должен отличаться от game_id, который равен датаид заявителя
+   * - master    = 4 bites - 0x38 //это нахуй не айпи, тут число
+   * - timelimit = 4 bites - 0x3C // количество секунд до конца ожидания
+   * - seq       = 4 bites - 0x40 //что то связанное с seq в pcbevent?
+   * - addr      = string  - 0x60 //естественно ip с портом для игры
+   * - time0     = 4 bites - 0xC0 //отсутствие не вызывает ошибки, но необходим ли он? число
+   * - time1     = 4 bites - 0xC4
+   * - time2     =
+   * - time3     =
+   * - time4     =
+   * - time5     =
+   * - time6     =
+   * - time7     =
    */
   console.log("lobbyQuery: START");
   console.log(JSON.stringify($(data).obj));
@@ -141,13 +141,32 @@ export const lobbyQuery: EPR = async (info, data, send) => {
   console.log(JSON.stringify(search[0]));
   if(search.length > 0){
     const tl: number = search[0].timelimit < UnixTime ? 0 : search[0].timelimit - UnixTime;
+    var arTime = [
+      search[0].time0,search[0].time1,search[0].time2,search[0].time3,
+      search[0].time4,search[0].time5,search[0].time6,search[0].time7,
+    ];
+    for(const i in arTime) if (arTime[i] == 0){
+      arTime[i] = UnixTime;
+      break
+    }
     rAttr = {
       qid: search[0].qid.toString(),
-      master: "1",
+      master: "0",
       timelimit: tl.toString(),
-      seq: seqIs(search[0].timelimit).toString(),
-      addr: $(data).attr().pa1
+      seq: (search[0].seq + 1).toString(),
+      addr: $(data).attr().pa1,
+      time0 : arTime[0].toString(),time1 : arTime[1].toString(),
+      time2 : arTime[2].toString(),time3 : arTime[3].toString(),
+      time4 : arTime[4].toString(),time5 : arTime[5].toString(),
+      time6 : arTime[6].toString(),time7 : arTime[7].toString(),
     };
+    DB.Update<lobby_search>({collection:"lobby_search",game_id:search[0].game_id,qid:search[0].qid},{$set:{
+      seq:search[0].seq + 1,
+      time0 : arTime[0],time1 : arTime[1],
+      time2 : arTime[2],time3 : arTime[3],
+      time4 : arTime[4],time5 : arTime[5],
+      time6 : arTime[6],time7 : arTime[7],
+    }})
     console.log(JSON.stringify(rAttr));
     console.log("lobbyQuery: END");
     return send.object(K.ATTR(rAttr));
@@ -177,6 +196,15 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     started: false,
     start_time:0,
     end_time:0,
+    seq:0,
+    time0 : UnixTime,
+    time1 : 0,
+    time2 : 0,
+    time3 : 0,
+    time4 : 0,
+    time5 : 0,
+    time6 : 0,
+    time7 : 0,
   });
   rAttr = {
     qid: UnixTime.toString(),
@@ -195,92 +223,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * Принятие в лобби
    * 
    * DATA:
-   *  - a1 = "127.0.0.1:5700",
-   *  - a2 = "127.0.0.1:5700",
-   *  - a3 = "127.0.0.1:5700",
-   *  - belong_shop_rating = "0",
-   *  - cab_client_id = "0",
-   *  - cab_group_id = "0",
-   *  - cheat_ctr = "0",
-   *  - cheat_pts = "0",
-   *  - entry_area = "13",
-   *  - eventmode = "0",
-   *  - from_area = "13",
-   *  - full_wait = "0",
-   *  - game_id = "A5B23874A5E46E9A", (is data_id)
-   *  - game_id_type = "1",
-   *  - gamemode = "3",
-   *  - gameparam = "0",
-   *  - gpcbid = "00010203040506070809",
-   *  - grand_champion = "0",
-   *  - group = "0",
-   *  - guest = "0",
-   *  - join_shop_rating = "0",
-   *  - jong_index = "0",
-   *  - koryu_class = "0",
-   *  - koryu_lv = "0",
-   *  - koryu_type = "0",
-   *  - league_han = "X",
-   *  - league_san = "X",
-   *  - league_ton = "X",
-   *  - level = "5",
-   *  - life = "0",
-   *  - loc_id = "ea",
-   *  - magic = "KK9",
-   *  - match_shop_id0 = "",
-   *  - match_shop_id1 = "",
-   *  - match_shop_id2 = "",
-   *  - method = "accept",
-   *  - net_version = "29",
-   *  - pa1 = "26.114.124.205:5700",
-   *  - pa2 = "26.114.124.205:5700",
-   *  - pa3 = "26.114.124.205:5700",
-   *  - party_id = "0",
-   *  - play_shop_id = "ea",
-   *  - pre_score = "-145",
-   *  - priority = "0",
-   *  - pro_id = "0",
-   *  - probit0 = "0",
-   *  - probit1 = "0",
-   *  - probit2 = "0",
-   *  - probit3 = "0",
-   *  - probit4 = "0",
-   *  - probit_level = "0",
-   *  - s_probit0 = "0",
-   *  - s_probit1 = "0",
-   *  - s_probit2 = "0",
-   *  - s_probit3 = "0",
-   *  - s_probit4 = "0",
-   *  - shop_number = "0",
-   *  - special_table = "0",
-   *  - super_league_class_han = "0",
-   *  - super_league_class_san = "0",
-   *  - super_league_class_ton = "0",
-   *  - taikyoku_cnt = "0",
-   *  - tatsujin_type = "0",
-   *  - tour_step = "0",
-   *  - ttype = "1",
-   *  - use_priority = "0"
-   * <prematch>
-   *   <data_id __type="str"></data_id>
-   *   <data_id __type="str"></data_id>
-   *   <data_id __type="str"></data_id>
-   * </prematch>
-   * <inhibit>
-   *   <data_id __type="str"></data_id>
-   *   <data_id __type="str"></data_id>
-   *   <data_id __type="str"></data_id>
-   * </inhibit>
-   * <lobby_key __type="str"></lobby_key>
-   * <lobby_param __type="s32">0</lobby_key>
-   * <avoid_match __type="u8">0</lobby_key>
-   * <ease_match __type="u8">1</lobby_key>
-   * <avoid_master __type="u8">0</lobby_key>
-   * <match_sec __type="s32">0</lobby_key>
-   * <need_cpu __type="u8">0</lobby_key>
-   * <kohaku_team __type="u8">0</lobby_key>
-   * <kohaku_win_pro __type="u8">0</lobby_key>
-   * <special_player __type="u8">0</lobby_key>
+   * то же самое что и в lobby.query
    * 
    * RESPONSE:
    * - stat =

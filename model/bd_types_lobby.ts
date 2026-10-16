@@ -36,4 +36,13 @@ export interface lobby_search {
   started : boolean,
   start_time:number,
   end_time:number,
+  seq:number,
+  time0 : number,
+  time1 : number,
+  time2 : number,
+  time3 : number,
+  time4 : number,
+  time5 : number,
+  time6 : number,
+  time7 : number,
 }
