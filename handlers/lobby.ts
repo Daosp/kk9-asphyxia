@@ -154,11 +154,15 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       master: "0",
       timelimit: tl.toString(),
       seq: (search[0].seq + 1).toString(),
-      addr: $(data).attr().pa1,
-      time0 : arTime[0].toString(),time1 : arTime[1].toString(),
-      time2 : arTime[2].toString(),time3 : arTime[3].toString(),
-      time4 : arTime[4].toString(),time5 : arTime[5].toString(),
-      time6 : arTime[6].toString(),time7 : arTime[7].toString(),
+      addr: search[0].pa1,
+      time0 : arTime[0] == 0 ? "" : arTime[0].toString(),
+      time1 : arTime[1] == 0 ? "" : arTime[1].toString(),
+      time2 : arTime[2] == 0 ? "" : arTime[2].toString(),
+      time3 : arTime[3] == 0 ? "" : arTime[3].toString(),
+      time4 : arTime[4] == 0 ? "" : arTime[4].toString(),
+      time5 : arTime[5] == 0 ? "" : arTime[5].toString(),
+      time6 : arTime[6] == 0 ? "" : arTime[6].toString(),
+      time7 : arTime[7] == 0 ? "" : arTime[7].toString(),
     };
     DB.Update<lobby_search>({collection:"lobby_search",game_id:search[0].game_id,qid:search[0].qid},{$set:{
       seq:search[0].seq + 1,
@@ -210,8 +214,9 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     qid: UnixTime.toString(),
     master: "1",
     timelimit: timelimit.toString(),
-    seq: seqIs(UnixTime).toString(),
-    addr: $(data).attr().pa1
+    seq: "0",
+    addr: $(data).attr().pa1,
+    time0: UnixTime.toString(),
   }
   console.log("lobbyQuery: END");
   return send.object(K.ATTR(rAttr));
@@ -274,6 +279,14 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     var doc = result.docs[0]
   } else return send.deny();
   console.log(JSON.stringify(result));
+  var arTime = [
+    doc.time0,doc.time1,doc.time2,doc.time3,
+    doc.time4,doc.time5,doc.time6,doc.time7,
+  ];
+  for(const i in arTime) if (arTime[i] == 0){
+    arTime[i] = UnixTime;
+    break
+  }
 
   var wait = "1"
   var master = "1"
@@ -295,7 +308,14 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     wait = "0";
     master = "0"
   }
-  if(wait == "0") DB.Upsert<lobby_search>(query,{$set: {started: true}});
+  if(wait == "0") DB.Upsert<lobby_search>(query,{$set: {
+    started: true,
+    seq:doc.seq + 1,
+    time0 : arTime[0],time1 : arTime[1],
+    time2 : arTime[2],time3 : arTime[3],
+    time4 : arTime[4],time5 : arTime[5],
+    time6 : arTime[6],time7 : arTime[7],
+  }});
   const tl: number = doc.timelimit < UnixTime ? 0 : doc.timelimit - UnixTime;
 
   return send.object(K.ATTR({
@@ -304,8 +324,12 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     wait: wait,
     master: master,
     timelimit: tl.toString(),
-    seq: seqIs(doc.qid).toString(),
-    addr: doc.pa1
+    seq: (doc.seq + 1).toString(),
+    addr: doc.pa1,
+    time0 : arTime[0].toString(),time1 : arTime[1].toString(),
+    time2 : arTime[2].toString(),time3 : arTime[3].toString(),
+    time4 : arTime[4].toString(),time5 : arTime[5].toString(),
+    time6 : arTime[6].toString(),time7 : arTime[7].toString(),
   }))
 };
 

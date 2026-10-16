@@ -27,8 +27,8 @@ export const customizeGet: EPR = async (info, data, send) => {
       base:K.ITEM("u32",parseInt(rCust.base)),       //1000000-1000005 , 1010001-1010005
       corner:K.ITEM("u32",parseInt(rCust.corner)),   //2000000-2000005 , 2010001-2010005
       midle:K.ITEM("u32",parseInt(rCust.midle)),     //3000000-3000005 , 3010001-3010005
-      //enable_pro_marker:K.ITEM("u32",100),
-      //pro_marker:K.ITEM("u32",100),
+      //enable_pro_marker:K.ITEM("u32",1),
+      //pro_marker:K.ITEM("u32",45),
       date:K.ITEM("u32",rCust.date_p)
     },
     table:{

@@ -32,26 +32,27 @@ export const proenterNow: EPR = async (info, data, send) => {
    * DATA:
    *  - method="now"
    */
-  return __sendSuccessLOG(info, data, send);
+  //return __sendSuccessLOG(info, data, send);
   const time = formatCurrentDateTimeUTC();
   const expireTime = formatCurrentDateTimeUTC(60*60);
+  const UnixTime: number = Math.floor(new Date().getTime() / 1000);
   const response = K.ATTR({
-    now_time:"0",
-    expire:expireTime,
-  }/*,{
+    now_time:UnixTime.toString(),
+    expire:"0",
+  },{
     data: K.ATTR({
-      pro_id:"123123",
-      game_mode:"1",
+      pro_id:"45",
+      game_mode:"11",
       league:"0",
-      entry_time:"2026-08-20 12:00:00+0",
+      entry_time:UnixTime.toString(),
       party:"0",
     }),
     top: K.ATTR({
-      pro_id:"123123",
-      game_mode:"hai",
-      stamp:"2026-08-20 12:00:00+0"
+      pro_id:"45",
+      game_mode:"11",
+      stamp:UnixTime.toString()
     }),
-  }*/);
+  });
   return send.object(response);
 };
 
