@@ -11,10 +11,6 @@ export const oshilist: oshi[] = [{
         nameEN: "Masayoshi Ara",
         nameJP: "荒正義",
     }, {
-        id: undefined,
-        nameEN: "Maehara Yudai",
-        nameJP: "前原雄大",
-    }, {
         id: 5,
         nameEN: "Yuko Ito",
         nameJP: "伊藤優孝",
@@ -51,14 +47,6 @@ export const oshilist: oshi[] = [{
         nameEN: "Yukiko Izumi",
         nameJP: "和泉由希子",
     }, {
-        id: undefined,
-        nameEN: "Kaori Shimizu",
-        nameJP: "清水香織",
-    }, {
-        id: undefined,
-        nameEN: "Masaharu Tomotake",
-        nameJP: "ともたけ雅晴",
-    }, {
         id: 31,
         nameEN: "Satoshi Fujisaki",
         nameJP: "藤崎智",
@@ -82,10 +70,6 @@ export const oshilist: oshi[] = [{
         id: 45,
         nameEN: "Garthe Nelson",
         nameJP: "ガース",
-    }, {
-        id: undefined,
-        nameEN: "Jenn Barr",
-        nameJP: "ジェン",
     }, {
         id: 58,
         nameEN: "Kenji Katsumata",
@@ -147,10 +131,6 @@ export const oshilist: oshi[] = [{
         nameEN: "Tojo Rio",
         nameJP: "東城り",
     }, {
-        id: undefined,
-        nameEN: "Inoue Emiko",
-        nameJP: "井上絵美",
-    }, {
         id: 96,
         nameEN: "HIRO Shibata",
         nameJP: "HIRO柴",
@@ -162,26 +142,6 @@ export const oshilist: oshi[] = [{
         id: 100,
         nameEN: "Hiroe Sugawara",
         nameJP: "菅原千",
-    }, {
-        id: undefined,
-        nameEN: "Chiaki Matsuoka",
-        nameJP: "松岡千",
-    }, {
-        id: undefined,
-        nameEN: "Tomomi Furutani",
-        nameJP: "古谷知",
-    }, {
-        id: undefined,
-        nameEN: "Chifumi Yamawaki",
-        nameJP: "山脇千文",
-    }, {
-        id: undefined,
-        nameEN: "Morishita Masato",
-        nameJP: "森下剛",
-    }, {
-        id: undefined,
-        nameEN: "Shibata Yoshikazu",
-        nameJP: "柴田吉",
     }, {
         id: 111,
         nameEN: "Yamato",
@@ -226,10 +186,6 @@ export const oshilist: oshi[] = [{
         id: 126,
         nameEN: "Arisa Date",
         nameJP: "伊達朱里",
-    }, {
-        id: undefined,
-        nameEN: "Midori Natsume",
-        nameJP: "夏目",
     }, {
         id: 129,
         nameEN: "Nakada Kana",
@@ -338,7 +294,54 @@ export const oshilist: oshi[] = [{
 ]
 
 type oshi = {
-    id: number | undefined,
+    id: number,
     nameEN: string,
     nameJP: string,
 }
+
+const oshilistUND = [{
+        id: undefined,
+        nameEN: "Maehara Yudai",
+        nameJP: "前原雄大",
+    }, {
+        id: undefined,
+        nameEN: "Kaori Shimizu",
+        nameJP: "清水香織",
+    }, {
+        id: undefined,
+        nameEN: "Masaharu Tomotake",
+        nameJP: "ともたけ雅晴",
+    }, {
+        id: undefined,
+        nameEN: "Jenn Barr",
+        nameJP: "ジェン",
+    }, {
+        id: undefined,
+        nameEN: "Inoue Emiko",
+        nameJP: "井上絵美",
+    }, {
+        id: undefined,
+        nameEN: "Chiaki Matsuoka",
+        nameJP: "松岡千",
+    }, {
+        id: undefined,
+        nameEN: "Tomomi Furutani",
+        nameJP: "古谷知",
+    }, {
+        id: undefined,
+        nameEN: "Chifumi Yamawaki",
+        nameJP: "山脇千文",
+    }, {
+        id: undefined,
+        nameEN: "Morishita Masato",
+        nameJP: "森下剛",
+    }, {
+        id: undefined,
+        nameEN: "Shibata Yoshikazu",
+        nameJP: "柴田吉",
+    }, {
+        id: undefined,
+        nameEN: "Midori Natsume",
+        nameJP: "夏目",
+    }
+]
