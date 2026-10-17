@@ -18,7 +18,7 @@ export const enqueteNow: EPR = async (info, data, send) => {
   },{
     foo:K.ITEM("str","bar")
   });
-  return send.object(response);
+  //return send.object(response);
   return __sendSuccessLOG(info, data, send);
 };
 

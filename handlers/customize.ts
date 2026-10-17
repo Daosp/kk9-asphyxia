@@ -173,7 +173,6 @@ export const customizeShop_buy: EPR = async (info, data, send) => {
 export const customizeOshigacha_confirm: EPR = async (info, data, send) => {
   /**
    * kk9customize.oshigacha_confirm
-   * Подача информации о кастомизации?
    * 
    * receiver returns failure
    * 
@@ -195,11 +194,43 @@ export const customizeOshigacha_confirm: EPR = async (info, data, send) => {
     </e_0>
 </oshigacha>
 */
-  var response = K.ATTR({
-    article:"0"
-  },{
-    master:K.ITEM("str","0"),
-  });
+  var response = {
+    gacha:[
+      K.ATTR({
+        article:"45"
+      },{
+        available:K.ITEM("bool",1),
+        drawable:K.ITEM("bool",1),
+        new:K.ITEM("bool",0),
+        info:{
+          gacha_id:K.ITEM("u32",45),
+          type:K.ITEM("u32",1),
+          name:K.ITEM("str","U"),
+          kind_name:K.ITEM("str","U"),
+          desc:K.ITEM("str","U"),
+          item:[
+            {
+              item_id:K.ITEM("u32",1),
+              name:K.ITEM("str","U"),
+              drawn:K.ITEM("str","U"),
+              right_aiming:K.ITEM("u32",0)
+            }
+          ]
+        },
+      })
+    ],
+    master:{
+      item:[
+        {
+          item_id:K.ITEM("u32",1),
+          name:K.ITEM("str","U"),
+          has:K.ITEM("bool",0),
+          server_signed:K.ITEM("bool",1)
+        }
+      ]
+    }
+  };
+  return send.object(response);
   return __sendSuccessLOG(info, data, send);
 };
 
