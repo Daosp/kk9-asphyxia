@@ -18,10 +18,10 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * DATA:
    *  - a1 = "127.0.0.1:5700",
    *  - a2 = "127.0.0.1:5700",
-   *  - a3 = "127.0.0.1:5700",
+   *  - a3 = "127.0.0.1:5700", (why is 3?)
    *  - belong_shop_rating = "0",
-   *  - cab_client_id = "0",  //This is for old cabs with CU
-   *  - cab_group_id = "0",   //CAB ID (0-22) and CAB GROUP (A-F)
+   *  - cab_client_id = "0",  //This is for old cabs with CU     //
+   *  - cab_group_id = "0",   //CAB ID (0-22) and CAB GROUP (A-F)//
    *  - cheat_ctr = "0",
    *  - cheat_pts = "0",
    *  - entry_area = "13",
@@ -45,7 +45,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - league_san = "X",
    *  - league_ton = "X",
    *  - level = "5",
-   *  - life = "0", (for standert play?)
+   *  - life = "0", (for standart play?)
    *  - loc_id = "ea",
    *  - magic = "KK9",
    *  - match_shop_id0 = "",
@@ -110,7 +110,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * - seq       = 4 bites - 0x40 //SEQuence number for players? Or requests?
    * - addr      = string  - 0x60 //IP:PORT of master
    * - time0     = 4 bites - 0xC0 //Timestamp?
-   * - time1     = 4 bites - 0xC4
+   * - time1     = 4 bites - 0xC4...
    * - time2     =
    * - time3     =
    * - time4     =
@@ -267,20 +267,43 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     )
   );
   if (lbID == -1) return send.deny();
-
-  lbSearch[lbID].dataid2     = dataIDs[0];
-  lbSearch[lbID].dataid3     = dataIDs[1];
-  lbSearch[lbID].dataid4     = dataIDs[2];
-  lbSearch[lbID].pa2         = $(data).attr().pa1;
-  lbSearch[lbID].pa3         = $(data).attr().pa2;
-  lbSearch[lbID].pa4         = $(data).attr().pa3;
-  lbSearch[lbID].inhibit1    = $(data).str("inhibit.data_id.0");
-  lbSearch[lbID].inhibit2    = $(data).str("inhibit.data_id.1");
-  lbSearch[lbID].inhibit3    = $(data).str("inhibit.data_id.2");
-  lbSearch[lbID].lobby_key   = $(data).str("lobby_key");
-  lbSearch[lbID].lobby_param = $(data).number("lobby_param");
-
   console.log(JSON.stringify(lbSearch[lbID]));
+
+  var wait = "1"
+  if((
+    $(data).attr().gamemode == "11" &&
+    dataIDs[0] != "" &&
+    dataIDs[1] != ""
+  ) || (
+    dataIDs[0] != "" &&
+    dataIDs[1] != "" &&
+    dataIDs[2] != ""
+  ) || (
+    lbSearch[lbID].timelimit <= UnixTime
+  ) || (
+    dataIDs[0] == "" &&
+    dataIDs[1] == "" &&
+    dataIDs[2] == ""
+  )) {
+    wait = "0"
+  }
+
+  if(wait == "0"){
+    lbSearch[lbID].started = true;
+    lbSearch[lbID].start_time = UnixTime;
+    lbSearch[lbID].dataid2     = dataIDs[0];
+    lbSearch[lbID].dataid3     = dataIDs[1];
+    lbSearch[lbID].dataid4     = dataIDs[2];
+    lbSearch[lbID].pa2         = $(data).attr().pa1;
+    lbSearch[lbID].pa3         = $(data).attr().pa2;
+    lbSearch[lbID].pa4         = $(data).attr().pa3;
+    lbSearch[lbID].inhibit1    = $(data).str("inhibit.data_id.0");
+    lbSearch[lbID].inhibit2    = $(data).str("inhibit.data_id.1");
+    lbSearch[lbID].inhibit3    = $(data).str("inhibit.data_id.2");
+    lbSearch[lbID].lobby_key   = $(data).str("lobby_key");
+    lbSearch[lbID].lobby_param = $(data).number("lobby_param");
+  }
+
   var arTime = [
     lbSearch[lbID].time0,lbSearch[lbID].time1,lbSearch[lbID].time2,lbSearch[lbID].time3,
     lbSearch[lbID].time4,lbSearch[lbID].time5,lbSearch[lbID].time6,lbSearch[lbID].time7,
@@ -290,26 +313,6 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     break
   }
 
-  var wait = "1"
-  if(
-    $(data).attr().gamemode == "11" &&
-    dataIDs[0] != "" &&
-    dataIDs[1] != ""
-  ) wait = "0"; else if(
-    dataIDs[0] != "" &&
-    dataIDs[1] != "" &&
-    dataIDs[2] != ""
-  ) wait = "0"; else if(
-    lbSearch[lbID].timelimit <= UnixTime
-  ) wait = "0"; else if(
-    dataIDs[0] == "" &&
-    dataIDs[1] == "" &&
-    dataIDs[2] == ""
-  ) {
-    wait = "0"
-  }
-
-  lbSearch[lbID].started = true;
   lbSearch[lbID].seq     = lbSearch[lbID].seq + 1;
   lbSearch[lbID].time0   = arTime[0];
   lbSearch[lbID].time1   = arTime[1];
@@ -327,7 +330,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     stat:"0",
     qid: lbSearch[lbID].qid.toString(),
     wait: wait,
-    master: "0",
+    master: "1",
     timelimit: tl.toString(),
     seq: (lbSearch[lbID].seq + 1).toString(),
     addr: lbSearch[lbID].pa1,
@@ -341,7 +344,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
 export const lobbyPoling: EPR = async (info, data, send) => {
   /**
    * lobby.poling
-   * ???
+   * ??? (is this after game?)
    * 
    * DATA:
    *  - cancel = ?????,

@@ -64,5 +64,6 @@ export function isLobbySame(
   const Inh2 = lobby0.inhibit2 !== dataid;
   const Inh3 = lobby0.inhibit3 !== dataid;
   const TT = lobby0.ttype !== ttype;
-  return GM && GP && LK && LP && Inh1 && Inh2 && Inh3 && TT
+  const ST = !lobby0.started;
+  return GM && GP && LK && LP && Inh1 && Inh2 && Inh3 && TT && ST
 }
