@@ -3,6 +3,13 @@ import { lobby, lobby_history, isLobbySame } from "../model/bd_types_lobby";
 
 export var lbSearch: lobby[] = [];
 
+/*
+Gamemodes:
+  Tonpu   - 3
+  Hanchan - 4
+  Sanma   - 11
+*/
+
 export const lobbyQuery: EPR = async (info, data, send) => {
   /**
    * lobby.query
@@ -13,8 +20,8 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - a2 = "127.0.0.1:5700",
    *  - a3 = "127.0.0.1:5700",
    *  - belong_shop_rating = "0",
-   *  - cab_client_id = "0",
-   *  - cab_group_id = "0",
+   *  - cab_client_id = "0",  //This is for old cabs with CU
+   *  - cab_group_id = "0",   //CAB ID (0-22) and CAB GROUP (A-F)
    *  - cheat_ctr = "0",
    *  - cheat_pts = "0",
    *  - entry_area = "13",
@@ -22,7 +29,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - from_area = "13",
    *  - full_wait = "0",
    *  - game_id = "________", (is data_id)
-   *  - game_id_type = "1",
+   *  - game_id_type = "1", (cardtype?)
    *  - gamemode = "3",
    *  - gameparam = "0",
    *  - gpcbid = "00010203040506070809",
@@ -38,7 +45,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - league_san = "X",
    *  - league_ton = "X",
    *  - level = "5",
-   *  - life = "0",
+   *  - life = "0", (for standert play?)
    *  - loc_id = "ea",
    *  - magic = "KK9",
    *  - match_shop_id0 = "",
@@ -73,7 +80,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - taikyoku_cnt = "0",
    *  - tatsujin_type = "0",
    *  - tour_step = "0",
-   *  - ttype = "1",
+   *  - ttype = "1", (hm, interesitng... this is room? after 1 dan i have ttype = "2")
    *  - use_priority = "0"
    * <prematch>
    *   <data_id __type="str"></data_id>
@@ -125,6 +132,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       $(data).attr().lobby_key,
       parseInt($(data).attr().lobby_param),
       $(data).attr().dataid1,
+      parseInt($(data).attr().ttype),
     )
   );
   if(lbID == -1){
@@ -150,6 +158,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       inhibit2 : "",
       inhibit3 : "",
       started: false,
+      ttype:parseInt($(data).attr().ttype),
       start_time:0,
       end_time:0,
       seq:0,
@@ -239,7 +248,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * - time7 =
    */
   console.log("lobbyAccept: START");
-  const UnixTime: number = Math.floor(new Date().getTime() / 1000);
+  const UnixTime : number = Math.floor(new Date().getTime() / 1000);
   const dataIDs = [
     $(data).str("prematch.data_id.0"),
     $(data).str("prematch.data_id.1"),
@@ -254,6 +263,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
       $(data).attr().lobby_key,
       parseInt($(data).attr().lobby_param),
       $(data).attr().dataid1,
+      parseInt($(data).attr().ttype),
     )
   );
   if (lbID == -1) return send.deny();

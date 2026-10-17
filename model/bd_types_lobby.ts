@@ -35,6 +35,7 @@ export type lobby = {
   started : boolean,
   start_time:number,
   end_time:number,
+  ttype : number,
   seq:number,
   time0 : number,
   time1 : number,
@@ -53,6 +54,7 @@ export function isLobbySame(
   lobby_key: string,
   lobby_param: number,
   dataid: string,
+  ttype: number,
 ) {
   const GM = lobby0.gamemode === gamemode;
   const GP = lobby0.gameparam === gameparam;
@@ -61,5 +63,6 @@ export function isLobbySame(
   const Inh1 = lobby0.inhibit1 !== dataid;
   const Inh2 = lobby0.inhibit2 !== dataid;
   const Inh3 = lobby0.inhibit3 !== dataid;
-  return GM && GP && LK && LP && Inh1 && Inh2 && Inh3
+  const TT = lobby0.ttype !== ttype;
+  return GM && GP && LK && LP && Inh1 && Inh2 && Inh3 && TT
 }
