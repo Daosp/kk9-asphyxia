@@ -11,8 +11,7 @@ export interface lobby_history {
   end_time:number;
 }
 
-export interface lobby_search {
-  collection: "lobby_search",
+export type lobby = {
   qid:number,
   timelimit: number,
   dataid1:string,
@@ -45,4 +44,22 @@ export interface lobby_search {
   time5 : number,
   time6 : number,
   time7 : number,
+}
+
+export function isLobbySame(
+  lobby0: lobby,
+  gamemode: string,
+  gameparam: string,
+  lobby_key: string,
+  lobby_param: number,
+  dataid: string,
+) {
+  const GM = lobby0.gamemode === gamemode;
+  const GP = lobby0.gameparam === gameparam;
+  const LK = lobby0.lobby_key === lobby_key;
+  const LP = lobby0.lobby_param === lobby_param;
+  const Inh1 = lobby0.inhibit1 !== dataid;
+  const Inh2 = lobby0.inhibit2 !== dataid;
+  const Inh3 = lobby0.inhibit3 !== dataid;
+  return GM && GP && LK && LP && Inh1 && Inh2 && Inh3
 }

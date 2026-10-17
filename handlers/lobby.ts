@@ -1,6 +1,8 @@
 import { __sendSuccessLOG } from './__test__';
-import { lobby_history, lobby_search } from "../model/bd_types_lobby";
-import { matchesProperty } from 'lodash';
+import { lobby, lobby_history, isLobbySame } from "../model/bd_types_lobby";
+
+export var lbSearch: lobby[] = [];
+
 export const lobbyQuery: EPR = async (info, data, send) => {
   /**
    * lobby.query
@@ -115,109 +117,98 @@ export const lobbyQuery: EPR = async (info, data, send) => {
   const timelimit: number = U.GetConfig("TimeLimitSearchLobby");
   const maxTime: number = UnixTime+timelimit;
   var rAttr: KAttrMap = {};
-  const search = await DB.Find<lobby_search>({
-    $and: [
-      {
-        collection:"lobby_search",
-        gamemode:$(data).attr().gamemode,
-        gameparam:$(data).attr().gameparam,
-        party_id:$(data).attr().party_id,
-        lobby_key : $(data).str("lobby_key"),
-        lobby_param : $(data).number("lobby_param"),
-        started: false
-      },
-      {
-        $not: {
-          $or: [
-            {inhibit1: $(data).attr().game_id},
-            {inhibit2: $(data).attr().game_id},
-            {inhibit3: $(data).attr().game_id},
-            {inhibit4: $(data).attr().game_id},
-          ]
-        }
-      }
-    ]
-  });
-  console.log(JSON.stringify(search[0]));
-  if(search.length > 0){
-    const tl: number = search[0].timelimit < UnixTime ? 0 : search[0].timelimit - UnixTime;
-    var arTime = [
-      search[0].time0,search[0].time1,search[0].time2,search[0].time3,
-      search[0].time4,search[0].time5,search[0].time6,search[0].time7,
-    ];
-    for(const i in arTime) if (arTime[i] == 0){
-      arTime[i] = UnixTime;
-      break
-    }
+  let lbID = lbSearch.findIndex(
+    (lb) => isLobbySame(
+      lb,
+      $(data).attr().gamemode,
+      $(data).attr().gameparam,
+      $(data).attr().lobby_key,
+      parseInt($(data).attr().lobby_param),
+      $(data).attr().dataid1,
+    )
+  );
+  if(lbID == -1){
+    lbSearch.push({
+      qid:UnixTime,
+      timelimit: maxTime,
+      game_id:$(data).attr().game_id,
+      dataid1:$(data).attr().game_id,
+      dataid2:"",
+      dataid3:"",
+      dataid4:"",
+      game_id_type : $(data).attr().game_id_type,
+      gamemode : $(data).attr().gamemode,
+      gameparam : $(data).attr().gameparam,
+      pa1 : $(data).attr().pa1,
+      pa2 : "",
+      pa3 : "",
+      pa4 : "",
+      party_id : $(data).attr().party_id,
+      lobby_key : $(data).str("lobby_key"),
+      lobby_param : $(data).number("lobby_param"),
+      inhibit1 : "",
+      inhibit2 : "",
+      inhibit3 : "",
+      started: false,
+      start_time:0,
+      end_time:0,
+      seq:0,
+      time0 : UnixTime,
+      time1 : 0,
+      time2 : 0,
+      time3 : 0,
+      time4 : 0,
+      time5 : 0,
+      time6 : 0,
+      time7 : 0,
+    });
     rAttr = {
-      qid: search[0].qid.toString(),
-      master: "0",
-      timelimit: tl.toString(),
-      seq: (search[0].seq + 1).toString(),
-      addr: search[0].pa1,
-      time0 : arTime[0] == 0 ? "" : arTime[0].toString(),
-      time1 : arTime[1] == 0 ? "" : arTime[1].toString(),
-      time2 : arTime[2] == 0 ? "" : arTime[2].toString(),
-      time3 : arTime[3] == 0 ? "" : arTime[3].toString(),
-      time4 : arTime[4] == 0 ? "" : arTime[4].toString(),
-      time5 : arTime[5] == 0 ? "" : arTime[5].toString(),
-      time6 : arTime[6] == 0 ? "" : arTime[6].toString(),
-      time7 : arTime[7] == 0 ? "" : arTime[7].toString(),
-    };
-    DB.Update<lobby_search>({collection:"lobby_search",game_id:search[0].game_id,qid:search[0].qid},{$set:{
-      seq:search[0].seq + 1,
-      time0 : arTime[0],time1 : arTime[1],
-      time2 : arTime[2],time3 : arTime[3],
-      time4 : arTime[4],time5 : arTime[5],
-      time6 : arTime[6],time7 : arTime[7],
-    }})
-    console.log(JSON.stringify(rAttr));
+      qid: UnixTime.toString(),
+      master: "1",
+      timelimit: timelimit.toString(),
+      seq: "0",
+      addr: $(data).attr().pa1,
+      time0: UnixTime.toString(),
+    }
     console.log("lobbyQuery: END");
     return send.object(K.ATTR(rAttr));
   }
-  DB.Insert<lobby_search>({
-    collection:"lobby_search",
-    qid:UnixTime,
-    timelimit: maxTime,
-    game_id:$(data).attr().game_id,
-    dataid1:$(data).attr().game_id,
-    dataid2:"",
-    dataid3:"",
-    dataid4:"",
-    game_id_type : $(data).attr().game_id_type,
-    gamemode : $(data).attr().gamemode,
-    gameparam : $(data).attr().gameparam,
-    pa1 : $(data).attr().pa1,
-    pa2 : "",
-    pa3 : "",
-    pa4 : "",
-    party_id : $(data).attr().party_id,
-    lobby_key : $(data).str("lobby_key"),
-    lobby_param : $(data).number("lobby_param"),
-    inhibit1 : "",
-    inhibit2 : "",
-    inhibit3 : "",
-    started: false,
-    start_time:0,
-    end_time:0,
-    seq:0,
-    time0 : UnixTime,
-    time1 : 0,
-    time2 : 0,
-    time3 : 0,
-    time4 : 0,
-    time5 : 0,
-    time6 : 0,
-    time7 : 0,
-  });
-  rAttr = {
-    qid: UnixTime.toString(),
-    master: "1",
-    timelimit: timelimit.toString(),
-    seq: "0",
-    addr: $(data).attr().pa1,
-    time0: UnixTime.toString(),
+  console.log(JSON.stringify(lbSearch[lbID]));
+  const tl: number = lbSearch[lbID].timelimit < UnixTime ? 0 : lbSearch[lbID].timelimit - UnixTime;
+  var arTime = [
+    lbSearch[lbID].time0,lbSearch[lbID].time1,lbSearch[lbID].time2,lbSearch[lbID].time3,
+    lbSearch[lbID].time4,lbSearch[lbID].time5,lbSearch[lbID].time6,lbSearch[lbID].time7,
+  ];
+  for(const i in arTime) if (arTime[i] == 0){
+    arTime[i] = UnixTime;
+    break
   }
+  rAttr = {
+    qid: lbID[0].qid.toString(),
+    master: "0",
+    timelimit: tl.toString(),
+    seq: (lbID[0].seq + 1).toString(),
+    addr: lbID[0].pa1,
+    time0 : arTime[0] == 0 ? "" : arTime[0].toString(),
+    time1 : arTime[1] == 0 ? "" : arTime[1].toString(),
+    time2 : arTime[2] == 0 ? "" : arTime[2].toString(),
+    time3 : arTime[3] == 0 ? "" : arTime[3].toString(),
+    time4 : arTime[4] == 0 ? "" : arTime[4].toString(),
+    time5 : arTime[5] == 0 ? "" : arTime[5].toString(),
+    time6 : arTime[6] == 0 ? "" : arTime[6].toString(),
+    time7 : arTime[7] == 0 ? "" : arTime[7].toString(),
+  };
+  lbSearch[lbID].seq++;
+  lbSearch[lbID].time0 = arTime[0];
+  lbSearch[lbID].time1 = arTime[1];
+  lbSearch[lbID].time2 = arTime[2];
+  lbSearch[lbID].time3 = arTime[3];
+  lbSearch[lbID].time4 = arTime[4];
+  lbSearch[lbID].time5 = arTime[5];
+  lbSearch[lbID].time6 = arTime[6];
+  lbSearch[lbID].time7 = arTime[7];
+
+  console.log(JSON.stringify(rAttr));
   console.log("lobbyQuery: END");
   return send.object(K.ATTR(rAttr));
 };
@@ -247,7 +238,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * - time6 =
    * - time7 =
    */
-  console.log(JSON.stringify($(data).obj));
+  console.log("lobbyAccept: START");
   const UnixTime: number = Math.floor(new Date().getTime() / 1000);
   const dataIDs = [
     $(data).str("prematch.data_id.0"),
@@ -255,33 +246,34 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     $(data).str("prematch.data_id.2")
   ];
   
-  var query: Query<lobby_search> = {
-    collection:"lobby_search",
-    game_id: $(data).attr().game_id,
-    started: false,
-  }
-  const result = await DB.Upsert<lobby_search>(query,{
-    $set:{
-      dataid2 : dataIDs[0],
-      dataid3 : dataIDs[1],
-      dataid4 : dataIDs[2],
-      pa2: $(data).attr().pa1,
-      pa3: $(data).attr().pa2,
-      pa4: $(data).attr().pa3,
-      inhibit1 : $(data).str("inhibit.data_id.0"),
-      inhibit2 : $(data).str("inhibit.data_id.1"),
-      inhibit3 : $(data).str("inhibit.data_id.2"),
-      lobby_key: $(data).str("lobby_key"),
-      lobby_param: $(data).number("lobby_param"),
-    }
-  });
-  if (result.upsert == true && result.updated > 0){
-    var doc = result.docs[0]
-  } else return send.deny();
-  console.log(JSON.stringify(result));
+  let lbID: number = lbSearch.findIndex(
+    (lb) => isLobbySame(
+      lb,
+      $(data).attr().gamemode,
+      $(data).attr().gameparam,
+      $(data).attr().lobby_key,
+      parseInt($(data).attr().lobby_param),
+      $(data).attr().dataid1,
+    )
+  );
+  if (lbID == -1) return send.deny();
+
+  lbSearch[lbID].dataid2     = dataIDs[0];
+  lbSearch[lbID].dataid3     = dataIDs[1];
+  lbSearch[lbID].dataid4     = dataIDs[2];
+  lbSearch[lbID].pa2         = $(data).attr().pa1;
+  lbSearch[lbID].pa3         = $(data).attr().pa2;
+  lbSearch[lbID].pa4         = $(data).attr().pa3;
+  lbSearch[lbID].inhibit1    = $(data).str("inhibit.data_id.0");
+  lbSearch[lbID].inhibit2    = $(data).str("inhibit.data_id.1");
+  lbSearch[lbID].inhibit3    = $(data).str("inhibit.data_id.2");
+  lbSearch[lbID].lobby_key   = $(data).str("lobby_key");
+  lbSearch[lbID].lobby_param = $(data).number("lobby_param");
+
+  console.log(JSON.stringify(lbSearch[lbID]));
   var arTime = [
-    doc.time0,doc.time1,doc.time2,doc.time3,
-    doc.time4,doc.time5,doc.time6,doc.time7,
+    lbSearch[lbID].time0,lbSearch[lbID].time1,lbSearch[lbID].time2,lbSearch[lbID].time3,
+    lbSearch[lbID].time4,lbSearch[lbID].time5,lbSearch[lbID].time6,lbSearch[lbID].time7,
   ];
   for(const i in arTime) if (arTime[i] == 0){
     arTime[i] = UnixTime;
@@ -289,7 +281,6 @@ export const lobbyAccept: EPR = async (info, data, send) => {
   }
 
   var wait = "1"
-  var master = "1"
   if(
     $(data).attr().gamemode == "11" &&
     dataIDs[0] != "" &&
@@ -299,33 +290,37 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     dataIDs[1] != "" &&
     dataIDs[2] != ""
   ) wait = "0"; else if(
-    doc.timelimit <= UnixTime
+    lbSearch[lbID].timelimit <= UnixTime
   ) wait = "0"; else if(
     dataIDs[0] == "" &&
     dataIDs[1] == "" &&
     dataIDs[2] == ""
   ) {
-    wait = "0";
-    master = "0"
+    wait = "0"
   }
-  if(wait == "0") DB.Upsert<lobby_search>(query,{$set: {
-    started: true,
-    seq:doc.seq + 1,
-    time0 : arTime[0],time1 : arTime[1],
-    time2 : arTime[2],time3 : arTime[3],
-    time4 : arTime[4],time5 : arTime[5],
-    time6 : arTime[6],time7 : arTime[7],
-  }});
-  const tl: number = doc.timelimit < UnixTime ? 0 : doc.timelimit - UnixTime;
 
+  lbSearch[lbID].started = true;
+  lbSearch[lbID].seq     = lbSearch[lbID].seq + 1;
+  lbSearch[lbID].time0   = arTime[0];
+  lbSearch[lbID].time1   = arTime[1];
+  lbSearch[lbID].time2   = arTime[2];
+  lbSearch[lbID].time3   = arTime[3];
+  lbSearch[lbID].time4   = arTime[4];
+  lbSearch[lbID].time5   = arTime[5];
+  lbSearch[lbID].time6   = arTime[6];
+  lbSearch[lbID].time7   = arTime[7];
+
+  const tl: number = lbSearch[lbID].timelimit < UnixTime ? 0 : lbSearch[lbID].timelimit - UnixTime;
+
+  console.log("lobbyAccept: END");
   return send.object(K.ATTR({
     stat:"0",
-    qid: doc.qid.toString(),
+    qid: lbSearch[lbID].qid.toString(),
     wait: wait,
-    master: master,
+    master: "0",
     timelimit: tl.toString(),
-    seq: (doc.seq + 1).toString(),
-    addr: doc.pa1,
+    seq: (lbSearch[lbID].seq + 1).toString(),
+    addr: lbSearch[lbID].pa1,
     time0 : arTime[0].toString(),time1 : arTime[1].toString(),
     time2 : arTime[2].toString(),time3 : arTime[3].toString(),
     time4 : arTime[4].toString(),time5 : arTime[5].toString(),
@@ -362,7 +357,7 @@ export const lobbyPoling: EPR = async (info, data, send) => {
    * - time6 =
    * - time7 =
    */
-  DB.Update<lobby_search>({
+  /*DB.Update<lobby_search>({
     collection:"lobby_search",
     game_id: $(data).attr().game_id
   }, {
@@ -370,11 +365,7 @@ export const lobbyPoling: EPR = async (info, data, send) => {
       started:true,
       start_time: Math.floor(new Date().getTime() / 1000)
     }
-  })
+  })*/
 
   return __sendSuccessLOG(info, data, send);
 };
-
-function seqIs (timestamp: number): number {
-  return (timestamp << 7) & 0xffffffff;
-}

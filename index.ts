@@ -31,7 +31,6 @@ import { twitterUser, twitterTweet } from './handlers/twitter';
 import { cardmngGetdatalist, facilityGet } from './handlers/eamuse';
 import { shop } from './model/bd_types_shop';
 import { custom, custom_Medal } from './model/bd_types_custom';
-import { lobby_search } from './model/bd_types_lobby';
 
 export function register() {
   /* Register game code */
@@ -289,6 +288,4 @@ export function register() {
     name:"Time limit on lobby",
     range:[20,120]
   })
-  const query: Query<lobby_search> = {collection: "lobby_search"};
-  DB.Remove<lobby_search>(query);
 }
