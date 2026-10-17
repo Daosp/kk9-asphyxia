@@ -10,7 +10,7 @@ export const djpAdd: EPR = async (info, data, send) => {
 export const djpStat: EPR = async (info, data, send) => {
   /**
    * kk9djp.stat
-   * Запрос статистики по DJP? Что такое DJP?
+   * Statistic of Dragon JackPot
    * 
    * DATA:
    *  - loc_id="ea"
@@ -28,7 +28,7 @@ export const djpInquire: EPR = async (info, data, send) => {
 export const djpHistory: EPR = async (info, data, send) => {
   /**
    * kk9djp.history
-   * История по DJP? Что такое DJP?
+   * History of points accrual (Dragon JackPot)
    * 
    * DATA:
    *  - loc_id="ea"

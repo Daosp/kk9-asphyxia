@@ -2,7 +2,7 @@ import { __sendSuccessLOG } from './__test__';
 export const questionInfo: EPR = async (info, data, send) => {
   /**
    * kk9question.info
-   * Запрос информации по вопросам?
+   * It conveys what questionnaires are available for the player.
    * 
    * DATA:
    *  - data_id="6AC255D500000000"

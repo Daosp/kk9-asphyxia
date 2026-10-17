@@ -7,14 +7,14 @@ export const customizeGet: EPR = async (info, data, send) => {
   if (!dataId) {return send.deny();}
   /**
    * kk9customize.get
-   * Подача информации о кастомизации?
+   * Request player's composition of customization
    * 
    * receiver returns failure
    * 
    * DATA:
    *  - data_id="6AC255D500000000"
    *  - method="get"
-   * <pro_id __type="s32">0</pro_id> от 1 до 154
+   * <pro_id __type="s32">0</pro_id> 1-154 - oshi pro?
    */
   var response: {
     [key: string]: any | Object; // любой строковый ключ с любым значением

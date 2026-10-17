@@ -2,7 +2,7 @@ import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
 export const populationReport: EPR = async (info, data, send) => {
   /**
    * kk9population.report
-   * статистика заходов?
+   * Onformation about gamemodes
    * 
    * DATA: (xml-like javascript object)
    *  - method="report"

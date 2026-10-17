@@ -2,7 +2,7 @@ import { __sendSuccessLOG } from './__test__';
 export const channelSchedule: EPR = async (info, data, send) => {
   /**
    * kk9channel.schedule
-   * Запрос таблицы "канала"?
+   * Request schedule of channel?
    * 
    * DATA:
    *  - method="schedule"

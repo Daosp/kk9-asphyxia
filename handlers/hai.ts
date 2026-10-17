@@ -12,7 +12,7 @@ export const haiRec_movie: EPR = async (info, data, send) => {
 export const haiGet: EPR = async (info, data, send) => {
   /**
    * kk9hai.get
-   * Что за HAI?
+   * Recording of gameplay?
    * 
    * DATA:
    *  - for_hotlive=0

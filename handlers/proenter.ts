@@ -2,7 +2,7 @@ import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
 export const proenterRegist: EPR = async (info, data, send) => {
   /**
    * kk9proenter.regist
-   * регистрация каба для онлайн-партий через Интернет?
+   * Registration of cabinet?
    * 
    * DATA:
    *  - addr="ip:port"
@@ -25,7 +25,7 @@ export const proenterResult: EPR = async (info, data, send) => {
 export const proenterNow: EPR = async (info, data, send) => {
   /**
    * kk9proenter.now
-   * Запрос состояния?..
+   * Oshi pro info?
    * 
    * receiver returns failure
    * 

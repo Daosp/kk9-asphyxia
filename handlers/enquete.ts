@@ -7,7 +7,7 @@ export const enqueteSee: EPR = async (info, data, send) => {
 export const enqueteNow: EPR = async (info, data, send) => {
   /**
    * kk9enquete.now
-   * Запрос информации по анкетам?
+   * It conveys what enquetes are available for the player.
    * 
    * DATA:
    *  - data_id="6AC255D500000000"

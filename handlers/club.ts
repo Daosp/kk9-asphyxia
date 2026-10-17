@@ -4,7 +4,7 @@ import { shop } from "../model/bd_types_shop";
 export const clubShopinfo: EPR = async (info, data, send) => {
   /**
    * kk9club.shopinfo
-   * запрос информации по магазину?
+   * Request shop information (name, region and comments)
    * 
    * DATA:
    *  - loc_id="ea"

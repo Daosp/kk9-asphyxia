@@ -5,7 +5,7 @@ import { __sendSuccessLOG } from './__test__';
 export const sdjpStat: EPR = async (info, data, send) => {
   /**
    * kk9sdjp.stat
-   * Запрос статистики по SDJP? Что такое SDJP?
+   * Statistic of Super Dragon JackPot
    * 
    * DATA:
    *  - loc_id="ea"
@@ -22,7 +22,7 @@ export const sdjpInquire: EPR = async (info, data, send) => {
 export const sdjpHistory: EPR = async (info, data, send) => {
   /**
    * kk9sdjp.history
-   * История по SDJP?
+   * History of points accrual (Super Dragon JackPot)
    * 
    * DATA:
    *  - loc_id="ea"
@@ -36,7 +36,7 @@ export const sdjpHistory: EPR = async (info, data, send) => {
 export const sdjpSettings: EPR = async (info, data, send) => {
   /**
    * kk9sdjp.settings
-   * Запрос настроек SDJP? Что такое SDJP?
+   * Settings of Super Dragon JackPot?
    * 
    * DATA:
    *  - method="settings"

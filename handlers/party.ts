@@ -2,7 +2,7 @@ import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
 export const partyWhatsnow: EPR = async (info, data, send) => {
   /**
    * kk9party.whatsnow
-   * "What's now?" - Что сейчас есть?
+   * "What's now?" - tournaments
    * 
    * DATA:
    *  - max=8
@@ -19,7 +19,7 @@ export const partyWhatsnow: EPR = async (info, data, send) => {
 export const partyInfo: EPR = async (info, data, send) => {
   /**
    * kk9party.info
-   * "What's now?" - Что сейчас есть?
+   * Information about tournament
    * 
    * DATA:
    *  - party_id="001"

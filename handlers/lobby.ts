@@ -4,7 +4,7 @@ import { matchesProperty } from 'lodash';
 export const lobbyQuery: EPR = async (info, data, send) => {
   /**
    * lobby.query
-   * Запрос на лобби
+   * Request to wait in the lobby
    * 
    * DATA:
    *  - a1 = "127.0.0.1:5700",
@@ -19,7 +19,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - eventmode = "0",
    *  - from_area = "13",
    *  - full_wait = "0",
-   *  - game_id = "A5B23874A5E46E9A", (is data_id)
+   *  - game_id = "________", (is data_id)
    *  - game_id_type = "1",
    *  - gamemode = "3",
    *  - gameparam = "0",
@@ -44,9 +44,9 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    *  - match_shop_id2 = "",
    *  - method = "query",
    *  - net_version = "29",
-   *  - pa1 = "26.114.124.205:5700",
-   *  - pa2 = "26.114.124.205:5700",
-   *  - pa3 = "26.114.124.205:5700",
+   *  - pa1 = "__.__.__.__:5700",
+   *  - pa2 = "__.__.__.__:5700",
+   *  - pa3 = "__.__.__.__:5700",
    *  - party_id = "0",
    *  - play_shop_id = "ea",
    *  - pre_score = "-145",
@@ -95,12 +95,12 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * <special_player __type="u8">0</lobby_key>
    * 
    * RESPONSE:
-   * - qid       = 4 bites - 0x34 //айди очереди? он вроде должен отличаться от game_id, который равен датаид заявителя
-   * - master    = 4 bites - 0x38 //это нахуй не айпи, тут число
-   * - timelimit = 4 bites - 0x3C // количество секунд до конца ожидания
-   * - seq       = 4 bites - 0x40 //что то связанное с seq в pcbevent?
-   * - addr      = string  - 0x60 //естественно ip с портом для игры
-   * - time0     = 4 bites - 0xC0 //отсутствие не вызывает ошибки, но необходим ли он? число
+   * - qid       = 4 bites - 0x34 //ID query? only number
+   * - master    = 4 bites - 0x38 //Number, not IP:Port. Boolean?
+   * - timelimit = 4 bites - 0x3C //Number of seconds left
+   * - seq       = 4 bites - 0x40 //SEQuence number for players? Or requests?
+   * - addr      = string  - 0x60 //IP:PORT of master
+   * - time0     = 4 bites - 0xC0 //Timestamp?
    * - time1     = 4 bites - 0xC4
    * - time2     =
    * - time3     =
@@ -228,7 +228,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
    * Принятие в лобби
    * 
    * DATA:
-   * то же самое что и в lobby.query
+   * see lobby.query
    * 
    * RESPONSE:
    * - stat =
@@ -340,7 +340,7 @@ export const lobbyPoling: EPR = async (info, data, send) => {
    * 
    * DATA:
    *  - cancel = ?????,
-   *  - game_id = "A5B23874A5E46E9A", (is data_id)
+   *  - game_id = "_____", (is data_id)
    *  - game_id_type = "1",
    *  - magic = "KK9",
    *  - qid = "0" - query id?

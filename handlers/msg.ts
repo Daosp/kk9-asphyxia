@@ -2,9 +2,7 @@ import { __sendSuccessLOG, formatCurrentDateTimeUTC } from './__test__';
 export const msgPut: EPR = async (info, data, send) => {
   /**
    * kk9msg.put
-   * Отправка сообщения? Куда и зачем?
-   * 
-   * label возможно означает, куда это сообщение (или его тип)
+   * Messages from cabinet
    * 
    * DATA:
    *  - label="user"

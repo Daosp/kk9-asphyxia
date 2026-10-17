@@ -280,8 +280,6 @@ export const pdataRanking: EPR = async (info, data, send) => {
   /**
    * kk9pdata.ranking
    * 
-   * receiver returns failure
-   * 
    * DATA:
    *  - data_id="AD8972E47E435A6B"
    *  - method="ranking"
@@ -315,7 +313,7 @@ export const pdataMisc_info: EPR = async (info, data, send) => {
    * 
    * RESPONSE:
    * <lobby>
-   *   <fixed> --- не более 10 штук!!!
+   *   <fixed> - no more than 10
    *     <name __type="str">______</name>
    *     <lobby_key __type="str">______</lobby_key>
    *     <lobby_param __type="s32">______</lobby_param>
@@ -334,7 +332,7 @@ export const pdataMisc_info: EPR = async (info, data, send) => {
    * <vote2017eapp>
    *   <exist __type="???">______</exist>
    *   <last_seq __type="???">______</last_seq>
-   *   <e seq="???"> - не более 5 штук
+   *   <e seq="???"> - no more than 5
    *     <nr __type="???">______</nr>
    *     <explain __type="???">______</explain>
    *     <kind __type="???">______</kind>
@@ -354,7 +352,7 @@ export const pdataMisc_info: EPR = async (info, data, send) => {
    *   <rate_tenbou_3 __type="???">______</rate_tenbou_3>
    *   <rate_score_4 __type="???">______</rate_score_4>
    *   <rate_score_3 __type="???">______</rate_score_3>
-   *   <yaku2 index="???"> - не более 9 штук
+   *   <yaku2 index="???"> - no more than 9
    *     <rate_n __type="???">______</rate_n>
    *     <rate_f __type="???">______</rate_f>
    *     <star __type="???">______</star>
@@ -376,13 +374,13 @@ export const pdataMisc_info: EPR = async (info, data, send) => {
    *     <id __type="???">______</id>
    *     <end_type __type="???">______</end_type>
    *     <end_time __type="???">______</end_time>
-   *     <f __type="???">______</f> - не более 8 штук
+   *     <f __type="???">______</f> - no more than 8
    *     ...
    *   </i>
    * </valid_item>
    */
   var response: {
-    [key: string]: any | Object; // любой строковый ключ с любым значением
+    [key: string]: any | Object;
   } = {}
   const rDB_LH = await DB.Find<lobby_history>({$or:[{collection:"lobby_history",dataid1:dataId},{collection:"lobby_history",dataid2:dataId},{collection:"lobby_history",dataid3:dataId},{collection:"lobby_history",dataid4:dataId}]});
   if(rDB_LH.length > 0){

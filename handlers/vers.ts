@@ -2,7 +2,7 @@ import { __sendSuccessLOG } from './__test__';
 export const versSend: EPR = async (info, data, send) => {
   /**
    * kk9vers.send
-   * самый первый вызов (инициализация?)
+   * Init?
    * 
    * DATA:
    *  - boot: 1

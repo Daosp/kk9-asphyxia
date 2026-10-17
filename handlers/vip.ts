@@ -39,7 +39,7 @@ export const vipStatus: EPR = async (info, data, send) => {
   const rDB = await DB.FindOne<vip>(dataId,{collection:"vip"});
   if (_.isNil(rDB)) return send.object({enable:K.ITEM("bool",false)});
   var content: {
-    [key: string]: any | Object; // любой строковый ключ с любым значением
+    [key: string]: any | Object;
   } = {
     enable:K.ITEM("bool",rDB.enable)
   };
