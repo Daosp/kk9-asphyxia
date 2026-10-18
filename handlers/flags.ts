@@ -9,40 +9,40 @@ export const flagsGet: EPR = async (info, data, send) => {
    *  - method="get"
    */
   const response = K.ATTR({
-    expire:(60*60).toString()
+    expire: "0"
   },{
     data:[
       //K.ATTR({flag:"hide_name"}),
       K.ATTR({flag:"enable_adventure"}),
-      //K.ATTR({flag:"examin"}),
-      //K.ATTR({flag:"upcancel"}),
+      K.ATTR({flag:"examin"}),
+      K.ATTR({flag:"upcancel"}),
       K.ATTR({flag:"writeall"}),
-      //K.ATTR({flag:"taxphase"}),
+      K.ATTR({flag:"taxphase"}),
       //K.ATTR({flag:"rectestmode"}),
       K.ATTR({flag:"premium_course"}),
       //K.ATTR({flag:"disconnect"}),
       K.ATTR({flag:"msgdisconnect"}),
       //K.ATTR({flag:"proxy_pdata"}),
-      //K.ATTR({flag:"exist_card_connect"}),
+      K.ATTR({flag:"exist_card_connect"}),
       //K.ATTR({flag:"enable_twitter"}),
-      //K.ATTR({flag:"enable_kakera_camp"}),
+      K.ATTR({flag:"enable_kakera_camp"}),
       K.ATTR({flag:"visual_arrange"}),  //NEEDED FOR CUSTOMIZATION!!! DO NOT TURN OFF!!!
       K.ATTR({flag:"enable_game_log"}),
-      //K.ATTR({flag:"skouryu_promatch"}),
+      K.ATTR({flag:"skouryu_promatch"}),
       //K.ATTR({flag:"no_taikyokudemo"}),
-      //K.ATTR({flag:"enable_syouryu2"}),
-      //K.ATTR({flag:"jonghou"}),
-      //K.ATTR({flag:"nvram_check"}),
-      //K.ATTR({flag:"enable_kakera_double"}),
+      K.ATTR({flag:"enable_syouryu2"}), //kk9wdj
+      K.ATTR({flag:"jonghou"}),
+      K.ATTR({flag:"nvram_check"}),
+      K.ATTR({flag:"enable_kakera_double"}),
       K.ATTR({flag:"exist_paseli_machine"}),
       //K.ATTR({flag:"enable_snapshot"}),
       //K.ATTR({flag:"force_autoreboot"}),
       //K.ATTR({flag:"ic_card_rw_power_off"}),
-      //K.ATTR({flag:"haifu_collect"}),
+      K.ATTR({flag:"haifu_collect"}),
       //K.ATTR({flag:"kac_event"}),
       //K.ATTR({flag:"entry_error"}),
       //K.ATTR({flag:"special_event"}),
-      //K.ATTR({flag:"fightclub_pack"}),
+      K.ATTR({flag:"fightclub_pack"}),
       ////K.ATTR({flag:"gamestop"}),//!-!-! THIS STOPS THE GAME !-!-! DO NOT TURN ON !-!-! THIS STOPS THE GAME !-!-! DO NOT TURN ON !-!-!
     ],
     param:{

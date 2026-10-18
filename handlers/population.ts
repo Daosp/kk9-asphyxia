@@ -12,40 +12,44 @@ export const populationReport: EPR = async (info, data, send) => {
    *   <event_mode __type="u16">0</event_mode>
    *  </join>
    */
-  var tonpuP = 0;
-  var hanchanP = 0;
-  var sanmaP = 0;
+  var population = {
+    1  : 0, //With CPU
+    2  : 0, //Local Play
+    3  : 0, //Tonpu
+    4  : 0, //Hanchan
+    5  : 0,
+    6  : 0,
+    7  : 0,
+    8  : 0,
+    9  : 0,
+    10 : 0,
+    11 : 0, //Sanma
+    12 : 0,
+    13 : 0,
+    14 : 0,
+    15 : 0,
+    16 : 0, //Planet mode
+  }
   //const format: number = $(data).number("format"); //always 0
   const joinMode: number = $(data).number("join.mode");
   //const joinEvent_mode: number = $(data).number("join.event_mode");
 
-  switch(joinMode) {
-    case 3  : tonpuP++;   break
-    case 4  : hanchanP++; break
-    case 11 : sanmaP++;   break
+  if(joinMode != 0) {
+    population[joinMode]++
   }
-  const response = {
-    data:[
-      K.ATTR({
+
+  var gamemodes: Object[] = [];
+  for(const i in population){
+    gamemodes.push(K.ATTR({
         expire: "0"
       },{
-        game_mode:K.ITEM("u16", 3),
-        num:K.ITEM("u16", tonpuP),
-      }),
-      K.ATTR({
-        expire: "0"
-      },{
-        game_mode:K.ITEM("u16", 4),
-        num:K.ITEM("u16", hanchanP),
-      }),
-      K.ATTR({
-        expire: "0"
-      },{
-        game_mode:K.ITEM("u16", 11),
-        num:K.ITEM("u16", sanmaP),
-      }),
-    ]
+        game_mode:K.ITEM("u16", parseInt(i)),
+        num:K.ITEM("u16", population[i]),
+      })
+    )
   }
-  return send.object(response);
+  return send.object({
+    data:gamemodes
+  });
 };
 
