@@ -26,7 +26,7 @@ Lobby PSH packet:
             (B9 E8 3C C8)
             (27 8C A9 6B)
   - 2 bites (01 01)
-  - 4 bites (00 00 00 04)
+  - 4 bites (00 00 00 04) - lobby of sanma, is not gamemode
   - seq     (__ __ __ __)
 */
 
