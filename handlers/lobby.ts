@@ -24,14 +24,14 @@ Gamemodes:
 
 Lobby PSH packet:
   - KK9     (4B 4B 39)
-  - 4 bites (00 00 00 00)
-  - 0A bite
-  - 4 bites (57 E6 5D E4) - if seq=1
+  - 4 bytes (00 00 00 00)
+  - 0A byte
+  - 4 bytes (57 E6 5D E4) - if seq=1
             (CE EF 0C 5E) - if seq=2
             (B9 E8 3C C8) - if seq=3
             (27 8C A9 6B) - if seq=4
-  - 2 bites (01 01)
-  - 4 bites (00 00 00 04) - lobby of sanma, is not gamemode. Maximum seq?
+  - 2 bytes (01 01)
+  - 4 bytes (00 00 00 04) - lobby of sanma, is not gamemode. Maximum seq?
   - seq     (__ __ __ __)
 */
 
@@ -129,13 +129,13 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * <special_player __type="u8">0</lobby_key>
    * 
    * RESPONSE:
-   * - qid       = 4 bites - 0x34 //ID query? only number
-   * - master    = 4 bites - 0x38 //Number, not IP:Port. Boolean?
-   * - timelimit = 4 bites - 0x3C //Number of seconds left
-   * - seq       = 4 bites - 0x40 //SEQuence number for players? Or requests?
+   * - qid       = 4 bytes - 0x34 //ID query? only number
+   * - master    = 4 bytes - 0x38 //Number, not IP:Port. Boolean?
+   * - timelimit = 4 bytes - 0x3C //Number of seconds left
+   * - seq       = 4 bytes - 0x40 //SEQuence number for players? Or requests?
    * - addr      = string  - 0x60 //IP:PORT of master
-   * - time0     = 4 bites - 0xC0 //Timestamp?
-   * - time1     = 4 bites - 0xC4...
+   * - time0     = 4 bytes - 0xC0 //Timestamp?
+   * - time1     = 4 bytes - 0xC4...
    * - time2     =
    * - time3     =
    * - time4     =
@@ -227,16 +227,11 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     master: "0",
     timelimit: tl.toString(),
     seq: (lbSearch[lbID].seq + 1).toString(),
-    addr: lbSearch[lbID].pa1,
-    time0 : arTime[0] == 0 ? "" : arTime[0].toString(),
-    time1 : arTime[1] == 0 ? "" : arTime[1].toString(),
-    time2 : arTime[2] == 0 ? "" : arTime[2].toString(),
-    time3 : arTime[3] == 0 ? "" : arTime[3].toString(),
-    time4 : arTime[4] == 0 ? "" : arTime[4].toString(),
-    time5 : arTime[5] == 0 ? "" : arTime[5].toString(),
-    time6 : arTime[6] == 0 ? "" : arTime[6].toString(),
-    time7 : arTime[7] == 0 ? "" : arTime[7].toString(),
+    addr: lbSearch[lbID].pa1
   };
+  for(const i in arTime) if(arTime[i] !== 0){
+    rAttr["time"+i] = arTime[i].toString();
+  }
   lbSearch[lbID].seq++;
   lbSearch[lbID].time0 = arTime[0];
   lbSearch[lbID].time1 = arTime[1];
