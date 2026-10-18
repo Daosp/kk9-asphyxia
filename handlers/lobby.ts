@@ -4,29 +4,34 @@ import { lbSearch as lbS } from "../index";
 
 /*
 Gamemodes:
-  0  - No play
-  1  - With CPU
-  2  - Local Play
-  3  - Tonpu
-  4  - Hanchan
-  5  - _
-  6  - _
-  7  - _
-  8  - _
-  9  - _
+   0 - No play
+   1 - With CPU
+   2 - Local Play
+   3 - Tonpu
+   4 - Hanchan
+   5 - _
+   6 - _
+   7 - _
+   8 - _
+   9 - _
   10 - _
   11 - Sanma
+  12 - _
+  13 - _
+  14 - _
+  15 - _
+  16 - Planet
 
 Lobby PSH packet:
   - KK9     (4B 4B 39)
   - 4 bites (00 00 00 00)
   - 0A bite
-  - 4 bites (57 E6 5D E4) - what is it?
-            (CE EF 0C 5E)
-            (B9 E8 3C C8)
-            (27 8C A9 6B)
+  - 4 bites (57 E6 5D E4) - if seq=1
+            (CE EF 0C 5E) - if seq=2
+            (B9 E8 3C C8) - if seq=3
+            (27 8C A9 6B) - if seq=4
   - 2 bites (01 01)
-  - 4 bites (00 00 00 04) - lobby of sanma, is not gamemode
+  - 4 bites (00 00 00 04) - lobby of sanma, is not gamemode. Maximum seq?
   - seq     (__ __ __ __)
 */
 
