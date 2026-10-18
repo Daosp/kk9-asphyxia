@@ -4,6 +4,7 @@ import { lbSearch as lbS } from "../index";
 
 /*
 Gamemodes:
+  0  - No play
   1  - With CPU
   2  - Local Play
   3  - Tonpu
@@ -15,6 +16,18 @@ Gamemodes:
   9  - _
   10 - _
   11 - Sanma
+
+Lobby PSH packet:
+  - KK9     (4B 4B 39)
+  - 4 bites (00 00 00 00)
+  - 0A bite
+  - 4 bites (57 E6 5D E4) - what is it?
+            (CE EF 0C 5E)
+            (B9 E8 3C C8)
+            (27 8C A9 6B)
+  - 2 bites (01 01)
+  - 4 bites (00 00 00 04)
+  - seq     (__ __ __ __)
 */
 
 export const lobbyQuery: EPR = async (info, data, send) => {
