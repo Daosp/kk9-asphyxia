@@ -1,3 +1,13 @@
+declare global {
+  export var lbSearch: lobby[];
+}
+
+if (!globalThis.lbSearch) {
+  globalThis.lbSearch = [];
+}
+
+export const lbSearch: lobby[] = globalThis.lbSearch;
+
 import { __sendSuccessLOG } from './handlers/__test__';
 import { versSend } from './handlers/vers';
 import { lobbyQuery, lobbyAccept, lobbyPoling } from './handlers/lobby';
@@ -31,6 +41,8 @@ import { twitterUser, twitterTweet } from './handlers/twitter';
 import { cardmngGetdatalist, facilityGet } from './handlers/eamuse';
 import { shop } from './model/bd_types_shop';
 import { custom, custom_Medal } from './model/bd_types_custom';
+import { lobby } from './model/bd_types_lobby';
+
 
 export function register() {
   /* Register game code */
