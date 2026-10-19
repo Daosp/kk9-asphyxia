@@ -4,23 +4,23 @@ import { lbSearch as lbS } from "../index";
 
 /*
 Gamemodes:
-   0 - No play
-   1 - With CPU
-   2 - Local Play
-   3 - Tonpu
-   4 - Hanchan
-   5 - _
-   6 - _
-   7 - _
-   8 - _
-   9 - _
-  10 - _
-  11 - Sanma
-  12 - _
-  13 - _
-  14 - _
-  15 - _
-  16 - Planet
+   0 - No play    - ""
+   1 - With CPU   - "CPU"
+   2 - Local Play - "local"
+   3 - Tonpu      - "onlinet"
+   4 - Hanchan    - "onlineh"
+   5 - _          - "tonpu"
+   6 - _          - "hanchan"
+   7 - _          - "tour_league"
+   8 - _          - "party"
+   9 - _          - "event"
+  10 - _          - "BGN"
+  11 - Sanma      - "sanma"
+  12 - _          - "competition"
+  13 - _          - "san_surv"
+  14 - _          - "triathlon"
+  15 - _          - "eight"
+  16 - Planet     - "eight"
 
 Data of lobby PSH packet:
   - KK9     (4B 4B 39)    - string
