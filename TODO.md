@@ -33,7 +33,7 @@
 - [x] kk9pdata
 - [x] kk9vers (nothing)
 - [x] kk9session (crutch)
-- [x] kk9population (crutch)
+- [x] kk9population
 - [x] kk9msg (write in logMSG.txt)
 - [x] Game Setup Flags (kk9flags) (crutch)
 - [x] Club info (kk9club)
