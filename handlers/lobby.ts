@@ -22,17 +22,18 @@ Gamemodes:
   15 - _
   16 - Planet
 
-Lobby PSH packet:
-  - KK9     (4B 4B 39)
-  - 4 bytes (00 00 00 00)
-  - 0A byte
-  - 4 bytes (57 E6 5D E4) - if seq=1
-            (CE EF 0C 5E) - if seq=2
-            (B9 E8 3C C8) - if seq=3
-            (27 8C A9 6B) - if seq=4
-  - 2 bytes (01 01)
-  - 4 bytes (00 00 00 04) - lobby of sanma, is not gamemode. Maximum seq?
-  - seq     (__ __ __ __)
+Data of lobby PSH packet:
+  - KK9     (4B 4B 39)    - string
+  - 4 bytes (00 00 00 00) - ???
+  - 0A byte (0A)          - byte
+  - 4 bytes (57 E6 5D E4) - ???    - if seq=1
+            (CE EF 0C 5E) - ???    - if seq=2
+            (B9 E8 3C C8) - ???    - if seq=3
+            (27 8C A9 6B) - ???    - if seq=4
+            (50 8B 99 FD) - ???    - if seq=5
+  - 2 bytes (01 01)       - ???
+  - 4 bytes (00 00 00 04) - ???    - lobby of sanma, is not gamemode. Maximum seq?
+  - seq     (__ __ __ __) - uint32
 */
 
 export const lobbyQuery: EPR = async (info, data, send) => {
