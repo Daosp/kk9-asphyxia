@@ -1,12 +1,54 @@
+type pop = {
+  1  : number, //With CPU
+  2  : number, //Local Play
+  3  : number, //Tonpu
+  4  : number, //Hanchan
+  5  : number,
+  6  : number,
+  7  : number,
+  8  : number,
+  9  : number,
+  10 : number,
+  11 : number, //Sanma
+  12 : number,
+  13 : number,
+  14 : number,
+  15 : number,
+  16 : number, //Planet mode
+}
 declare global {
   export var lbSearch: lobby[];
+  export var population: pop;
 }
 
 if (!globalThis.lbSearch) {
   globalThis.lbSearch = [];
 }
 
+if (!globalThis.population) {
+  globalThis.population = {
+    1  : 0, //With CPU
+    2  : 0, //Local Play
+    3  : 0, //Tonpu
+    4  : 0, //Hanchan
+    5  : 0,
+    6  : 0,
+    7  : 0,
+    8  : 0,
+    9  : 0,
+    10 : 0,
+    11 : 0, //Sanma
+    12 : 0,
+    13 : 0,
+    14 : 0,
+    15 : 0,
+    16 : 0, //Planet mode
+  }
+}
+
+
 export const lbSearch: lobby[] = globalThis.lbSearch;
+export const population: pop = globalThis.population;
 
 import { __sendSuccessLOG } from './handlers/__test__';
 import { versSend } from './handlers/vers';
