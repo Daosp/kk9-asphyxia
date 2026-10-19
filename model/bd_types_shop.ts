@@ -8,3 +8,18 @@ export interface shop {
   comment3: string;
   name: string
 }
+
+export interface djp {
+  collection: "djp";
+  loc_id: string;
+  uid: number;
+  total: number;
+  djchance: number;
+  type: string;
+  name: string
+}
+
+export interface djp_uid {
+  collection: "djp_uid";
+  last_uid: number
+}
