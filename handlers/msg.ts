@@ -30,11 +30,11 @@ export const msgRec: EPR = async (info, data, send) => {
 
 export const msgRecbin: EPR = async (info, data, send) => {
   const loc_id = $(data).attr().loc_id;
-  const dataM = $(data).buffer("data").toString("hex");
+  const dataM = U.DecodeString($(data).buffer("data"),"shift_jis");
   const stamp = formatCurrentDateTimeUTC();
   const str = stamp+" - recbin("+loc_id+") : " + dataM + "\n";
   IO.WriteFile("./logMSG.txt",str,{flag:"a"});
-  return __sendSuccessLOG(info, data, send);
+  return send.success();
 };
 
 export const msgStat: EPR = async (info, data, send) => {
