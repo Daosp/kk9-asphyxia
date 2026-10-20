@@ -25,19 +25,19 @@ export const flagsGet: EPR = async (info, data, send) => {
       //K.ATTR({flag:"nvram_check"}),
       //K.ATTR({flag:"force_autoreboot"}),
       //K.ATTR({flag:"ic_card_rw_power_off"}),//no visible changes. value?
-      //K.ATTR({flag:"haifu_collect"}),
+      //K.ATTR({flag:"haifu_collect"}),//kk9hai - Haifu
       //K.ATTR({flag:"kac_event"}),//no visible changes. value?
       //K.ATTR({flag:"special_event"}),
       //K.ATTR({flag:"fightclub_pack"}),
       //K.ATTR({flag:"premium_course"}),//what is it?
       //K.ATTR({flag:"skouryu_promatch"}),//Yellow Dragon Orbs matches?
-      //K.ATTR({flag:"no_taikyokudemo"}),//demo battles
+      //K.ATTR({flag:"no_taikyokudemo"}),//demo battles?
       //K.ATTR({flag:"jonghou"}),//kk9sns
       //K.ATTR({flag:"exist_card_connect"}),
       //K.ATTR({flag:"exist_paseli_machine"}),
       //K.ATTR({flag:"enable_adventure"}),
       //K.ATTR({flag:"enable_twitter"}),  //kk9twitter
-      //K.ATTR({flag:"enable_game_log"}), //kk9hai?
+      K.ATTR({flag:"enable_game_log"}),
       //K.ATTR({flag:"enable_syouryu2"}),//kk9wdj (Seungryong JackPot)
       //K.ATTR({flag:"enable_kakera_camp"}),  //Event
       //K.ATTR({flag:"enable_kakera_double"}),//Event

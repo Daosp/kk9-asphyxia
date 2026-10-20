@@ -1,7 +1,9 @@
 import { __sendSuccessLOG } from './__test__';
+import { hai_record } from "../model/bd_types_hai";
 export const haiRec: EPR = async (info, data, send) => {
   /**
    * kk9hai.rec
+   * Haifu - game log
    * 
    * DATA:
    * <profile>
@@ -22,7 +24,24 @@ export const haiRec: EPR = async (info, data, send) => {
    * <data __type="bin" __size="409600" date="1792316898">_________</data>
    * <is_master __type="u8">1</is_master>
    */
-  console.log("kk9hai.rec");
+  console.log("haiRec: START");
+  const data_id = $(data).str("profile.data_id");
+  const dataHai: Buffer = $(data).buffer("data");
+  const UnixTime: number = Math.floor(new Date().getTime() / 1000);
+  const haifu ={
+    type: $(data).number("haifu_type"),
+    tag: $(data).number("haifu_tag"),
+    priority: $(data).number("haifu_priority")
+  };
+  IO.WriteFile("./hai/"+data_id+"_"+UnixTime.toString()+".kmhr",dataHai);
+  DB.Insert<hai_record>(data_id,{
+    collection:"hai_record",
+    haifu_type:haifu.type,
+    haifu_tag:haifu.tag,
+    haifu_priority:haifu.priority,
+    timestamp:UnixTime
+  });
+  console.log("haiRec: END");
   return send.success();
 };
 

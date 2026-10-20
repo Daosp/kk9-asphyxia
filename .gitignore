@@ -5,3 +5,4 @@ tsconfig.json
 *.7z
 logMSG.txt
 userdata_xml/*.xml
+*.kmhr
