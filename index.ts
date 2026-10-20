@@ -16,9 +16,15 @@ type pop = {
   15 : number,
   16 : number, //Planet mode
 }
+
 declare global {
   export var lbSearch: lobby[];
   export var population: pop;
+  export var lbMasterLastSeq: {[data_id:string]:number};
+}
+
+if (!globalThis.lbMasterLastSeq) {
+  globalThis.lbMasterLastSeq = {};
 }
 
 if (!globalThis.lbSearch) {
@@ -49,6 +55,7 @@ if (!globalThis.population) {
 
 export const lbSearch: lobby[] = globalThis.lbSearch;
 export const population: pop = globalThis.population;
+export const lbMasterLastSeq: {[data_id:string]:number} = globalThis.lbMasterLastSeq;
 
 import { __sendSuccessLOG } from './handlers/__test__';
 import { versSend } from './handlers/vers';

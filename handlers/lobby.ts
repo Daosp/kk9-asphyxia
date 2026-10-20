@@ -1,6 +1,6 @@
 import { __sendSuccessLOG } from './__test__';
 import { lobby, lobby_history, isLobbySame } from "../model/bd_types_lobby";
-import { lbSearch as lbS } from "../index";
+import { lbSearch as lbS, lbMasterLastSeq as lbMLS } from "../index";
 
 /*
 Gamemodes:
@@ -166,6 +166,8 @@ export const lobbyQuery: EPR = async (info, data, send) => {
   if(lbID == -1){
     console.log("lobbyQuery: New lobby");
     const lbSearch: lobby[] = lbS;
+    const reqBool = typeof lbMLS[$(data).attr().game_id] === "undefined";
+    const seq = reqBool?0:lbMLS[$(data).attr().game_id]+1;
     lbSearch.push({
       qid:UnixTime,
       timelimit: maxTime,
@@ -191,7 +193,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       ttype:parseInt($(data).attr().ttype),
       start_time:0,
       end_time:0,
-      seq:0,
+      seq:UnixTime,
       time0 : UnixTime,
       time1 : 0,
       time2 : 0,
@@ -209,6 +211,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       addr: $(data).attr().pa1,
       time0: UnixTime.toString(),
     }
+    lbMLS[$(data).attr().game_id]=seq;
     console.log("lobbyQuery: END");
     return send.object(K.ATTR(rAttr));
   }
@@ -227,13 +230,12 @@ export const lobbyQuery: EPR = async (info, data, send) => {
     qid: lbSearch[lbID].qid.toString(),
     master: "0",
     timelimit: tl.toString(),
-    seq: (lbSearch[lbID].seq + 1).toString(),
+    seq: lbSearch[lbID].seq.toString(),
     addr: lbSearch[lbID].pa1
   };
   for(const i in arTime) if(arTime[i] !== 0){
     rAttr["time"+i] = arTime[i].toString();
   }
-  lbSearch[lbID].seq++;
   lbSearch[lbID].time0 = arTime[0];
   lbSearch[lbID].time1 = arTime[1];
   lbSearch[lbID].time2 = arTime[2];
@@ -340,7 +342,6 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     break
   }
 
-  lbSearch[lbID].seq     = lbSearch[lbID].seq + 1;
   lbSearch[lbID].time0   = arTime[0];
   lbSearch[lbID].time1   = arTime[1];
   lbSearch[lbID].time2   = arTime[2];
@@ -359,7 +360,7 @@ export const lobbyAccept: EPR = async (info, data, send) => {
     wait: wait,
     master: "1",
     timelimit: tl.toString(),
-    seq: (lbSearch[lbID].seq + 1).toString(),
+    seq: lbSearch[lbID].seq.toString(),
     addr: lbSearch[lbID].pa1,
     time0 : arTime[0].toString(),time1 : arTime[1].toString(),
     time2 : arTime[2].toString(),time3 : arTime[3].toString(),

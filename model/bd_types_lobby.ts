@@ -56,14 +56,8 @@ export function isLobbySame(
   dataid: string,
   ttype: number,
 ): boolean {
-  //console.log("isLobbySame: START");
-  //console.log("lobby: "+JSON.stringify(lobby0));
-  //console.log("gamemode: "+gamemode);
-  //console.log("gameparam: "+gameparam);
-  //console.log("lobby_key: "+lobby_key);
-  //console.log("lobby_param: "+lobby_param);
-  //console.log("dataid: "+dataid);
-  //console.log("ttype: "+ttype);
+  const UnixTime: number = Math.floor(new Date().getTime() / 1000);
+
   const GM = lobby0.gamemode === gamemode;
   const GP = lobby0.gameparam === gameparam;
   const LK = lobby0.lobby_key === lobby_key;
@@ -73,19 +67,9 @@ export function isLobbySame(
   const Inh3 = lobby0.inhibit3 !== dataid;
   const TT = lobby0.ttype !== ttype;
   const ST = !lobby0.started;
+  const TL = lobby0.timelimit >= UnixTime;
 
-  //console.log("GM: "+GM);
-  //console.log("GP: "+GP);
-  //console.log("LK: "+LK);
-  //console.log("LP: "+LP);
-  //console.log("Inh1: "+Inh1);
-  //console.log("Inh2: "+Inh2);
-  //console.log("Inh3: "+Inh3);
-  //console.log("TT: "+TT);
-  //console.log("ST: "+ST);
 
-  const bool = GM && GP && LK && LP && Inh1 && Inh2 && Inh3 && ST;
-  //console.log("bool: "+bool);
-  //console.log("isLobbySame: END");
+  const bool = GM && GP && LK && LP && Inh1 && Inh2 && Inh3 && ST && TL;
   return bool;
 }
