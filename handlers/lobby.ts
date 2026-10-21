@@ -130,19 +130,19 @@ export const lobbyQuery: EPR = async (info, data, send) => {
    * <special_player __type="u8">0</lobby_key>
    * 
    * RESPONSE:
-   * - qid       = 4 bytes - 0x34 //ID query? only number
-   * - master    = 4 bytes - 0x38 //Number, not IP:Port. Boolean?
-   * - timelimit = 4 bytes - 0x3C //Number of seconds left
-   * - seq       = 4 bytes - 0x40 //SEQuence number for players? Or requests?
-   * - addr      = string  - 0x60 //IP:PORT of master
-   * - time0     = 4 bytes - 0xC0 //Timestamp?
-   * - time1     = 4 bytes - 0xC4...
-   * - time2     =
-   * - time3     =
-   * - time4     =
-   * - time5     =
-   * - time6     =
-   * - time7     =
+   * - qid       //ID query? only number
+   * - master    //Master flag (0|1)
+   * - timelimit //Number of seconds left
+   * - seq       //SEQuence number of lobby by master
+   * - addr      //IP:PORT of master
+   * - time0     //Timestamps
+   * - time1
+   * - time2
+   * - time3
+   * - time4
+   * - time5
+   * - time6
+   * - time7
    */
   const lbSearch: lobby[] = lbS;
   console.log("lobbyQuery: START");
@@ -193,7 +193,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       ttype:parseInt($(data).attr().ttype),
       start_time:0,
       end_time:0,
-      seq:UnixTime,
+      seq:seq,
       time0 : UnixTime,
       time1 : 0,
       time2 : 0,
@@ -207,7 +207,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
       qid: UnixTime.toString(),
       master: "1",
       timelimit: timelimit.toString(),
-      seq: "0",
+      seq:seq.toString(),
       addr: $(data).attr().pa1,
       time0: UnixTime.toString(),
     }
@@ -253,7 +253,7 @@ export const lobbyQuery: EPR = async (info, data, send) => {
 export const lobbyAccept: EPR = async (info, data, send) => {
   /**
    * lobby.accept
-   * Принятие в лобби
+   * ...
    * 
    * DATA:
    * see lobby.query
