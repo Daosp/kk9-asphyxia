@@ -98,9 +98,9 @@ export function register() {
   R.GameCode('KK9');
 
   /* A plugin can have multiple contributors. */
-  R.Contributor('Daosp (programming)', 'https://github.com/Daosp');
-  R.Contributor('Remaster (decompiling)', 'https://github.com/remaster1');
-  R.Contributor('gluu (webui)', 'https://github.com/Gullmanx');
+  R.Contributor('Daosp', 'https://github.com/Daosp');
+  R.Contributor('Remaster', 'https://github.com/remaster1');
+  R.Contributor('gluu', 'https://github.com/Gullmanx');
 
   R.Route('cardmng.getdatalist', cardmngGetdatalist);
   R.Route('facility.get', facilityGet);
