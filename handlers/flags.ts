@@ -38,7 +38,7 @@ export const flagsGet: EPR = async (info, data, send) => {
       //K.ATTR({flag:"enable_adventure"}),
       //K.ATTR({flag:"enable_twitter"}),  //kk9twitter
       K.ATTR({flag:"enable_game_log"}),
-      //K.ATTR({flag:"enable_syouryu2"}),//kk9wdj (Seungryong JackPot)
+      K.ATTR({flag:"enable_syouryu2"}),//kk9wdj (Seungryong JackPot)
       //K.ATTR({flag:"enable_kakera_camp"}),  //Event
       //K.ATTR({flag:"enable_kakera_double"}),//Event
       //K.ATTR({flag:"enable_snapshot"}),
