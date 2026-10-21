@@ -8,6 +8,19 @@ export const channelSchedule: EPR = async (info, data, send) => {
    *  - method="schedule"
    *  - nr=10
    */
+  const resp = {
+    data:[
+      K.ATTR({
+        expire:"0",
+        type:"",
+        gen:"",
+        start:"",
+        finish:"",
+        start_d:"",
+        finish_d:"",
+      })
+    ]
+  }
 
   return __sendSuccessLOG(info, data, send);
 };
