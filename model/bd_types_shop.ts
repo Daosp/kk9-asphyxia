@@ -23,3 +23,11 @@ export interface djp_uid {
   collection: "djp_uid";
   last_uid: number
 }
+
+export interface djp_hist {
+  collection: "djp_hist";
+  uid: number;
+  djp:number;
+  timestamp:number;
+  dataid:string;
+}
