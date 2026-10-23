@@ -153,8 +153,8 @@ export const lobbyQuery: EPR = async (info, data, send) => {
   if(lbID == -1){
     console.log("lobbyQuery: New lobby");
     const lbSearch: lobby[] = lbS;
-    const reqBool = typeof lbMLS[$(data).attr().game_id] === "undefined";
-    const seq = reqBool?0:lbMLS[$(data).attr().game_id]+1;
+    const reqBool = typeof lbMLS[$(data).attr().gpcbid] === "undefined";
+    const seq = reqBool?0:lbMLS[$(data).attr().gpcbid]+1;
     lbSearch.push({
       qid:UnixTime,
       timelimit: maxTime,
