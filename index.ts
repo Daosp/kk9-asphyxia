@@ -21,10 +21,16 @@ declare global {
   export var lbSearch: lobby[];
   export var population: pop;
   export var lbMasterLastSeq: {[data_id:string]:number};
+  export var popPCBID: {[pcbid:string]:number};
 }
 
 if (!globalThis.lbMasterLastSeq) {
   globalThis.lbMasterLastSeq = {};
+}
+
+
+if (!globalThis.lbMasterLastSeq) {
+  globalThis.popPCBID = {};
 }
 
 if (!globalThis.lbSearch) {
@@ -56,6 +62,7 @@ if (!globalThis.population) {
 export const lbSearch: lobby[] = globalThis.lbSearch;
 export const population: pop = globalThis.population;
 export const lbMasterLastSeq: {[data_id:string]:number} = globalThis.lbMasterLastSeq;
+export const popPCBID: {[pcbid:string]:number} = globalThis.lbMasterLastSeq;
 
 import { __sendSuccessLOG } from './handlers/__test__';
 import { versSend } from './handlers/vers';
