@@ -25,8 +25,8 @@ export const djpAdd: EPR = async (info, data, send) => {
   //const table_type = $(data).attr().table_type;
   const tenbou = $(data).attr().tenbou;
   const record = await _djpData(loc_id);
-  const total = record.total + parseInt(tenbou);
-  const djchance = record.djchance + parseInt(tenbou);
+  const total = record.total;
+  const djchance = record.djchance;
   const UnixTime: number = Math.floor(new Date().getTime() / 1000);
 
   DB.Update<djp>({collection:"djp",loc_id:loc_id},{
