@@ -5,8 +5,7 @@
 - [ ] Jackpots (kk9djp & kk9sdjp)
     - [ ] Dragon JackPot (kk9djp)
     - [ ] Super Dragon JackPot (kk9sdjp)
-- [ ] Multiplayer (lobby, kk9ranking et cetera) 0/7
-    - [ ] Lobby (lobby)
+- [ ] Multiplayer (lobby, kk9ranking et cetera) 1/7
     - [ ] Tracking pro-players (kk9proenter)
     - [ ] Ranking (kk9ranking)
     - [ ] For pro-players? (kk9pro)
@@ -24,11 +23,13 @@
 
 ### In Progress
 
-- [ ] Multiplayer (lobby, kk9ranking et cetera) 0/7
-    - [ ] Lobby (lobby)
+- [ ] Jackpots (kk9djp & kk9sdjp)
+    - [ ] Dragon JackPot (kk9djp)
 
 ### Done ✓
 
+- [ ] Multiplayer (lobby, kk9ranking et cetera) 1/7
+    - [x] Lobby (lobby)
 - [x] Basic work of customization (Fight Club Arrangement) (kk9customization)
 - [x] kk9pdata
 - [x] kk9vers (nothing)
