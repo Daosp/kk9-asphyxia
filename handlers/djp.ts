@@ -1,6 +1,5 @@
 import { __sendSuccessLOG } from './__test__';
 import { djp, djp_uid, djp_hist } from "../model/bd_types_shop";
-import { update } from 'lodash';
 
 // DJP - Dragon Jackpot Points
 

@@ -2,9 +2,6 @@
 
 ### Todo
 
-- [ ] Jackpots (kk9djp & kk9sdjp)
-    - [ ] Dragon JackPot (kk9djp)
-    - [ ] Super Dragon JackPot (kk9sdjp)
 - [ ] Multiplayer (lobby, kk9ranking et cetera) 1/7
     - [ ] Tracking pro-players (kk9proenter)
     - [ ] Ranking (kk9ranking)
@@ -14,17 +11,16 @@
     - [ ] What is it? (kk9channel)
 - [ ] Hai (Record of games?) (kk9hai)
 - [ ] What is it? (kk9identifier)
-- [ ] What is it? (kk9wdj)
 - [ ] PASELI minigames (kk9paseli)
 - [ ] SNS (kk9sns, kk9twitter)
 - [ ] FIGHT CLUB VIP (kk9vip)
 - [ ] Oshigacha (Fight Club Arrangement) (kk9customization)
+- [ ] Present (kk9club)
 
 
 ### In Progress
 
-- [ ] Jackpots (kk9djp & kk9sdjp)
-    - [ ] Dragon JackPot (kk9djp)
+Sleep...
 
 ### Done ✓
 
@@ -42,3 +38,7 @@
 ### Postponed
 
 - [ ] Enquetes and questions (kk9enquete & kk9question)
+- [ ] Jackpots (kk9djp & kk9sdjp)
+    - [ ] Dragon JackPot (kk9djp)
+    - [ ] Super Dragon JackPot (kk9sdjp)
+    - [ ] Rising Dragon JACKPOT (kk9wdj)
